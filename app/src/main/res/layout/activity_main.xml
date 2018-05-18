@@ -8,37 +8,57 @@
     android:orientation="vertical">
     <!--android:weightSum="4">-->
 
-    <ImageButton
-        android:id="@+id/imageButton3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/notification" />
 
-    <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/history" />
+
+
 
     <LinearLayout
-       android:layout_width="wrap_content"
-       android:layout_height="match_parent"
-        android:orientation="horizontal">
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:layout_marginTop="130dp">
        <!--android:weightSum="1">-->
+        <ImageButton
+            android:id="@+id/btn_notifications"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            app:srcCompat="@drawable/notification" />
 
        <ImageButton
-           android:id="@+id/imageButton"
+           android:id="@+id/btn_new_request"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
+           app:srcCompat="@drawable/request"
            android:layout_weight="1"
-           app:srcCompat="@drawable/request" />
+           android:background="@null"/>
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3">
 
         <ImageButton
-            android:id="@+id/imageButton4"
-            android:layout_width="92dp"
-            android:layout_height="80dp"
+            android:id="@+id/btn_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/history"
             android:layout_weight="1"
-            app:srcCompat="@drawable/help" />
+            android:background="@null"/>
+
+        <ImageButton
+            android:id="@+id/btn_help"
+            android:layout_width="105dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            app:srcCompat="@drawable/hellp" />
     </LinearLayout>
 
     <!--<LinearLayout-->
