@@ -6,19 +6,30 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.s215087038.wefixx.LoginActivity"
-    android:weightSum="3">
+    android:weightSum="3"
+    android:background="@color/background">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/logo"
+            android:layout_gravity="center"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login"
+            android:text="WeFixx"
+            android:textStyle="bold"
             android:textAlignment="center"
-            android:textSize="25dp"
+            android:textSize="@dimen/heading"
+            android:textColor="@color/labelColor"
             android:layout_gravity="center"/>
 
     </LinearLayout>
@@ -33,26 +44,35 @@
             android:id="@+id/et_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Username"/>
+            android:hint="Username"
+            android:textAlignment="center"
+            android:textColorHint="#ABA6A4" />
 
         <EditText
             android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Password"/>
+            android:textAlignment="center"
+            android:textColorHint="#ABA6A4"
+            android:hint="Password"/>
 
         <Button
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/rounded_button"
             android:text="Login"/>
 
         <TextView
             android:id="@+id/tv_forgot_passoword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Forgot Password"
+            android:text="Forgot Password?"
+            android:textColor="@color/labelColor"
             android:textAlignment="center"/>
 
     </LinearLayout>

@@ -5,44 +5,65 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.s215087038.wefixx.MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/background">
     <!--android:weightSum="4">-->
 
-
-
-
-
     <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="3"
-        android:layout_marginTop="130dp">
-       <!--android:weightSum="1">-->
+        android:gravity="center_horizontal"
+        android:layout_marginTop="90dp">
+
+        <ImageButton
+            android:id="@+id/btn_new_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/new_req"
+            android:layout_weight="1"
+            android:background="@null"/>
+
         <ImageButton
             android:id="@+id/btn_notifications"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@null"
-            app:srcCompat="@drawable/notification" />
-
-       <ImageButton
-           android:id="@+id/btn_new_request"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           app:srcCompat="@drawable/request"
-           android:layout_weight="1"
-           android:background="@null"/>
-
-
-
+            app:srcCompat="@drawable/notifications" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="3">
+        android:layout_gravity="center_horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="57dp"
+            android:textColor="@color/labelColor"
+            android:textSize="@dimen/label"
+            android:text="New Request"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/labelColor"
+            android:textSize="@dimen/label"
+            android:text="Notifications"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="45dp">
 
         <ImageButton
             android:id="@+id/btn_history"
@@ -54,12 +75,34 @@
 
         <ImageButton
             android:id="@+id/btn_help"
-            android:layout_width="105dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@null"
-            app:srcCompat="@drawable/hellp" />
+            app:srcCompat="@drawable/help" />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="46dp"
+            android:textColor="@color/labelColor"
+            android:textSize="@dimen/label"
+            android:text="Request History"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/labelColor"
+            android:textSize="@dimen/label"
+            android:text="Help"/>
+    </LinearLayout>
+
 
     <!--<LinearLayout-->
         <!--android:layout_width="wrap_content"-->
