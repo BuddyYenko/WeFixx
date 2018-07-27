@@ -46,15 +46,20 @@
             android:layout_height="wrap_content"
             android:hint="Username"
             android:textAlignment="center"
-            android:textColorHint="#ABA6A4" />
+            android:textColorHint="@color/placeholders"
+            android:textColor="@color/placeholders"
+
+            android:text="1"/>
 
         <EditText
             android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:textColorHint="#ABA6A4"
-            android:hint="Password"/>
+            android:textColorHint="@color/placeholders"
+            android:textColor="@color/placeholders"
+            android:hint="Password"
+            android:text="1"/>
 
         <Button
             android:id="@+id/btn_login"
