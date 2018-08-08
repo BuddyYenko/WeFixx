@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.s215087038.wefixx.student.NewRequest"
+    tools:context="com.example.s215087038.wefixx"
     android:orientation="vertical"
     android:background="@color/background">
 
@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <EditText
-                android:id="@+id/textArea_information"
+                android:id="@+id/et_description"
                 android:layout_width="365dp"
                 android:layout_height="wrap_content"
                 android:gravity="top|left"
@@ -58,16 +58,32 @@
         android:textColor="@color/labelColor"
         android:textStyle="bold"
         android:text="PHOTO"/>
-    <ImageButton
-        android:id="@+id/btn_new_request"
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+
+    <ImageView
+        android:id="@+id/ib_photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/upload"
         android:layout_weight="1"
         android:background="@null"/>
-
+        <ImageView
+            android:id="@+id/ib_resized"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/upload"
+            android:layout_weight="1"
+            android:background="@null"/>
+        </LinearLayout>
     <Button
-        android:id="@+id/btn_login"
+        android:id="@+id/btn_request"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

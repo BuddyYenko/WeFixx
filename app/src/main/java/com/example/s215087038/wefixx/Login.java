@@ -8,7 +8,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.EditText
+        ;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -36,7 +37,8 @@ public class Login extends AppCompatActivity {
     AlertDialog.Builder builder;
     //String url = "http://sict-iis.nmmu.ac.za/yenko/app/passenger-login.php";
     String url = "http://sict-iis.nmmu.ac.za/weeshop/app/login.php";
-    //String url = "http://10.102.129.156:8080/wefixx/login.php";
+   // String url = "http://10.202.105.211:8080/wefixx/login.php";
+    //String url = "http://10.0.2.2:8080/wefixx/login.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,7 +152,7 @@ public class Login extends AppCompatActivity {
 
         editor.commit();
         //*******************************************
-    }
+   }
 
     public void displayAlert(final String code) {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
