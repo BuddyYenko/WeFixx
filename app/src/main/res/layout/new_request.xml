@@ -59,29 +59,22 @@
         android:textStyle="bold"
         android:text="PHOTO"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
+<!--<LinearLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:maxWidth="150dp"-->
+    <!--android:maxHeight="150dp">-->
 
     <ImageView
         android:id="@+id/ib_photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/upload"
-        android:layout_weight="1"
         android:background="@null"/>
-        <ImageView
-            android:id="@+id/ib_resized"
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/upload"
-            android:layout_weight="1"
-            android:background="@null"/>
-        </LinearLayout>
+<!--</LinearLayout>-->
+
+
+
     <Button
         android:id="@+id/btn_request"
         android:layout_width="match_parent"

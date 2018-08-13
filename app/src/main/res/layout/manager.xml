@@ -22,7 +22,7 @@
             android:id="@+id/btn_new_request"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/delayed"
+            app:srcCompat="@drawable/history"
             android:layout_weight="1"
             android:background="@null"/>
 
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
-            app:srcCompat="@drawable/reports" />
+            app:srcCompat="@drawable/help" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
