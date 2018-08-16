@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView tv_forgot_password;
 
     AlertDialog.Builder builder;
-    String url = "http://10.102.129.156:8080/wefixx/login.php";
+    String url = "http://sict-iis.nmmu.ac.za/wefixx/login.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,13 +156,6 @@ public class LoginActivity extends AppCompatActivity {
                 else if (code.equals("login_failed")) {
                     et_password.setText("");
                 }
-//                else if (code.equals("login_success")) {
-//                    et_password.setText("");
-//                    et_username.setText("");
-//                    Intent scannerPage = new Intent(LoginActivity.this, Request.class);
-//                    startActivity(scannerPage);
-//                }
-
             }
         });
 
@@ -181,11 +174,11 @@ public class LoginActivity extends AppCompatActivity {
                     et_password.setText("");
                 }
                 else if (code.equals("login_success")) {
-                    et_password.setText("");
-                    et_username.setText("");
+//                    et_password.setText("");
+//                    et_username.setText("");
 
 
-                    if(user_type.equals("manager") ){
+                    if(user_type.equals("student") ){
                         Intent mainPage = new Intent(LoginActivity.this, Student.class);
                         startActivity(mainPage);
                     }
@@ -193,7 +186,7 @@ public class LoginActivity extends AppCompatActivity {
                         Intent mainPage = new Intent(LoginActivity.this, Manager.class);
                         startActivity(mainPage);
                     }
-                    else  if(user_type.equals("residence manager assistant") ){
+                    else  if(user_type.equals("residence student assistant") ){
                         Intent mainPage = new Intent(LoginActivity.this, RSA.class);
                         startActivity(mainPage);
                     }

@@ -8,6 +8,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.s215087038.wefixx.R;
+import com.example.s215087038.wefixx.UploadImage;
 
 public class Student extends AppCompatActivity {
     ImageButton new_request, help, notifications, request_history;
@@ -25,7 +26,7 @@ public class Student extends AppCompatActivity {
         new_request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent new_req = new Intent(Student.this, NewRequest.class);
+                Intent new_req = new Intent(Student.this, UploadImage.class);
                 startActivity(new_req);
             }
         });
