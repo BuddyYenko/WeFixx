@@ -2,6 +2,7 @@ package com.example.s215087038.wefixx;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -22,13 +23,21 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
@@ -37,7 +46,10 @@ import com.android.volley.toolbox.Volley;
 import com.example.s215087038.wefixx.EndPoints;
 import com.example.s215087038.wefixx.R;
 import com.example.s215087038.wefixx.VolleyMultipartRequest;
+import com.example.s215087038.wefixx.student.DataObject;
 import com.example.s215087038.wefixx.student.Student;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,37 +63,52 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static java.net.Proxy.Type.HTTP;
 
 
-public class UploadImage extends AppCompatActivity {
+public class NewRequest extends AppCompatActivity {
 
     //ImageView to display image selected
-    ImageView imageView, resizedView;
+    ImageView imageView;
+    private Spinner spinner;
+    private EditText Description;
+    String description, photo;
+    private Button btn_request;
     Matrix matrix;
-    int newWidth, newHeight, width, height;
-    float scaleWidth, scaleHeight;
     Bitmap scaledBitmap = null, bitmap = null;
-    ByteArrayOutputStream outputStream;
-    ByteArrayOutputStream bytearrayoutputstream;
-    byte[] BYTE;
-    String uploadUrl = "http://sict-iis.nmmu.ac.za/wefixx/student/new.php";
+    //url to send student's input
+    String newRequestUrl = "http://sict-iis.nmmu.ac.za/wefixx/student/new_request.php";
+    //url to get fault catergories for dropdown menu
+    String faultUrl = "http://sict-iis.nmmu.ac.za/wefixx/student/fault_types.php";
     AlertDialog.Builder builder;
-
-
-    //edittext for getting the tags input
-    EditText editTextTags;
+    protected List<DataObject> spinnerData;
+    private RequestQueue queue;
+    String user_id, name, fault;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_request);
 
-        //initializing views
+        //********************************************
+        SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
+
+        user_id = preferences.getString("user_id", "");
+        name = preferences.getString("name", "");
+        //********************************************
+
+        //initializing controls
         imageView = (ImageView) findViewById(R.id.ib_photo);
+        requestJsonObject();
+
+        //Getting id by their xml
+        Description = (EditText) findViewById(R.id.et_description);
+        btn_request = (Button) findViewById(R.id.btn_request);
 
         //checking the permission
         //if the permission is not given we will open setting to add permission
@@ -95,26 +122,133 @@ public class UploadImage extends AppCompatActivity {
             startActivity(intent);
             return;
         }
-
-
-        //adding click listener to button
+        //adding click listener to button for photo
         findViewById(R.id.ib_photo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                //if the tags edittext is empty
-                //we will throw input error
-//                if (editTextTags.getText().toString().trim().isEmpty()) {
-//                    editTextTags.setError("Enter tags first");
-//                    editTextTags.requestFocus();
-//                    return;
-//                }
-
-                //if everything is ok we will open image chooser
+                //open image chooser/ photo gallery
                 Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(i, 100);
             }
         });
+
+        btn_request.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                description = Description.getText().toString();
+
+
+                if (description.equals("")) {
+                    builder.setTitle("Something Went Wrong...");
+                    builder.setMessage("Please fill in description");
+                    displayAlert("input_error");
+                } else {
+                    VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, newRequestUrl,
+                            new Response.Listener<NetworkResponse>() {
+                                @Override
+                                public void onResponse(NetworkResponse response) {
+
+                                    try {
+                                        JSONArray jsonArray = new JSONArray(new String (response.data));
+                                        JSONObject jsonObject = jsonArray.getJSONObject(0);
+                                        String message = jsonObject.getString("message");
+                                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+
+                                }
+                            }) {
+
+                        //Posting parameters to php script
+                        @Override
+                        protected Map<String, String> getParams() {
+                            Map<String, String> params = new HashMap<>();
+                            params.put("user_id", user_id);
+                            params.put("description", description);
+                            params.put("fault_type", fault);
+                            return params;
+                        }
+                         //Here we are passing image by renaming it with a unique name
+                        @Override
+                        protected Map<String, DataPart> getByteData() {
+                            Map<String, DataPart> params = new HashMap<>();
+                            String imagename = "me";
+                            params.put("photo", new DataPart(imagename + ".jpeg", getFileDataFromDrawable(bitmap)));
+                            return params;
+                        }
+                    };
+
+                    //adding the request to volley
+                    Volley.newRequestQueue(NewRequest.this).add(volleyMultipartRequest);
+                }
+            }
+
+            private void displayAlert(final String code) {
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (code.equals("req_failed")) {
+                                Intent req = new Intent(NewRequest.this, NewRequest.class);
+                                startActivity(req);
+                            } else if (code.equals("req_success")) {
+                                Description.setText("");
+                                Intent main = new Intent(NewRequest.this, Student.class);
+                                startActivity(main);
+                            }
+
+                        }
+                    });
+
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }
+
+        });
+
+
+
+}
+
+    private void requestJsonObject() {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, faultUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                GsonBuilder builder = new GsonBuilder();
+                Gson mGson = builder.create();
+                spinnerData = Arrays.asList(mGson.fromJson(response, DataObject[].class));
+                //display first question to the user
+                if(null != spinnerData){
+                    spinner = (Spinner) findViewById(R.id.sp_fault);
+                    spinner.setOnItemSelectedListener(
+                            new AdapterView.OnItemSelectedListener() {
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long fault_id) {
+                                    DataObject selected = (DataObject) parent.getItemAtPosition(position);
+                                    //get selected fault type
+                                    fault = selected.getID();
+                                }
+                                public void onNothingSelected(AdapterView<?> parent) {
+                                }
+                            });
+                    assert spinner != null;
+                    SpinnerAdapter spinnerAdapter = new SpinnerAdapter(NewRequest.this, spinnerData);
+                    spinner.setAdapter(spinnerAdapter);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+        queue.add(stringRequest);
     }
 
     @Override
@@ -127,14 +261,9 @@ public class UploadImage extends AppCompatActivity {
             try {
                 //getting bitmap object from uri
                 matrix = new Matrix();
-
-
-
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
                // imageView.setImageBitmap(bitmap);
                 compressImage(imageUri);
-
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -255,118 +384,10 @@ public class UploadImage extends AppCompatActivity {
             e.printStackTrace();
         }
         imageView.setImageBitmap(scaledBitmap);
-        uploadBitmap(scaledBitmap);
         return filename;
 
     }
 
-    private void uploadBitmap(final Bitmap scaledBitmap) {
-
-        //getting the tag from the edittext
-
-        //our custom volley request
-        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, uploadUrl,
-                new Response.Listener<NetworkResponse>() {
-                    @Override
-                    public void onResponse(NetworkResponse response) {
-
-                        try {
-
-
-                            JSONArray jsonArray = new JSONArray(new String (response.data));
-                            JSONObject jsonObject = jsonArray.getJSONObject(0);
-//                            String code = jsonObject.getString("code");
-                            String message = jsonObject.getString("message");
-
-//                            JSONObject jo = new JSONObject(new String(response.data));
-//
-//                            String message = jo.getString("message");
-
-                            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-
-                    }
-                }) {
-
-            /*
-             * If you want to add more parameters with the image
-             * you can do it here
-             * here we have only one parameter with the image
-             * which is tags
-             * */
-
-
-            /*
-             * Here we are passing image by renaming it with a unique name
-             * */
-            @Override
-            protected Map<String, DataPart> getByteData() {
-                Map<String, DataPart> params = new HashMap<>();
-                String imagename = "me";
-                params.put("pic", new DataPart(imagename + ".jpeg", getFileDataFromDrawable(bitmap)));
-                return params;
-            }
-        };
-
-        //adding the request to volley
-        Volley.newRequestQueue(this).add(volleyMultipartRequest);
-
-//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//        byte[] imageBytes = baos.toByteArray();
-//        final String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-//
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST, uploadUrl,
-//                    new Response.Listener<String>() {
-//                        @Override
-//                        public void onResponse(String response) {
-//                            try {
-//                                JSONArray jsonArray = new JSONArray(response);
-//                                JSONObject jsonObject = jsonArray.getJSONObject(0);
-//                                String code = jsonObject.getString("code");
-//                                String message = jsonObject.getString("message");
-//
-////                                if(code.equals("req_success")){
-////                                    String passengerID = jsonObject.getString("user_id");
-////                                    String passengerName = jsonObject.getString("name");
-////                                    createSessions(passengerID, passengerName);
-////                                }
-//                                Toast.makeText(UploadImage.this, message, Toast.LENGTH_LONG).show();
-//
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }, new Response.ErrorListener() {
-//                @Override
-//                public void onErrorResponse(VolleyError error) {
-//
-//                }
-//            }) {
-//                @Override
-//                protected Map<String, String> getParams() throws AuthFailureError {
-//                    Map<String, String> params = new HashMap<String, String>();
-//
-//                    params.put("photo", imageString);
-//
-//                    return params;
-//                }
-//
-//
-//            };
-//            MySingleton.getInstance(UploadImage.this).addToRequestque(stringRequest);
-
-
-    }
 
     public String getFilename() {
         File file = new File(Environment.getExternalStorageDirectory().getPath(), "MyFolder/Images");
