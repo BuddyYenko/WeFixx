@@ -95,7 +95,8 @@ public class ManageRequest extends AppCompatActivity {
                                         //request.getInt("id"),
                                         request.getString("request_date"),
                                         request.getString("request_type"),
-                                        request.getString("status")
+                                        request.getString("status"),
+                                        request.getString("description")
                                 ));
 
                             }
@@ -134,7 +135,8 @@ public class ManageRequest extends AppCompatActivity {
                                 //request.getInt("id"),
                                 request.getString("request_date"),
                                 request.getString("request_type"),
-                                request.getString("status")
+                                request.getString("status"),
+                                request.getString("description")
                         ));
 
                     }

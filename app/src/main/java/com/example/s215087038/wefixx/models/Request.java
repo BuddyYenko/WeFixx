@@ -1,15 +1,16 @@
 package com.example.s215087038.wefixx.models;
 
 public class Request {
-    private String request_date, request_type, status;
+    private String request_date, request_type, status, description;
 
     public Request() {
     }
 
-    public Request(String request_date, String request_type, String status) {
+    public Request(String request_date, String request_type, String status, String description) {
         this.request_date = request_date;
         this.request_type = request_type;
         this.status = status;
+        this.description = description;
     }
 
     public String getRequestDate() {
@@ -26,6 +27,14 @@ public class Request {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getDescrription() {
+        return request_type;
+    }
+
+    public void setDescription(String request_type) {
+        this.request_type = request_type;
     }
 
     public String getRequestType() {
