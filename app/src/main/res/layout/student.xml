@@ -45,7 +45,8 @@
             android:layout_marginLeft="57dp"
             android:textColor="@color/labelColor"
             android:textSize="@dimen/label"
-            android:text="New Request"/>
+            android:text="New Request"
+            android:textStyle="bold"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

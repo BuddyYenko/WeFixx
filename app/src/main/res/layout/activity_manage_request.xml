@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".rsa.ManageRequest">
+
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/text"
+    android:text="New Requests"
+    android:textColor="@color/colorPrimaryDark"
+    android:textStyle="bold"
+    android:background="@color/colorAccent"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/openRecylcerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/text1"
+        android:text="Assigned Requests"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        android:background="@color/colorAccent"
+        android:layout_below="@+id/openRecylcerView"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/assignedRecylcerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text1"/>
+</RelativeLayout>

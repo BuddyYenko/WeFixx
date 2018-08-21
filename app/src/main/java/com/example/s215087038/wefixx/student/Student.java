@@ -1,14 +1,13 @@
 package com.example.s215087038.wefixx.student;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import com.example.s215087038.wefixx.R;
-import com.example.s215087038.wefixx.UploadImage;
+import com.example.s215087038.wefixx.NewRequest;
 
 public class Student extends AppCompatActivity {
     ImageButton new_request, help, notifications, request_history;
@@ -26,7 +25,7 @@ public class Student extends AppCompatActivity {
         new_request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent new_req = new Intent(Student.this, UploadImage.class);
+                Intent new_req = new Intent(Student.this, NewRequest.class);
                 startActivity(new_req);
             }
         });

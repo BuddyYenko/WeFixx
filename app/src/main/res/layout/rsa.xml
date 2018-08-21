@@ -18,20 +18,19 @@
         android:layout_marginTop="90dp">
 
         <ImageButton
-            android:id="@+id/btn_new_request"
+            android:id="@+id/manage_request"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/history"
+            app:srcCompat="@drawable/picture7"
             android:layout_weight="1"
             android:background="@null"/>
 
         <ImageButton
-            android:id="@+id/btn_notifications"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
-            app:srcCompat="@drawable/history" />
+            app:srcCompat="@drawable/rsa_history" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

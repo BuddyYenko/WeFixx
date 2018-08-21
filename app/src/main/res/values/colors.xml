@@ -6,4 +6,6 @@
     <color name="background">#404040</color>
     <color name="labelColor">#FFFFFF</color>
     <color name="placeholders">#6F6D6C</color>
+    <color name="status">#999999</color>
+    <color name="date">#222222</color>
 </resources>
