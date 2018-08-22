@@ -1,6 +1,7 @@
 package com.example.s215087038.wefixx.rsa;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -18,6 +20,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.s215087038.wefixx.MyDividerItemDecoration;
 import com.example.s215087038.wefixx.R;
+import com.example.s215087038.wefixx.RecyclerTouchListener;
 import com.example.s215087038.wefixx.models.Request;
 
 import org.json.JSONArray;
@@ -32,6 +35,7 @@ public class OneFragment extends Fragment {
     private RecyclerView openRecyclerView;
     private RequestAdapter mAdapter;
     String openRequestsUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/open_requests.php";
+    Context mContext;
     public OneFragment() {
         // Required empty public constructor
     }
@@ -60,6 +64,22 @@ public class OneFragment extends Fragment {
 
         prepareRequestData();
 
+        openRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), openRecyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Request request = requestList.get(position);
+                Toast.makeText(getActivity(), request.getDescription() + " is selected!", Toast.LENGTH_SHORT).show();
+
+                Intent i = new Intent(mContext, AssignRequest.class);
+                i.putExtra("request_id", request.getID());
+                mContext.startActivity(i);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
         return myFragmentView;
     }
 
@@ -83,9 +103,9 @@ public class OneFragment extends Fragment {
                                 //request.getInt("id"),
                                 request.getString("request_date"),
                                 request.getString("request_type"),
-                                request.getString("status"),
-                                request.getString("description")
-                        ));
+                                request.getString("description"),
+                                request.getString("room")
+                                ));
 
                     }
 

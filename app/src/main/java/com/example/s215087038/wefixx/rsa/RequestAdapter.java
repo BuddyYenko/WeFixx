@@ -28,13 +28,14 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.MyViewHo
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView request_date, request_type, status;
+        public TextView request_date, request_type, room, description;
 
         public MyViewHolder(View view) {
             super(view);
             request_date = (TextView) view.findViewById(R.id.request_date);
             request_type = (TextView) view.findViewById(R.id.request_type);
-            status = (TextView) view.findViewById(R.id.status);
+            description = (TextView) view.findViewById(R.id.description);
+            room = (TextView) view.findViewById(R.id.room);
         }
     }
 
@@ -51,7 +52,8 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.MyViewHo
         Request request = requestList.get(position);
         holder.request_date.setText(request.getRequestDate());
         holder.request_type.setText(request.getRequestType());
-        holder.status.setText(request.getStatus());
+        holder.description.setText(request.getDescription());
+        holder.room.setText(request.getRoom());
     }
 
     @Override

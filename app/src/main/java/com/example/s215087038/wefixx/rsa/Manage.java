@@ -25,8 +25,6 @@ public class Manage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage);
 
-      //  toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

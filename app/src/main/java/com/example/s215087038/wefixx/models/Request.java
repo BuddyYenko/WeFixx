@@ -1,40 +1,40 @@
 package com.example.s215087038.wefixx.models;
 
 public class Request {
-    private String request_date, request_type, status, description;
+    private String request_date, request_type, room, description, id;
 
     public Request() {
     }
 
-    public Request(String request_date, String request_type, String status, String description) {
+    public Request(String request_date, String request_type, String description, String room) {
         this.request_date = request_date;
         this.request_type = request_type;
-        this.status = status;
         this.description = description;
+        this.room = room;
     }
 
     public String getRequestDate() {
         return request_date;
     }
 
-    public void setRequestDatte(String name) {
-        this.request_date = name;
+    public void setRequestDate(String request_date) {
+        this.request_date = request_date;
     }
 
-    public String getStatus() {
-        return status;
+    public String getRoom() {
+        return room;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setRoom(String room) {
+        this.room = room;
     }
 
-    public String getDescrription() {
-        return request_type;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescription(String request_type) {
-        this.request_type = request_type;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getRequestType() {
@@ -43,5 +43,9 @@ public class Request {
 
     public void setRequestType(String request_type) {
         this.request_type = request_type;
+    }
+
+    public String getID(){
+        return id;
     }
 }

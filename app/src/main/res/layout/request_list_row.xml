@@ -12,14 +12,14 @@
     android:paddingTop="@dimen/row_padding_vertical">
 
     <TextView
-        android:id="@+id/request_date"
+        android:id="@+id/room"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:textColor="@color/date"
         android:textSize="16dp"
         android:textStyle="bold"
-        android:text="date"/>
+        android:text="room"/>
 
     <TextView
         android:id="@+id/request_type"
@@ -27,13 +27,19 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/request_date"
         android:text="type"/>
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/request_type"
+        android:text="description"/>
 
     <TextView
-        android:id="@+id/status"
+        android:id="@+id/request_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:textColor="@color/status"
-        android:text="status"/>
+        android:text="date"/>
 
 </RelativeLayout>

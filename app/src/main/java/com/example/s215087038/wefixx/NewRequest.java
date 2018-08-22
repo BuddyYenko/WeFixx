@@ -84,7 +84,7 @@ public class NewRequest extends AppCompatActivity {
     //url to send student's input
     String newRequestUrl = "http://sict-iis.nmmu.ac.za/wefixx/student/new_request.php";
     //url to get fault catergories for dropdown menu
-    String faultUrl = "http://sict-iis.nmmu.ac.za/wefixx/student/fault_types.php";
+    String faultUrl = "http://sict-iis.nmmu.ac.za/wefixx/fault_types.php";
     AlertDialog.Builder builder;
     protected List<DataObject> spinnerData;
     private RequestQueue queue;
@@ -212,9 +212,6 @@ public class NewRequest extends AppCompatActivity {
                 }
 
         });
-
-
-
 }
 
     private void requestJsonObject() {
