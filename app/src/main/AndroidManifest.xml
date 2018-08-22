@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".rsa.Manage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,10 +25,8 @@
         <activity android:name=".Login" />
         <activity android:name=".manager.Manager" />
         <activity android:name=".rsa.RSA" />
-        <activity android:name=".rsa.Manage" />
+        <!--<activity android:name=".Main2Activity" />-->
         <activity android:name=".NewRequest" />
-        <activity android:name=".rsa.ManageRequest" />
-        <activity android:name=".rsa.AssignRequest"></activity>
     </application>
 
 </manifest>

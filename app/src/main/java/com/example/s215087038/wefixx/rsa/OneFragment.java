@@ -64,22 +64,22 @@ public class OneFragment extends Fragment {
 
         prepareRequestData();
 
-        openRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), openRecyclerView, new RecyclerTouchListener.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                Request request = requestList.get(position);
-                Toast.makeText(getActivity(), request.getDescription() + " is selected!", Toast.LENGTH_SHORT).show();
-
-                Intent i = new Intent(mContext, AssignRequest.class);
-                i.putExtra("request_id", request.getID());
-                mContext.startActivity(i);
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-
-            }
-        }));
+//        openRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), openRecyclerView, new RecyclerTouchListener.ClickListener() {
+//            @Override
+//            public void onClick(View view, int position) {
+//                Request request = requestList.get(position);
+//                Toast.makeText(getActivity(), request.getDescription() + " is selected!", Toast.LENGTH_SHORT).show();
+////
+////                Intent i = new Intent(mContext, AssignRequest.class);
+////                i.putExtra("request_id", request.getID());
+////                mContext.startActivity(i);
+//            }
+//
+//            @Override
+//            public void onLongClick(View view, int position) {
+//
+//            }
+//        }));
         return myFragmentView;
     }
 
@@ -104,7 +104,8 @@ public class OneFragment extends Fragment {
                                 request.getString("request_date"),
                                 request.getString("request_type"),
                                 request.getString("description"),
-                                request.getString("room")
+                                request.getString("room"),
+                                "http://sict-iis.nmmu.ac.za/wefixx/files/photos/" + request.getString("photo") +".jpeg"
                                 ));
 
                     }

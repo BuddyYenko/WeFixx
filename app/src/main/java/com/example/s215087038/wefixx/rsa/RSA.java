@@ -23,7 +23,7 @@ ImageButton manage_req;
         manage_req.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent manage_req = new Intent(RSA.this, ManageRequest.class);
+                Intent manage_req = new Intent(RSA.this, Manage.class);
                 startActivity(manage_req);
             }
         });

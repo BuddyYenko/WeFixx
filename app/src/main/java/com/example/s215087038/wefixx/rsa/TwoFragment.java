@@ -85,7 +85,9 @@ public class TwoFragment extends Fragment {
                                 request.getString("request_date"),
                                 request.getString("request_type"),
                                 request.getString("description"),
-                                request.getString("room")
+                                request.getString("room"),
+                                "http://sict-iis.nmmu.ac.za/wefixx/files/photos/" + request.getString("photo") +".jpeg"
+
                         ));
 
                     }
