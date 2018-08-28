@@ -57,9 +57,9 @@ public class SpinnerAdapter extends BaseAdapter{
 
 //public class SpinnerAdapter extends BaseAdapter {
 //    private LayoutInflater layoutInflater;
-//    private List<DataObject> listData;
+//    private List<PriorityDataObject> listData;
 //    private Context context;
-//    public SpinnerAdapter(Context context, List<DataObject> listData) {
+//    public SpinnerAdapter(Context context, List<PriorityDataObject> listData) {
 //        this.context = context;
 //        layoutInflater =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 //        this.listData = listData;
@@ -70,7 +70,7 @@ public class SpinnerAdapter extends BaseAdapter{
 //    }
 //    @Override
 //    public Object getItem(int position) {
-//        return (DataObject)listData.get(position);
+//        return (PriorityDataObject)listData.get(position);
 //    }
 //    @Override
 //    public long getItemId(int position) {

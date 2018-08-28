@@ -22,7 +22,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.MyViewHo
 
     private List<Request> requestList;
     private Context mCtx;
-    private static int currentPosition = 0;
+    private static int currentPosition = -1;
 
     public RequestAdapter(List<Request> requestList) {
         this.requestList = requestList;
@@ -34,7 +34,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.MyViewHo
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView request_date, request_type, room, description, textView;
+        public TextView request_date, request_type, room, description, textView, date_label;
         public ImageView imageView;
         public LinearLayout linearLayout;
 
@@ -44,7 +44,8 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.MyViewHo
             request_type = (TextView) view.findViewById(R.id.tv_type);
             description = (TextView) view.findViewById(R.id.tv_desc);
             room = (TextView) view.findViewById(R.id.tv_room);
-            textView = (TextView) view.findViewById(R.id.room);
+            textView = (TextView) view.findViewById(R.id.room_label);
+            date_label = (TextView) view.findViewById(R.id.date_label);
             imageView = (ImageView)view.findViewById(R.id.imageView);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
 
@@ -66,6 +67,8 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.MyViewHo
         holder.request_type.setText(request.getRequestType());
         holder.description.setText(request.getDescription());
         holder.room.setText(request.getRoom());
+        holder.textView.setText(request.getRoom());
+        holder.date_label.setText(request.getRequestDate());
         Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
         holder.linearLayout.setVisibility(View.GONE);
 
