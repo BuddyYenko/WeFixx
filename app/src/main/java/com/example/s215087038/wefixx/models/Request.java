@@ -1,11 +1,20 @@
 package com.example.s215087038.wefixx.models;
 
 public class Request {
-    private String fault_id, request_date, request_type, room, description,image_url;
+    private String fault_id, request_date,fault_type_id, request_type, room, description,image_url, provider, priority;
 
     public Request() {
     }
 
+    public Request(String fault_id, String request_date, String fault_type_id, String request_type, String description, String room, String image_url) {
+        this.fault_id = fault_id;
+        this.request_date = request_date;
+        this.fault_type_id = fault_type_id;
+        this.request_type = request_type;
+        this.description = description;
+        this.room = room;
+        this.image_url = image_url;
+    }
     public Request(String fault_id, String request_date, String request_type, String description, String room, String image_url) {
         this.fault_id = fault_id;
         this.request_date = request_date;
@@ -14,8 +23,16 @@ public class Request {
         this.room = room;
         this.image_url = image_url;
     }
-
-
+    public Request(String fault_id, String request_date, String request_type, String description, String room, String image_url, String provider, String priority) {
+        this.fault_id = fault_id;
+        this.request_date = request_date;
+        this.request_type = request_type;
+        this.description = description;
+        this.room = room;
+        this.image_url = image_url;
+        this.provider = provider;
+        this.priority = priority;
+    }
     public String getRequestDate() {
         return request_date;
     }
@@ -48,9 +65,13 @@ public class Request {
         this.request_type = request_type;
     }
 
+    public String getFaultTypeID(){return fault_type_id;}
+    public  void setFaultIDType(String fault_type_id){this.fault_type_id = fault_type_id;}
+
     public String getFaultID(){
         return fault_id;
     }
+    public  void setFaultID(String fault_id){this.fault_id = fault_id;}
 
     public String getImageUrl() {
         return image_url;
@@ -58,5 +79,21 @@ public class Request {
 
     public void setImageUrl(String image_url) {
         this.image_url = image_url;
+    }
+
+    ////
+    public String getProvider() {
+        return provider;
+    }
+
+    public void setProvider(String provider) {
+        this.provider = provider;
+    }
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
     }
 }

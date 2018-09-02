@@ -88,7 +88,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="date"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:layout_marginLeft="20dp"/>
                     </TableRow>
 
                     <TableRow>
@@ -103,7 +104,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="room"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:layout_marginLeft="20dp"/>
                     </TableRow>
 
                     <TableRow>
@@ -118,7 +120,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="category"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:layout_marginLeft="20dp"/>
                     </TableRow>
 
                     <TableRow>
@@ -133,7 +136,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="desc"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:layout_marginLeft="20dp"/>
                     </TableRow>
 
                     <TableRow>
@@ -141,14 +145,16 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Maintenance Provider" />
-
-                        <Spinner
-                            android:id="@+id/sp_provider"
+                            android:text="Maintenance Provider"
+                            />
+                        <TextView
+                            android:id="@+id/tv_provider"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:text="provider"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="20dp"/>
 
-                        </Spinner>
 
                     </TableRow>
 
@@ -159,10 +165,13 @@
                             android:layout_height="wrap_content"
                             android:text="Priority" />
 
-                        <Spinner
-                            android:id="@+id/sp_priority"
+                        <TextView
+                            android:id="@+id/tv_priority"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"></Spinner>
+                            android:layout_height="wrap_content"
+                            android:text="priority"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="20dp"/>
                     </TableRow>
 
                     <TableRow>

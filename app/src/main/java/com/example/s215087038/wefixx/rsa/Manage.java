@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toolbar;
 
 import com.example.s215087038.wefixx.R;
 
@@ -37,8 +36,8 @@ public class Manage extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new OneFragment(), "OPEN");
-        adapter.addFragment(new TwoFragment(), "ASSIGNED");
+        adapter.addFragment(new OpenFragment(), "OPEN");
+        adapter.addFragment(new AssignedFragment(), "ASSIGNED");
         viewPager.setAdapter(adapter);
     }
 

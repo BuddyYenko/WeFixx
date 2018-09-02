@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,15 +27,10 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.s215087038.wefixx.LoginActivity;
 import com.example.s215087038.wefixx.MySingleton;
-import com.example.s215087038.wefixx.NewRequest;
 import com.example.s215087038.wefixx.PriorityDataObject;
 import com.example.s215087038.wefixx.ProviderDataObject;
 import com.example.s215087038.wefixx.R;
-import com.example.s215087038.wefixx.SpinnerAdapter;
-import com.example.s215087038.wefixx.manager.Manager;
 import com.example.s215087038.wefixx.models.Request;
-import com.example.s215087038.wefixx.student.DataObject;
-import com.example.s215087038.wefixx.student.Student;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -42,6 +38,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -52,15 +49,14 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.MyViewHo
     private List<Request> requestList;
     private Context mCtx;
     private static int currentPosition = -1;
-    String priorityUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/fault_provider.php";
-    String providerUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/priority.php";
+    String providerUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/fault_provider.php";
+    String priorityUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/priority.php";
     String assignUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/update_request.php";
     AlertDialog.Builder builder;
 
     protected List<ProviderDataObject> providerData;
     protected List<PriorityDataObject> priorityData;
-    private RequestQueue queue;
-    String provider, priority, fault_id;
+    String provider, priority, fault_id, fault_type_id;
 
     public RequestAdapter(List<Request> requestList) {
         this.requestList = requestList;
@@ -71,7 +67,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.MyViewHo
         this.requestList = requestList;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView request_date, request_type, room, description, textView, date_label;
         public ImageView imageView;
         public LinearLayout linearLayout;
@@ -92,14 +88,13 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.MyViewHo
             sp_provider = (Spinner) view.findViewById(R.id.sp_provider);
             bn_assign = (Button) view.findViewById(R.id.btn_submit);
 
-
         }
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.open_list, parent, false);
+                .inflate(R.layout.list_open, parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -113,31 +108,78 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.MyViewHo
         holder.room.setText(request.getRoom());
         holder.textView.setText(request.getRoom());
         holder.date_label.setText(request.getRequestDate());
+
+        fault_type_id = request.getFaultTypeID();
+        fault_id = request.getFaultID();
+
         Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
         holder.linearLayout.setVisibility(View.GONE);
 
-        RequestQueue q = Volley.newRequestQueue(mCtx);
-        StringRequest stringReq = new StringRequest(com.android.volley.Request.Method.GET, providerUrl, new Response.Listener<String>() {
+        builder = new AlertDialog.Builder(mCtx);
+        StringRequest stringRequest = new StringRequest(com.android.volley.Request.Method.POST, providerUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        GsonBuilder builder = new GsonBuilder();
+                        Gson mGson = builder.create();
+                        providerData = Arrays.asList(mGson.fromJson(response, ProviderDataObject[].class));
+                        //display first question to the user
+                        if (null != providerData) {
+                            holder.sp_provider.setOnItemSelectedListener(
+                                    new AdapterView.OnItemSelectedListener() {
+                                        public void onItemSelected(AdapterView<?> parent, View view, int position, long fault_id) {
+                                            ProviderDataObject selected = (ProviderDataObject) parent.getItemAtPosition(position);
+                                            //get selected fault type
+                                            provider = selected.getID();
+                                        }
+                                        public void onNothingSelected(AdapterView<?> parent) {
+                                        }
+                                    });
+                            assert holder.sp_provider != null;
+                            ProviderSpinnerAdapter spinnerAdapter = new ProviderSpinnerAdapter(mCtx, providerData);
+                            holder.sp_provider.setAdapter(spinnerAdapter);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("fault_type_id", fault_type_id);
+                return params;
+            }
+        };
+        MySingleton.getInstance(mCtx).addToRequestque(stringRequest);
+
+        RequestQueue que = Volley.newRequestQueue(mCtx);
+        StringRequest stringReq = new StringRequest(com.android.volley.Request.Method.GET, priorityUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 GsonBuilder builder = new GsonBuilder();
                 Gson mGson = builder.create();
-                providerData = Arrays.asList(mGson.fromJson(response, ProviderDataObject[].class));
+                priorityData = Arrays.asList(mGson.fromJson(response, PriorityDataObject[].class));
                 //display first question to the user
-                if(null != providerData){
-                    holder.sp_provider.setOnItemSelectedListener(
+                if (null != priorityData) {
+                    holder.sp_priority.setOnItemSelectedListener(
                             new AdapterView.OnItemSelectedListener() {
-                                public void onItemSelected(AdapterView<?> parent, View view, int position, long fault_id) {
-                                    ProviderDataObject selected = (ProviderDataObject) parent.getItemAtPosition(position);
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long provider_id) {
+                                    PriorityDataObject selected = (PriorityDataObject) parent.getItemAtPosition(position);
                                     //get selected fault type
-                                    provider = selected.getID();
+                                    priority = selected.getID();
                                 }
+
                                 public void onNothingSelected(AdapterView<?> parent) {
                                 }
                             });
-                    assert holder.sp_provider != null;
-                    ProviderSpinnerAdapter spinnerAdapter = new ProviderSpinnerAdapter(mCtx, providerData);
-                    holder.sp_provider.setAdapter(spinnerAdapter);
+                    assert holder.sp_priority != null;
+                    PrioritySpinnerAdapter spinnerAdapter = new PrioritySpinnerAdapter(mCtx, priorityData);
+                    holder.sp_priority.setAdapter(spinnerAdapter);
                 }
             }
         }, new Response.ErrorListener() {
@@ -145,39 +187,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.MyViewHo
             public void onErrorResponse(VolleyError error) {
             }
         });
-        q.add(stringReq);
-
-        RequestQueue queue = Volley.newRequestQueue(mCtx);
-            StringRequest stringRequest = new StringRequest(com.android.volley.Request.Method.GET, priorityUrl, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    GsonBuilder builder = new GsonBuilder();
-                    Gson mGson = builder.create();
-                    priorityData = Arrays.asList(mGson.fromJson(response, PriorityDataObject[].class));
-                    //display first question to the user
-                    if (null != priorityData) {
-                        holder.sp_priority.setOnItemSelectedListener(
-                                new AdapterView.OnItemSelectedListener() {
-                                    public void onItemSelected(AdapterView<?> parent, View view, int position, long fault_id) {
-                                        PriorityDataObject selected = (PriorityDataObject) parent.getItemAtPosition(position);
-                                        //get selected fault type
-                                        priority = selected.getID();
-                                    }
-
-                                    public void onNothingSelected(AdapterView<?> parent) {
-                                    }
-                                });
-                        assert holder.sp_priority != null;
-                        PrioritySpinnerAdapter spinnerAdapter = new PrioritySpinnerAdapter(mCtx, priorityData);
-                        holder.sp_priority.setAdapter(spinnerAdapter);
-                    }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                }
-            });
-            queue.add(stringRequest);
+        que.add(stringReq);
 
 
         //if the position is equals to the item position which is to be expanded
@@ -217,10 +227,20 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.MyViewHo
                                     String code = jsonObject.getString("code");
                                     String message = jsonObject.getString("message");
 
+
+
+                                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(mCtx);
                                     builder.setTitle("WeFixx Response");
                                     builder.setMessage(message);
-
-                                    DisplayAlert();
+                                    alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Intent refresh = new Intent(mCtx, Manage.class);
+                                            mCtx.startActivity(refresh);
+                                        }
+                                    });
+                                    AlertDialog dialog = alertDialog.create();
+                                    dialog.show();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

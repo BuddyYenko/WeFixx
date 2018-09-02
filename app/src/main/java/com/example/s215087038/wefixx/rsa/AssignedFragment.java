@@ -1,11 +1,15 @@
 package com.example.s215087038.wefixx.rsa;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -13,8 +17,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.s215087038.wefixx.MyDividerItemDecoration;
-import com.example.s215087038.wefixx.PriorityDataObject;
-import com.example.s215087038.wefixx.ProviderDataObject;
 import com.example.s215087038.wefixx.R;
 import com.example.s215087038.wefixx.models.Request;
 
@@ -22,35 +24,51 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class History extends AppCompatActivity {
-    private List<Request> requestList;
-    private RecyclerView recyclerView;
-    private RequestAdapter mAdapter;
-    String historyUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/history.php";
-    Context mContext;
-    private RequestQueue queue;
+
+public class AssignedFragment extends Fragment {
+    private List<Request> assignedRequestList;
+    private RecyclerView  assignedRecyclerView;
+    private RequestAdapter aAdapter;
+    String assignedRequestsUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/assigned_requests.php";
+
+    public AssignedFragment() {
+        // Required empty public constructor
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history);
 
-        recyclerView = (RecyclerView)findViewById(R.id.openRecylcerView);
-        mAdapter = new RequestAdapter(requestList);
+
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View myFragmentView = inflater.inflate(R.layout.fragment_two, container, false);
+        assignedRequestList = new ArrayList<>();
+        assignedRecyclerView = (RecyclerView) myFragmentView.findViewById(R.id.assignedRecylcerView);
+        aAdapter = new RequestAdapter(assignedRequestList);
 
         // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new MyDividerItemDecoration(mContext, LinearLayoutManager.VERTICAL, 16));
-        recyclerView.setAdapter(mAdapter);
+        assignedRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        assignedRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        assignedRecyclerView.addItemDecoration(new MyDividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL, 16));
+        assignedRecyclerView.setAdapter(aAdapter);
         prepareRequestData();
+        return myFragmentView;
     }
 
     private void prepareRequestData() {
-        RequestQueue queue = Volley.newRequestQueue(mContext);
-        StringRequest stringRequest = new StringRequest(com.android.volley.Request.Method.GET, historyUrl, new Response.Listener<String>() {
+
+
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        StringRequest stringRequest1 = new StringRequest(com.android.volley.Request.Method.GET, assignedRequestsUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -64,20 +82,21 @@ public class History extends AppCompatActivity {
                         JSONObject request = array.getJSONObject(i);
 
                         //adding the request to request list_open
-                        requestList.add(new Request(
+                        assignedRequestList.add(new Request(
                                 request.getString("fault_id"),
                                 request.getString("request_date"),
                                 request.getString("request_type"),
                                 request.getString("description"),
                                 request.getString("room"),
-                                "http://sict-iis.nmmu.ac.za/wefixx/files/photos/" + request.getString("photo") + ".jpeg"
+                                "http://sict-iis.nmmu.ac.za/wefixx/files/photos/" + request.getString("photo") +".jpeg"
+
                         ));
 
                     }
 
                     //creating adapter object and setting it to recyclerview
-                    RequestAdapter adapter = new RequestAdapter(mContext, requestList);
-                    recyclerView.setAdapter(adapter);
+                    RequestAdapter adapter = new RequestAdapter(getActivity(), assignedRequestList);
+                    assignedRecyclerView.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -88,7 +107,6 @@ public class History extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
             }
         });
-        queue.add(stringRequest);
-        mAdapter.notifyDataSetChanged();
+        queue.add(stringRequest1);
     }
 }
