@@ -7,19 +7,19 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class DataObject {
-    @SerializedName("fault_type_name")
-    private String fault_type_name;
+    @SerializedName("name")
+    private String name;
     private String fault_type_id;
     public DataObject(){}
     public DataObject(String fault_type_id, String fault_type_name) {
-        this.fault_type_name = fault_type_name;
+        this.name = fault_type_name;
         this.fault_type_id =fault_type_id;
     }
     public String getName() {
-        return fault_type_name;
+        return name;
     }
     public void setName(String fault_type_name) {
-        this.fault_type_name = fault_type_name;
+        this.name = fault_type_name;
     }
 
     public String getID() {

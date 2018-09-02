@@ -1,18 +1,20 @@
 package com.example.s215087038.wefixx.models;
 
 public class Request {
-    private String request_date, request_type, room, description, id,image_url;
+    private String fault_id, request_date, request_type, room, description,image_url;
 
     public Request() {
     }
 
-    public Request(String request_date, String request_type, String description, String room, String image_url) {
+    public Request(String fault_id, String request_date, String request_type, String description, String room, String image_url) {
+        this.fault_id = fault_id;
         this.request_date = request_date;
         this.request_type = request_type;
         this.description = description;
         this.room = room;
         this.image_url = image_url;
     }
+
 
     public String getRequestDate() {
         return request_date;
@@ -46,9 +48,10 @@ public class Request {
         this.request_type = request_type;
     }
 
-    public String getID(){
-        return id;
+    public String getFaultID(){
+        return fault_id;
     }
+
     public String getImageUrl() {
         return image_url;
     }

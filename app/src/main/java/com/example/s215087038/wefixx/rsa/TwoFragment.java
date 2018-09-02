@@ -79,9 +79,9 @@ public class TwoFragment extends Fragment {
                         //getting request object from json array
                         JSONObject request = array.getJSONObject(i);
 
-                        //adding the request to request list
+                        //adding the request to request open_list
                         assignedRequestList.add(new Request(
-                                //request.getInt("id"),
+                                request.getString("fault_id"),
                                 request.getString("request_date"),
                                 request.getString("request_type"),
                                 request.getString("description"),

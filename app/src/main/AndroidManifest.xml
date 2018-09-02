@@ -25,8 +25,9 @@
         <activity android:name=".Login" />
         <activity android:name=".manager.Manager" />
         <activity android:name=".rsa.RSA" />
-        <!--<activity android:name=".Main2Activity" />-->
+        <!-- <activity android:name=".Main2Activity" /> -->
         <activity android:name=".NewRequest" />
+        <activity android:name=".rsa.History"></activity>
     </application>
 
 </manifest>

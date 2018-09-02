@@ -1,4 +1,4 @@
-package com.example.s215087038.wefixx;
+package com.example.s215087038.wefixx.rsa;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.s215087038.wefixx.PriorityDataObject;
+import com.example.s215087038.wefixx.R;
 import com.example.s215087038.wefixx.student.DataObject;
 
 import java.util.List;
@@ -15,11 +17,11 @@ import java.util.List;
  * Created by s215087038 on 2017/07/31.
  */
 
-public class SpinnerAdapter extends BaseAdapter{
+public class PrioritySpinnerAdapter extends BaseAdapter{
     private LayoutInflater layoutInflater;
-    private List<DataObject> listData;
+    private List<PriorityDataObject> listData;
     private Context context;
-    public SpinnerAdapter(Context context, List<DataObject> listData) {
+    public PrioritySpinnerAdapter(Context context, List<PriorityDataObject> listData) {
         this.context = context;
         layoutInflater =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.listData = listData;
@@ -30,7 +32,7 @@ public class SpinnerAdapter extends BaseAdapter{
     }
     @Override
     public Object getItem(int position) {
-        return (DataObject)listData.get(position);
+        return (PriorityDataObject)listData.get(position);
     }
     @Override
     public long getItemId(int position) {
