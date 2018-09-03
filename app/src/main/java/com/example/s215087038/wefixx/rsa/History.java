@@ -27,7 +27,7 @@ import java.util.List;
 public class History extends AppCompatActivity {
     private List<Request> requestList;
     private RecyclerView recyclerView;
-    private RequestAdapter mAdapter;
+    private HistoryAdapter mAdapter;
     String historyUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/history.php";
     Context mContext;
     private RequestQueue queue;
@@ -37,19 +37,20 @@ public class History extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
-        recyclerView = (RecyclerView)findViewById(R.id.openRecylcerView);
-        mAdapter = new RequestAdapter(requestList);
+        recyclerView = (RecyclerView)findViewById(R.id.recylcerView);
+        mAdapter = new HistoryAdapter(requestList);
 
         // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        recyclerView.setLayoutManager(new LinearLayoutManager(History.this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new MyDividerItemDecoration(mContext, LinearLayoutManager.VERTICAL, 16));
+//        recyclerView.addItemDecoration(new MyDividerItemDecoration(mContext, LinearLayoutManager.VERTICAL, 16));
         recyclerView.setAdapter(mAdapter);
         prepareRequestData();
     }
 
+
     private void prepareRequestData() {
-        RequestQueue queue = Volley.newRequestQueue(mContext);
+        RequestQueue queue = Volley.newRequestQueue(History.this);
         StringRequest stringRequest = new StringRequest(com.android.volley.Request.Method.GET, historyUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -67,6 +68,7 @@ public class History extends AppCompatActivity {
                         requestList.add(new Request(
                                 request.getString("fault_id"),
                                 request.getString("request_date"),
+                                request.getString("fault_type_id"),
                                 request.getString("request_type"),
                                 request.getString("description"),
                                 request.getString("room"),
@@ -76,7 +78,7 @@ public class History extends AppCompatActivity {
                     }
 
                     //creating adapter object and setting it to recyclerview
-                    RequestAdapter adapter = new RequestAdapter(mContext, requestList);
+                    RequestAdapter adapter = new RequestAdapter(History.this, requestList);
                     recyclerView.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
