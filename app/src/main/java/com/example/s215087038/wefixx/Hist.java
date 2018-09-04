@@ -1,56 +1,51 @@
-package com.example.s215087038.wefixx.rsa;
+package com.example.s215087038.wefixx;
 
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.s215087038.wefixx.MyDividerItemDecoration;
-import com.example.s215087038.wefixx.PriorityDataObject;
-import com.example.s215087038.wefixx.ProviderDataObject;
-import com.example.s215087038.wefixx.R;
-import com.example.s215087038.wefixx.models.Request;
+import com.example.s215087038.wefixx.adapter.RequestAdapter;
+import com.example.s215087038.wefixx.model.Request;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class History extends AppCompatActivity {
+public class Hist extends AppCompatActivity {
     private List<Request> requestList;
     private RecyclerView recyclerView;
-    private HistoryAdapter mAdapter;
-    String historyUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/history.php";
-    Context mContext;
-    private RequestQueue queue;
-
+    private RequestAdapter mAdapter;
+    String historyUrl = "http://sict-iis.nmmu.ac.za/wefixx/history.php";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history);
+        setContentView(R.layout.activity_hist);
 
-        recyclerView = (RecyclerView)findViewById(R.id.recylcerView);
-        mAdapter = new HistoryAdapter(requestList);
+        requestList = new ArrayList<>();
+        recyclerView = (RecyclerView)findViewById(R.id.openRecylcerView);
+
+        mAdapter = new RequestAdapter(requestList);
 
         // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(new LinearLayoutManager(History.this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(Hist.this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-//        recyclerView.addItemDecoration(new MyDividerItemDecoration(mContext, LinearLayoutManager.VERTICAL, 16));
+        recyclerView.addItemDecoration(new MyDividerItemDecoration(Hist.this, LinearLayoutManager.VERTICAL, 16));
         recyclerView.setAdapter(mAdapter);
         prepareRequestData();
     }
-
-
     private void prepareRequestData() {
-        RequestQueue queue = Volley.newRequestQueue(History.this);
+        RequestQueue queue = Volley.newRequestQueue(Hist.this);
         StringRequest stringRequest = new StringRequest(com.android.volley.Request.Method.GET, historyUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -78,7 +73,7 @@ public class History extends AppCompatActivity {
                     }
 
                     //creating adapter object and setting it to recyclerview
-                    RequestAdapter adapter = new RequestAdapter(History.this, requestList);
+                    RequestAdapter adapter = new RequestAdapter(Hist.this, requestList);
                     recyclerView.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();

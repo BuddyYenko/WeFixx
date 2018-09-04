@@ -1,4 +1,4 @@
-package com.example.s215087038.wefixx.rsa;
+package com.example.s215087038.wefixx.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,10 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.s215087038.wefixx.PriorityDataObject;
-import com.example.s215087038.wefixx.ProviderDataObject;
+import com.example.s215087038.wefixx.model.ProviderDataObject;
 import com.example.s215087038.wefixx.R;
-import com.example.s215087038.wefixx.student.DataObject;
 
 import java.util.List;
 

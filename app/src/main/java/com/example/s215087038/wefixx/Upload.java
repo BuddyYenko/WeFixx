@@ -21,7 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.example.s215087038.wefixx.EndPoints;
 import com.example.s215087038.wefixx.R;
-import com.example.s215087038.wefixx.VolleyMultipartRequest;
+import com.example.s215087038.wefixx.model.VolleyMultipartRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;

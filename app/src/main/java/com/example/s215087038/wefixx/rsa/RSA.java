@@ -6,9 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
-import com.example.s215087038.wefixx.NewRequest;
+import com.example.s215087038.wefixx.History;
 import com.example.s215087038.wefixx.R;
-import com.example.s215087038.wefixx.student.Student;
 
 
 public class RSA extends AppCompatActivity {

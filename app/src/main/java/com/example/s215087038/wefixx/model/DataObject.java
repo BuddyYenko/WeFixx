@@ -1,4 +1,4 @@
-package com.example.s215087038.wefixx.student;
+package com.example.s215087038.wefixx.model;
 
 import com.google.gson.annotations.SerializedName;
 

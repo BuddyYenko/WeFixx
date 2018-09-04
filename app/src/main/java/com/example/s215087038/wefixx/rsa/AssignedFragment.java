@@ -1,7 +1,5 @@
 package com.example.s215087038.wefixx.rsa;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -18,7 +16,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.s215087038.wefixx.MyDividerItemDecoration;
 import com.example.s215087038.wefixx.R;
-import com.example.s215087038.wefixx.models.Request;
+import com.example.s215087038.wefixx.adapter.RequestAdapter;
+import com.example.s215087038.wefixx.model.Request;
 
 import org.json.JSONArray;
 import org.json.JSONException;

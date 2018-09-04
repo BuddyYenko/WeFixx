@@ -1,4 +1,4 @@
-package com.example.s215087038.wefixx.rsa;
+package com.example.s215087038.wefixx.adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,12 +24,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.example.s215087038.wefixx.LoginActivity;
-import com.example.s215087038.wefixx.MySingleton;
-import com.example.s215087038.wefixx.PriorityDataObject;
-import com.example.s215087038.wefixx.ProviderDataObject;
+import com.example.s215087038.wefixx.model.MySingleton;
+import com.example.s215087038.wefixx.model.PriorityDataObject;
+import com.example.s215087038.wefixx.model.ProviderDataObject;
 import com.example.s215087038.wefixx.R;
-import com.example.s215087038.wefixx.models.Request;
+import com.example.s215087038.wefixx.model.Request;
+import com.example.s215087038.wefixx.rsa.Manage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -38,7 +37,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;

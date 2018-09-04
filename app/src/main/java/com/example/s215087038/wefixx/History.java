@@ -1,22 +1,19 @@
-package com.example.s215087038.wefixx.rsa;
+package com.example.s215087038.wefixx;
 
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.s215087038.wefixx.MyDividerItemDecoration;
-import com.example.s215087038.wefixx.R;
+import com.example.s215087038.wefixx.adapter.HAdapter;
+import com.example.s215087038.wefixx.adapter.HistoryAdapter;
 import com.example.s215087038.wefixx.adapter.RequestAdapter;
 import com.example.s215087038.wefixx.model.Request;
 
@@ -27,45 +24,34 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OpenFragment extends Fragment {
+public class History extends AppCompatActivity {
     private List<Request> requestList;
-    private RecyclerView openRecyclerView;
-    private RequestAdapter mAdapter;
-    String openRequestsUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/open_requests.php";
-
-
-    public OpenFragment() {
-        // Required empty public constructor
-    }
+    private RecyclerView recyclerView;
+    private HistoryAdapter mAdapter;
+    String historyUrl = "http://sict-iis.nmmu.ac.za/wefixx/history.php";
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View myFragmentView = inflater.inflate(R.layout.fragment_one, container, false);
-
+        setContentView(R.layout.activity_history);
         requestList = new ArrayList<>();
-        openRecyclerView = (RecyclerView) myFragmentView.findViewById(R.id.openRecylcerView);
 
-        mAdapter = new RequestAdapter(requestList);
+        recyclerView = (RecyclerView)findViewById(R.id.recylcerView);
+        mAdapter = new HistoryAdapter(requestList);
 
         // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        openRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        openRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        openRecyclerView.addItemDecoration(new MyDividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL, 16));
-        openRecyclerView.setAdapter(mAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(History.this));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new MyDividerItemDecoration(History.this, LinearLayoutManager.VERTICAL, 16));
+        recyclerView.setAdapter(mAdapter);
         prepareRequestData();
-        return myFragmentView;
+
     }
 
+
     private void prepareRequestData() {
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
-        StringRequest stringRequest = new StringRequest(com.android.volley.Request.Method.GET, openRequestsUrl, new Response.Listener<String>() {
+        RequestQueue queue = Volley.newRequestQueue(History.this);
+        StringRequest stringRequest = new StringRequest(com.android.volley.Request.Method.GET, historyUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -74,26 +60,30 @@ public class OpenFragment extends Fragment {
 
                     //traversing through all the object
                     for (int i = 0; i < array.length(); i++) {
-
                         //getting request object from json array
                         JSONObject request = array.getJSONObject(i);
 
                         //adding the request to request list_open
                         requestList.add(new Request(
-                                request.getString("fault_id"),
                                 request.getString("request_date"),
-                                request.getString("fault_type_id"),
+                                request.getString("date_assigned"),
+                                request.getString("date_closed"),
                                 request.getString("request_type"),
                                 request.getString("description"),
                                 request.getString("room"),
-                                "http://sict-iis.nmmu.ac.za/wefixx/files/photos/" + request.getString("photo") + ".jpeg"
-                        ));
+                                request.getString("comment"),
+                                request.getLong("rating"),
+                                "http://sict-iis.nmmu.ac.za/wefixx/files/photos/" + request.getString("photo") + ".jpeg",
+                                request.getString("provider"),
+                                request.getString("priority")
 
-                    }
+                                ));
+
+                }
 
                     //creating adapter object and setting it to recyclerview
-                    RequestAdapter adapter = new RequestAdapter(getActivity(), requestList);
-                    openRecyclerView.setAdapter(adapter);
+                    HistoryAdapter adapter = new HistoryAdapter(History.this, requestList);
+                    recyclerView.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -107,5 +97,4 @@ public class OpenFragment extends Fragment {
         queue.add(stringRequest);
         mAdapter.notifyDataSetChanged();
     }
-
 }

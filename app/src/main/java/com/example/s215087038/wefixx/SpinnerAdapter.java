@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.s215087038.wefixx.student.DataObject;
+import com.example.s215087038.wefixx.model.DataObject;
 
 import java.util.List;
 

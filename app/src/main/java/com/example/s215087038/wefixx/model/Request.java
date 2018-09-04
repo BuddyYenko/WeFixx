@@ -1,7 +1,8 @@
-package com.example.s215087038.wefixx.models;
+package com.example.s215087038.wefixx.model;
 
 public class Request {
-    private String fault_id, request_date,fault_type_id, request_type, room, description,image_url, provider, priority;
+    private String fault_id, request_date,fault_type_id, request_type, room, description,image_url, provider, priority, comment, date_assigned, date_closed;
+    private float rating ;
 
     public Request() {
     }
@@ -23,18 +24,35 @@ public class Request {
         this.room = room;
         this.image_url = image_url;
     }
-    public Request(String fault_id, String request_date, String request_type, String description, String room, String image_url, String provider, String priority) {
-        this.fault_id = fault_id;
+    public Request( String request_date, String date_assigned, String date_closed, String request_type, String description, String room, String comment, float rating ,String image_url, String provider, String priority) {
         this.request_date = request_date;
+        this.date_assigned = date_assigned;
+        this.date_closed = date_closed;
         this.request_type = request_type;
         this.description = description;
         this.room = room;
+        this.rating = rating;
         this.image_url = image_url;
         this.provider = provider;
         this.priority = priority;
+        this.comment = comment;
     }
     public String getRequestDate() {
         return request_date;
+    }
+
+    public void setDateAssigned(String date_assigned) {
+        this.date_assigned = date_assigned;
+    }
+    public String getDateAssigned() {
+        return date_assigned;
+    }
+
+    public void setDateClosed(String date_closed) {
+        this.date_closed = date_closed;
+    }
+    public String getDateClosed() {
+        return date_closed;
     }
 
     public void setRequestDate(String request_date) {
@@ -88,6 +106,23 @@ public class Request {
 
     public void setProvider(String provider) {
         this.provider = provider;
+    }
+
+    public String getComment()
+    {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(Float rating) {
+        this.rating = rating;
     }
     public String getPriority() {
         return priority;

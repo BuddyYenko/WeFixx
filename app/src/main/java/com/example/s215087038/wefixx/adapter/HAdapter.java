@@ -1,4 +1,4 @@
-package com.example.s215087038.wefixx.rsa;
+package com.example.s215087038.wefixx.adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -24,11 +24,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.example.s215087038.wefixx.MySingleton;
-import com.example.s215087038.wefixx.PriorityDataObject;
-import com.example.s215087038.wefixx.ProviderDataObject;
 import com.example.s215087038.wefixx.R;
-import com.example.s215087038.wefixx.models.Request;
+import com.example.s215087038.wefixx.model.MySingleton;
+import com.example.s215087038.wefixx.model.PriorityDataObject;
+import com.example.s215087038.wefixx.model.ProviderDataObject;
+import com.example.s215087038.wefixx.model.Request;
+import com.example.s215087038.wefixx.rsa.Manage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -41,17 +42,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHolder> {
+public class HAdapter extends RecyclerView.Adapter<HAdapter.MyViewHolder> {
 
     private List<Request> requestList;
     private Context mCtx;
     private static int currentPosition = -1;
-    AlertDialog.Builder builder;
-    public HistoryAdapter(List<Request> requestList) {
+    String historyUrl = "http://sict-iis.nmmu.ac.za/wefixx/history.php";
+
+
+    protected List<ProviderDataObject> providerData;
+    protected List<PriorityDataObject> priorityData;
+
+    public HAdapter(List<Request> requestList) {
         this.requestList = requestList;
     }
 
-    public HistoryAdapter(Context mCtx, List<Request> requestList) {
+    public HAdapter(Context mCtx, List<Request> requestList) {
         this.mCtx = mCtx;
         this.requestList = requestList;
     }
@@ -60,6 +66,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         public TextView request_date, request_type, room, description, textView, date_label, priority, provider;
         public ImageView imageView;
         public LinearLayout linearLayout;
+        public Spinner sp_priority, sp_provider;
+        public Button bn_assign;
 
         public MyViewHolder(View view) {
             super(view);
@@ -85,6 +93,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         return new MyViewHolder(itemView);
     }
 
+
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         Request request = requestList.get(position);
@@ -94,8 +103,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         holder.room.setText(request.getRoom());
         holder.textView.setText(request.getRoom());
         holder.date_label.setText(request.getRequestDate());
-        holder.priority.setText(request.getPriority());
-        holder.provider.setText(request.getProvider());
+
+//        fault_type_id = request.getFaultTypeID();
+//        fault_id = request.getFaultID();
+
         Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
         holder.linearLayout.setVisibility(View.GONE);
 

@@ -1,4 +1,4 @@
-package com.example.s215087038.wefixx;
+package com.example.s215087038.wefixx.model;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
