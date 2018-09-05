@@ -1,6 +1,5 @@
 package com.example.s215087038.wefixx.rsa;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -17,7 +16,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.s215087038.wefixx.MyDividerItemDecoration;
 import com.example.s215087038.wefixx.R;
-import com.example.s215087038.wefixx.adapter.RequestAdapter;
+import com.example.s215087038.wefixx.adapter.OpenRequestAdapter;
 import com.example.s215087038.wefixx.model.Request;
 
 import org.json.JSONArray;
@@ -30,7 +29,7 @@ import java.util.List;
 public class OpenFragment extends Fragment {
     private List<Request> requestList;
     private RecyclerView openRecyclerView;
-    private RequestAdapter mAdapter;
+    private OpenRequestAdapter mAdapter;
     String openRequestsUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/open_requests.php";
 
 
@@ -52,7 +51,7 @@ public class OpenFragment extends Fragment {
         requestList = new ArrayList<>();
         openRecyclerView = (RecyclerView) myFragmentView.findViewById(R.id.openRecylcerView);
 
-        mAdapter = new RequestAdapter(requestList);
+        mAdapter = new OpenRequestAdapter(requestList);
 
         // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         openRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -92,7 +91,7 @@ public class OpenFragment extends Fragment {
                     }
 
                     //creating adapter object and setting it to recyclerview
-                    RequestAdapter adapter = new RequestAdapter(getActivity(), requestList);
+                    OpenRequestAdapter adapter = new OpenRequestAdapter(getActivity(), requestList);
                     openRecyclerView.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();

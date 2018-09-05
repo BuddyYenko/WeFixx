@@ -24,6 +24,17 @@ public class Request {
         this.room = room;
         this.image_url = image_url;
     }
+    public Request(String fault_id, String request_date, String date_assigned, String request_type, String description, String room ,String image_url, String provider, String priority) {
+        this.fault_id = fault_id;
+        this.request_date = request_date;
+        this.date_assigned = date_assigned;
+        this.request_type = request_type;
+        this.description = description;
+        this.room = room;
+        this.image_url = image_url;
+        this.provider = provider;
+        this.priority = priority;
+    }
     public Request( String request_date, String date_assigned, String date_closed, String request_type, String description, String room, String comment, float rating ,String image_url, String provider, String priority) {
         this.request_date = request_date;
         this.date_assigned = date_assigned;

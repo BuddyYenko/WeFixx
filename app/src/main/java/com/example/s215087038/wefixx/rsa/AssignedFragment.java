@@ -16,7 +16,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.s215087038.wefixx.MyDividerItemDecoration;
 import com.example.s215087038.wefixx.R;
-import com.example.s215087038.wefixx.adapter.RequestAdapter;
+import com.example.s215087038.wefixx.adapter.AssignedRequestAdapter;
+import com.example.s215087038.wefixx.adapter.OpenRequestAdapter;
 import com.example.s215087038.wefixx.model.Request;
 
 import org.json.JSONArray;
@@ -30,9 +31,8 @@ import java.util.List;
 public class AssignedFragment extends Fragment {
     private List<Request> assignedRequestList;
     private RecyclerView  assignedRecyclerView;
-    private RequestAdapter aAdapter;
+    private AssignedRequestAdapter aAdapter;
     String assignedRequestsUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/assigned_requests.php";
-
     public AssignedFragment() {
         // Required empty public constructor
     }
@@ -40,7 +40,6 @@ public class AssignedFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
     }
 
@@ -52,7 +51,8 @@ public class AssignedFragment extends Fragment {
         View myFragmentView = inflater.inflate(R.layout.fragment_two, container, false);
         assignedRequestList = new ArrayList<>();
         assignedRecyclerView = (RecyclerView) myFragmentView.findViewById(R.id.assignedRecylcerView);
-        aAdapter = new RequestAdapter(assignedRequestList);
+
+        aAdapter = new AssignedRequestAdapter(assignedRequestList);
 
         // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         assignedRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -84,17 +84,21 @@ public class AssignedFragment extends Fragment {
                         assignedRequestList.add(new Request(
                                 request.getString("fault_id"),
                                 request.getString("request_date"),
+                                request.getString("date_assigned"),
                                 request.getString("request_type"),
                                 request.getString("description"),
                                 request.getString("room"),
-                                "http://sict-iis.nmmu.ac.za/wefixx/files/photos/" + request.getString("photo") +".jpeg"
+                                "http://sict-iis.nmmu.ac.za/wefixx/files/photos/" + request.getString("photo") +".jpeg",
+                                request.getString("provider"),
+                                request.getString("priority")
+
 
                         ));
 
                     }
 
                     //creating adapter object and setting it to recyclerview
-                    RequestAdapter adapter = new RequestAdapter(getActivity(), assignedRequestList);
+                    AssignedRequestAdapter adapter = new AssignedRequestAdapter(getActivity(), assignedRequestList);
                     assignedRecyclerView.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();

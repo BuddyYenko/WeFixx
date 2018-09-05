@@ -229,18 +229,17 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Rating   " />
+                            android:text="Rating   "
+                            android:maxWidth="100dip"/>
 
                         <RatingBar
                             android:id="@+id/rb_rating"
                             style="?android:attr/ratingBarStyleSmall"
                             android:layout_width="187dp"
                             android:layout_height="wrap_content"
-                            android:stepSize="0.5"
                             android:layout_marginLeft="20dp"
+                            android:numStars="0"
                             android:isIndicator="true" />
-
-
                     </TableRow>
                     <TableRow>
                         <TextView

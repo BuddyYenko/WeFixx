@@ -5,14 +5,13 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.s215087038.wefixx.adapter.RequestAdapter;
+import com.example.s215087038.wefixx.adapter.OpenRequestAdapter;
 import com.example.s215087038.wefixx.model.Request;
 
 import org.json.JSONArray;
@@ -25,7 +24,7 @@ import java.util.List;
 public class Hist extends AppCompatActivity {
     private List<Request> requestList;
     private RecyclerView recyclerView;
-    private RequestAdapter mAdapter;
+    private OpenRequestAdapter mAdapter;
     String historyUrl = "http://sict-iis.nmmu.ac.za/wefixx/history.php";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +34,7 @@ public class Hist extends AppCompatActivity {
         requestList = new ArrayList<>();
         recyclerView = (RecyclerView)findViewById(R.id.openRecylcerView);
 
-        mAdapter = new RequestAdapter(requestList);
+        mAdapter = new OpenRequestAdapter(requestList);
 
         // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(Hist.this));
@@ -73,7 +72,7 @@ public class Hist extends AppCompatActivity {
                     }
 
                     //creating adapter object and setting it to recyclerview
-                    RequestAdapter adapter = new RequestAdapter(Hist.this, requestList);
+                    OpenRequestAdapter adapter = new OpenRequestAdapter(Hist.this, requestList);
                     recyclerView.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();

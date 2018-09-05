@@ -65,11 +65,7 @@
                 android:orientation="vertical"
                 android:visibility="visible">
 
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left" />
+
 
                 <TableLayout
                     android:layout_width="match_parent"
@@ -77,17 +73,123 @@
                     android:padding="15dp">
 
                     <TableRow>
+                        <ImageView
+                            android:id="@+id/imageView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"/>
+                    </TableRow>
+                    <TableRow>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Date   " />
+                            android:text="Date Reported" />
 
                         <TextView
                             android:id="@+id/tv_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="date" />
+                            android:textStyle="bold"
+                            android:text="date reported"
+                            android:layout_marginLeft="20dp"
+                            />
+                    </TableRow>
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Date Assigned" />
+
+                        <TextView
+                            android:id="@+id/tv_date_assigned"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="date assigned"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="20dp"/>
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Room No   " />
+
+                        <TextView
+                            android:id="@+id/tv_room"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="room"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="20dp"/>
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Category   " />
+
+                        <TextView
+                            android:id="@+id/tv_type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="category"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="20dp"/>
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Description   " />
+
+                        <TextView
+                            android:id="@+id/tv_desc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="desc"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="20dp"/>
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Maintenance Provider"
+                            />
+                        <TextView
+                            android:id="@+id/tv_provider"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="provider"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="20dp"/>
+
+
+                    </TableRow>
+
+                    <TableRow>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Priority" />
+
+                        <TextView
+                            android:id="@+id/tv_priority"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="priority"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="20dp"/>
                     </TableRow>
 
                     <TableRow>
@@ -96,23 +198,33 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="REQUEST REPORT:"
-                            android:textStyle="bold"/>
-
+                            android:textStyle="bold"
+                            android:layout_marginTop="20dp"/>
                     </TableRow>
-                    <TableRow>
-                        <ImageView
-                            android:id="@+id/ib_photo"
+                    <RelativeLayout>
+
+                        <ImageButton
+                            android:id="@+id/ib_report"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/file"
                             android:layout_gravity="start"
                             android:layout_marginBottom="15dp"
-                            android:background="@null"/>
-                    </TableRow>
-                    <TableRow>
+                            android:background="@null"
+                            android:src="@drawable/choose_report" />
 
+                        <TextView
+                            android:id="@+id/tv_file_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/ib_report"
+                            android:gravity="center_vertical"
+                            android:text="Choose Report" />
+                    </RelativeLayout>
+
+                    <TableRow>
                         <Button
-                            android:id="@+id/btn_login"
+                            android:id="@+id/btn_close"
                             android:layout_width="wrap_content"
                             android:layout_height="20dp"
                             android:layout_gravity="start"

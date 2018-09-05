@@ -40,7 +40,7 @@
 //    private List<Request> requestList;
 //    private List<Request> assignedRequestList;
 //    private RecyclerView openRecyclerView, assignedRecyclerView;
-//    private RequestAdapter mAdapter, aAdapter;
+//    private OpenRequestAdapter mAdapter, aAdapter;
 //    String openRequestsUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/open_requests.php";
 //    String assignedRequestsUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/assigned_requests.php";
 //
@@ -57,8 +57,8 @@
 //        assignedRecyclerView = (RecyclerView) findViewById(R.id.assignedRecylcerView);
 //
 //
-//        mAdapter = new RequestAdapter(requestList);
-//        aAdapter = new RequestAdapter(assignedRequestList);
+//        mAdapter = new OpenRequestAdapter(requestList);
+//        aAdapter = new OpenRequestAdapter(assignedRequestList);
 //
 //        // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
 //        openRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -102,7 +102,7 @@
 //                            }
 //
 //                            //creating adapter object and setting it to recyclerview
-//                            RequestAdapter adapter = new RequestAdapter(ManageRequest.this, requestList);
+//                            OpenRequestAdapter adapter = new OpenRequestAdapter(ManageRequest.this, requestList);
 //                            openRecyclerView.setAdapter(adapter);
 //                        } catch (JSONException e) {
 //                            e.printStackTrace();
@@ -142,7 +142,7 @@
 //                    }
 //
 //                    //creating adapter object and setting it to recyclerview
-//                    RequestAdapter adapter = new RequestAdapter(ManageRequest.this, assignedRequestList);
+//                    OpenRequestAdapter adapter = new OpenRequestAdapter(ManageRequest.this, assignedRequestList);
 //                    assignedRecyclerView.setAdapter(adapter);
 //                } catch (JSONException e) {
 //                    e.printStackTrace();

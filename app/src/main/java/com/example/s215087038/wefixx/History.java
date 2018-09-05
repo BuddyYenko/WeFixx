@@ -1,6 +1,5 @@
 package com.example.s215087038.wefixx;
 
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,9 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.s215087038.wefixx.adapter.HAdapter;
 import com.example.s215087038.wefixx.adapter.HistoryAdapter;
-import com.example.s215087038.wefixx.adapter.RequestAdapter;
 import com.example.s215087038.wefixx.model.Request;
 
 import org.json.JSONArray;

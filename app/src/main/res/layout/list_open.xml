@@ -65,11 +65,7 @@
                 android:orientation="vertical"
                 android:visibility="visible">
 
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left" />
+
 
                 <TableLayout
                     android:layout_width="match_parent"
@@ -77,11 +73,19 @@
                     android:padding="15dp">
 
                     <TableRow>
+                        <ImageView
+                            android:id="@+id/imageView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"/>
+
+                    </TableRow>
+                    <TableRow>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Date   " />
+                            android:text="Date Requested" />
 
                         <TextView
                             android:id="@+id/tv_date"
