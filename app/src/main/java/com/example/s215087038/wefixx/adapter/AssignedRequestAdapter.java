@@ -5,8 +5,12 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,12 +50,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static android.app.Activity.RESULT_OK;
 import static android.support.v4.app.ActivityCompat.startActivityForResult;
 
-public class AssignedRequestAdapter extends RecyclerView.Adapter<AssignedRequestAdapter.MyViewHolder> {
+public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedRequestAdapter.MyViewHolder> {
 
     private List<Request> requestList;
     private Context mCtx;
+    private static Context context = null;
+    Uri uri;
+
     private static int currentPosition = -1;
     String closeUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/update_request.php";
     AlertDialog.Builder builder;
@@ -67,6 +75,7 @@ public class AssignedRequestAdapter extends RecyclerView.Adapter<AssignedRequest
     public AssignedRequestAdapter(Context mCtx, List<Request> requestList) {
         this.mCtx = mCtx;
         this.requestList = requestList;
+        this.context = mCtx;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -93,6 +102,30 @@ public class AssignedRequestAdapter extends RecyclerView.Adapter<AssignedRequest
             choose_file = (ImageButton) view.findViewById(R.id.ib_report);
             bn_close = (Button) view.findViewById(R.id.btn_close);
 
+            choose_file.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent();
+
+                    intent.setType("application/pdf");
+
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+
+                   // startActivityForResult(Intent.createChooser(intent, "Select Pdf"), PDF_REQ_CODE);
+
+                }
+            });
+
+
+        }
+        public  void onActivityResult(int requestCode, int resultCode, Intent data) {
+            Log.d("MyAdapter", "onActivityResult");
+            //.onActivityResult(requestCode, resultCode, data);
+//
+//            if (requestCode == PICK_PDF_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+//                filePath = data.getData();
+//            }
         }
     }
 
@@ -103,6 +136,7 @@ public class AssignedRequestAdapter extends RecyclerView.Adapter<AssignedRequest
 
         return new MyViewHolder(itemView);
     }
+
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
@@ -148,16 +182,7 @@ public class AssignedRequestAdapter extends RecyclerView.Adapter<AssignedRequest
                 notifyDataSetChanged();
             }
         });
-        holder.choose_file.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setType("application/pdf");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-              //  startActivityForResult(Intent.createChooser(intent, "Select Pdf"), "PICK_PDF_REQUEST");
-
-            }
-        });
+      //  holder.choose_file.setOnClickListener(mCtx);
 
         holder.bn_close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -218,7 +243,9 @@ public class AssignedRequestAdapter extends RecyclerView.Adapter<AssignedRequest
                 alertDialog.show();
             }
         });
+
     }
+
 
     @Override
     public int getItemCount() {

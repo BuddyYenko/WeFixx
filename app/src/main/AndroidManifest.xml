@@ -22,14 +22,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".student.Student" />
-        <activity android:name=".Login" />
+        <!--<activity android:name=".Login" />-->
         <activity android:name=".manager.Manager" />
         <activity android:name=".rsa.RSA" />
+        <activity android:name=".LoginActivity" />
         <!-- <activity android:name=".Main2Activity" /> -->
         <activity android:name=".NewRequest" />
         <activity android:name=".History" />
         <activity android:name=".Hist" />
-        <activity android:name=".Main3Activity"></activity>
+        <!--<activity android:name=".Main3Activity"></activity>-->
     </application>
 
 </manifest>

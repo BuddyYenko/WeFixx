@@ -36,8 +36,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.s215087038.wefixx.manager.Manager;
 import com.example.s215087038.wefixx.model.DataObject;
 import com.example.s215087038.wefixx.model.VolleyMultipartRequest;
+import com.example.s215087038.wefixx.rsa.RSA;
 import com.example.s215087038.wefixx.student.Student;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -138,8 +140,11 @@ public class NewRequest extends AppCompatActivity {
                                     try {
                                         JSONArray jsonArray = new JSONArray(new String (response.data));
                                         JSONObject jsonObject = jsonArray.getJSONObject(0);
+                                        String code = jsonObject.getString("code");
                                         String message = jsonObject.getString("message");
-                                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                                        builder.setTitle("WeFixx Response");
+                                        builder.setMessage(message);
+                                        displayAlert(code);
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -188,6 +193,8 @@ public class NewRequest extends AppCompatActivity {
                                 Description.setText("");
                                 Intent main = new Intent(NewRequest.this, Student.class);
                                 startActivity(main);
+                            }else if(code.equals("input_error")){
+
                             }
 
                         }
@@ -199,6 +206,42 @@ public class NewRequest extends AppCompatActivity {
 
         });
 }
+
+    private void Display(final String code) {
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (code.equals("req_failed")) {
+                    imageView.setImageResource(R.drawable.upload);
+                }
+                else if (code.equals("req_success")) {
+                    Intent mainPage = new Intent(NewRequest.this, Student.class);
+                    startActivity(mainPage);
+                }
+                //recreate();
+
+
+
+            }
+        });
+//        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+////                if (code.equals("req_failed")) {
+////                    Intent mainPage = new Intent(NewRequest.this, RSA.class);
+////                    startActivity(mainPage);
+////                }
+////                else if (code.equals("req_success")) {
+////                    // et_password.setText("");
+////                }
+//
+//                //finish();
+//
+//            }
+//        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
 
     private void requestJsonObject() {
         RequestQueue queue = Volley.newRequestQueue(this);

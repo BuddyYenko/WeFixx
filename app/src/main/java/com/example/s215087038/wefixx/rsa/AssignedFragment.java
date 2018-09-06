@@ -88,7 +88,7 @@ public class AssignedFragment extends Fragment {
                                 request.getString("request_type"),
                                 request.getString("description"),
                                 request.getString("room"),
-                                "http://sict-iis.nmmu.ac.za/wefixx/files/photos/" + request.getString("photo") +".jpeg",
+                                "http://sict-iis.nmmu.ac.za/wefixx/files/photos/" + request.getString("photo") + ".jpeg",
                                 request.getString("provider"),
                                 request.getString("priority")
 
@@ -111,5 +111,12 @@ public class AssignedFragment extends Fragment {
             }
         });
         queue.add(stringRequest1);
+
     }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        mAdapter.onActivityResult(requestCode, resultCode, data);
+//    }
+//
+
 }
