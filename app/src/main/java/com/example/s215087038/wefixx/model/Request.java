@@ -16,6 +16,13 @@ public class Request {
         this.room = room;
         this.image_url = image_url;
     }
+    public Request(String fault_id, String request_date, String request_type, String description, String image_url) {
+        this.fault_id = fault_id;
+        this.request_date = request_date;
+        this.request_type = request_type;
+        this.description = description;
+        this.image_url = image_url;
+    }
     public Request(String fault_id, String request_date, String request_type, String description, String room, String image_url) {
         this.fault_id = fault_id;
         this.request_date = request_date;
@@ -35,7 +42,30 @@ public class Request {
         this.provider = provider;
         this.priority = priority;
     }
-    public Request( String request_date, String date_assigned, String date_closed, String request_type, String description, String room, String comment, float rating ,String image_url, String provider, String priority) {
+    public Request(String fault_id, String request_date, String date_assigned, String request_type, String description, String image_url, String provider, String priority) {
+        this.fault_id = fault_id;
+        this.request_date = request_date;
+        this.date_assigned = date_assigned;
+        this.request_type = request_type;
+        this.description = description;
+        this.image_url = image_url;
+        this.provider = provider;
+        this.priority = priority;
+    }
+    public Request(String fault_id, String request_date, String date_assigned, String date_closed, String request_type, String description, String provider, String priority, String comment, float rating,String image_url) {
+        this.fault_id = fault_id;
+        this.request_date = request_date;
+        this.date_assigned = date_assigned;
+        this.date_closed = date_closed;
+        this.request_type = request_type;
+        this.description = description;
+        this.image_url = image_url;
+        this.provider = provider;
+        this.priority = priority;
+        this.comment = comment;
+        this.rating = rating;
+    }
+    public Request( String request_date, String date_assigned, String date_closed, String request_type, String description, String room, String comment, float rating , String provider, String priority, String image_url) {
         this.request_date = request_date;
         this.date_assigned = date_assigned;
         this.date_closed = date_closed;
@@ -43,10 +73,11 @@ public class Request {
         this.description = description;
         this.room = room;
         this.rating = rating;
-        this.image_url = image_url;
         this.provider = provider;
         this.priority = priority;
         this.comment = comment;
+        this.image_url = image_url;
+
     }
     public String getRequestDate() {
         return request_date;
