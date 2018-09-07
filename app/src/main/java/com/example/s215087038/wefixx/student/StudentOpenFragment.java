@@ -1,5 +1,7 @@
 package com.example.s215087038.wefixx.student;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -17,6 +19,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.s215087038.wefixx.MyDividerItemDecoration;
 import com.example.s215087038.wefixx.R;
 import com.example.s215087038.wefixx.adapter.OpenRequestAdapter;
+import com.example.s215087038.wefixx.adapter.StudentOpenAdapter;
 import com.example.s215087038.wefixx.model.Request;
 
 import org.json.JSONArray;
@@ -31,7 +34,8 @@ public class StudentOpenFragment extends Fragment {
     private RecyclerView recyclerView;
     private OpenRequestAdapter mAdapter;
     String openRequestsUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/open_requests.php";
-
+    String user_id, name;
+    Context context;
 
     public StudentOpenFragment() {
         // Required empty public constructor
@@ -40,6 +44,12 @@ public class StudentOpenFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //********************************************
+        SharedPreferences preferences =  this.getActivity().getSharedPreferences("MYPREFS", context.MODE_PRIVATE);
+
+        user_id = preferences.getString("user_id", "");
+        name = preferences.getString("name", "");
+        //********************************************
     }
 
     @Override
@@ -49,7 +59,7 @@ public class StudentOpenFragment extends Fragment {
         View myFragmentView = inflater.inflate(R.layout.fragment_student_assigned, container, false);
 
         requestList = new ArrayList<>();
-        recyclerView = (RecyclerView) myFragmentView.findViewById(R.id.openRecylcerView);
+        recyclerView = (RecyclerView) myFragmentView.findViewById(R.id.recylcerView);
 
         mAdapter = new OpenRequestAdapter(requestList);
 
@@ -81,17 +91,16 @@ public class StudentOpenFragment extends Fragment {
                         requestList.add(new Request(
                                 request.getString("fault_id"),
                                 request.getString("request_date"),
-                                request.getString("fault_type_id"),
                                 request.getString("request_type"),
                                 request.getString("description"),
-                                request.getString("room"),
                                 "http://sict-iis.nmmu.ac.za/wefixx/files/photos/" + request.getString("photo") + ".jpeg"
                         ));
+
 
                     }
 
                     //creating adapter object and setting it to recyclerview
-                    OpenRequestAdapter adapter = new OpenRequestAdapter(getActivity(), requestList);
+                    StudentOpenAdapter adapter = new StudentOpenAdapter(getActivity(), requestList);
                     recyclerView.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();

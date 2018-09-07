@@ -42,7 +42,7 @@ public class Request {
         this.provider = provider;
         this.priority = priority;
     }
-    public Request(String fault_id, String request_date, String date_assigned, String request_type, String description, String image_url, String provider, String priority) {
+    public Request(String fault_id, String request_date, String date_assigned, String request_type, String description, String provider, String priority, String image_url) {
         this.fault_id = fault_id;
         this.request_date = request_date;
         this.date_assigned = date_assigned;
@@ -79,6 +79,9 @@ public class Request {
         this.image_url = image_url;
 
     }
+
+
+
     public String getRequestDate() {
         return request_date;
     }

@@ -1,5 +1,7 @@
 package com.example.s215087038.wefixx.student;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -18,6 +20,7 @@ import com.example.s215087038.wefixx.MyDividerItemDecoration;
 import com.example.s215087038.wefixx.R;
 import com.example.s215087038.wefixx.adapter.OpenRequestAdapter;
 import com.example.s215087038.wefixx.adapter.StudentAssignedAdapter;
+import com.example.s215087038.wefixx.adapter.StudentClosedAdapter;
 import com.example.s215087038.wefixx.model.Request;
 
 import org.json.JSONArray;
@@ -30,9 +33,10 @@ import java.util.List;
 public class StudentClosedFragment extends Fragment {
     private List<Request> requestList;
     private RecyclerView recyclerView;
-    private StudentAssignedAdapter mAdapter;
-    String openRequestsUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/open_requests.php";
-
+    private StudentClosedAdapter mAdapter;
+    String requestsUrl = "http://sict-iis.nmmu.ac.za/wefixx/student/student_closed.php";
+    String user_id, name;
+    Context context;
 
     public StudentClosedFragment() {
         // Required empty public constructor
@@ -41,6 +45,12 @@ public class StudentClosedFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //********************************************
+        SharedPreferences preferences =  this.getActivity().getSharedPreferences("MYPREFS", context.MODE_PRIVATE);
+
+        user_id = preferences.getString("user_id", "");
+        name = preferences.getString("name", "");
+        //********************************************
     }
 
     @Override
@@ -50,9 +60,9 @@ public class StudentClosedFragment extends Fragment {
         View myFragmentView = inflater.inflate(R.layout.fragment_student_assigned, container, false);
 
         requestList = new ArrayList<>();
-        recyclerView = (RecyclerView) myFragmentView.findViewById(R.id.openRecylcerView);
+        recyclerView = (RecyclerView) myFragmentView.findViewById(R.id.recylcerView);
 
-        mAdapter = new StudentAssignedAdapter(requestList);
+        mAdapter = new StudentClosedAdapter(requestList);
 
         // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -65,7 +75,7 @@ public class StudentClosedFragment extends Fragment {
 
     private void prepareRequestData() {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        StringRequest stringRequest = new StringRequest(com.android.volley.Request.Method.GET, openRequestsUrl, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(com.android.volley.Request.Method.GET, requestsUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -97,7 +107,7 @@ public class StudentClosedFragment extends Fragment {
                     }
 
                     //creating adapter object and setting it to recyclerview
-                    OpenRequestAdapter adapter = new OpenRequestAdapter(getActivity(), requestList);
+                    StudentClosedAdapter adapter = new StudentClosedAdapter(getActivity(), requestList);
                     recyclerView.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();

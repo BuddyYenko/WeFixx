@@ -19,7 +19,7 @@
         android:layout_marginTop="160dp">
 
         <ImageButton
-            android:id="@+id/btn_new_request"
+            android:id="@+id/btn_delayed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/history"
@@ -27,7 +27,7 @@
             android:background="@null"/>
 
         <ImageButton
-            android:id="@+id/btn_notifications"
+            android:id="@+id/btn_history"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

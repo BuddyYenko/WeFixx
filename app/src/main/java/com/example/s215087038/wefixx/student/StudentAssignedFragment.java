@@ -1,5 +1,7 @@
 package com.example.s215087038.wefixx.student;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -31,8 +33,9 @@ public class StudentAssignedFragment extends Fragment {
     private List<Request> requestList;
     private RecyclerView recyclerView;
     private StudentAssignedAdapter mAdapter;
-    String requestsUrl = "http://sict-iis.nmmu.ac.za/wefixx/student/astudent_assigned.php";
-
+    String requestsUrl = "http://sict-iis.nmmu.ac.za/wefixx/student/student_assigned.php";
+    String user_id, name;
+    Context context;
 
     public StudentAssignedFragment() {
         // Required empty public constructor
@@ -41,6 +44,12 @@ public class StudentAssignedFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //********************************************
+        SharedPreferences preferences =  this.getActivity().getSharedPreferences("MYPREFS", context.MODE_PRIVATE);
+
+        user_id = preferences.getString("user_id", "");
+        name = preferences.getString("name", "");
+        //********************************************
     }
 
     @Override
@@ -50,7 +59,7 @@ public class StudentAssignedFragment extends Fragment {
         View myFragmentView = inflater.inflate(R.layout.fragment_student_assigned, container, false);
 
         requestList = new ArrayList<>();
-        recyclerView = (RecyclerView) myFragmentView.findViewById(R.id.openRecylcerView);
+        recyclerView = (RecyclerView) myFragmentView.findViewById(R.id.recylcerView);
 
         mAdapter = new StudentAssignedAdapter(requestList);
 
@@ -83,6 +92,7 @@ public class StudentAssignedFragment extends Fragment {
                                 request.getString("fault_id"),
                                 request.getString("request_date"),
                                 request.getString("date_assigned"),
+                                request.getString("request_type"),
                                 request.getString("description"),
                                 request.getString("provider"),
                                 request.getString("priority"),
@@ -92,7 +102,7 @@ public class StudentAssignedFragment extends Fragment {
                     }
 
                     //creating adapter object and setting it to recyclerview
-                    OpenRequestAdapter adapter = new OpenRequestAdapter(getActivity(), requestList);
+                    StudentAssignedAdapter adapter = new StudentAssignedAdapter(getActivity(), requestList);
                     recyclerView.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -53,15 +53,14 @@ public class StudentClosedAdapter extends  RecyclerView.Adapter<StudentClosedAda
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView request_date, request_type, room, description,comment, textView, date_label, date_closed, date_assigned, provider, priority, file_name;
         public ImageView imageView;
-        public LinearLayout linearLayout;
-        public Button bn_close;
-        public ImageButton choose_file;
+        public LinearLayout linearLayout, row;
+
         public RatingBar rating;
 
 
         public MyViewHolder(View view) {
             super(view);
-            request_date = (TextView) view.findViewById(R.id.tv_date);
+            request_date = (TextView) view.findViewById(R.id.tv_date_opened);
             request_type = (TextView) view.findViewById(R.id.tv_type);
             description = (TextView) view.findViewById(R.id.tv_desc);
             room = (TextView) view.findViewById(R.id.tv_room);
@@ -75,6 +74,7 @@ public class StudentClosedAdapter extends  RecyclerView.Adapter<StudentClosedAda
             date_closed= (TextView) view.findViewById(R.id.tv_date_closed);
             comment = (TextView) view.findViewById(R.id.tv_comment);
             rating = (RatingBar) view.findViewById(R.id.rb_rating);
+            row = (LinearLayout) itemView.findViewById(R.id.row);
 
         }
     }
@@ -125,7 +125,7 @@ public class StudentClosedAdapter extends  RecyclerView.Adapter<StudentClosedAda
             holder.linearLayout.startAnimation(slideDown);
         }
 
-        holder.textView.setOnClickListener(new View.OnClickListener() {
+        holder.row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

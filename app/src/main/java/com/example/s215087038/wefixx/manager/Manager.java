@@ -17,7 +17,7 @@ public class Manager extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manager);
-        history = (ImageButton) findViewById(R.id.history);
+        history = (ImageButton) findViewById(R.id.btn_history);
 
         history.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -30,7 +30,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="2">
+                android:weightSum="2"
+                android:id="@+id/row">
 
                 <TextView
                     android:id="@+id/room_label"
@@ -88,7 +89,7 @@
                             android:text="Date Requested" />
 
                         <TextView
-                            android:id="@+id/tv_date"
+                            android:id="@+id/tv_date_opened"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="date"
@@ -96,21 +97,7 @@
                             android:layout_marginLeft="20dp"/>
                     </TableRow>
 
-                    <TableRow>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Room No   " />
-
-                        <TextView
-                            android:id="@+id/tv_room"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="room"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="20dp"/>
-                    </TableRow>
 
                     <TableRow>
 
@@ -144,38 +131,6 @@
                             android:layout_marginLeft="20dp"/>
                     </TableRow>
 
-                    <TableRow>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Maintenance Provider" />
-
-                        <TextView
-                            android:id="@+id/tv_provider"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Provider"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="20dp"/>
-
-                    </TableRow>
-
-                    <TableRow>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Priority" />
-
-                        <TextView
-                            android:id="@+id/tv_priority"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Priority"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="20dp"/>
-                    </TableRow>
 
 
 

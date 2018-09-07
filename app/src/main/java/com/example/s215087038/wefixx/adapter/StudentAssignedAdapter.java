@@ -65,8 +65,7 @@ public class StudentAssignedAdapter extends  RecyclerView.Adapter<StudentAssigne
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView request_date, request_type, room, description, textView, date_label, date_assigned, provider, priority;
         public ImageView imageView;
-        public LinearLayout linearLayout;
-        public ImageButton choose_file;
+        public LinearLayout linearLayout, row;
 
         public MyViewHolder(View view) {
             super(view);
@@ -80,6 +79,7 @@ public class StudentAssignedAdapter extends  RecyclerView.Adapter<StudentAssigne
             priority = (TextView) view.findViewById(R.id.tv_priority);
             provider = (TextView) view.findViewById(R.id.tv_provider);
             date_assigned = (TextView) view.findViewById(R.id.tv_date_assigned);
+            row = (LinearLayout) itemView.findViewById(R.id.row);
 
 
 
@@ -90,7 +90,7 @@ public class StudentAssignedAdapter extends  RecyclerView.Adapter<StudentAssigne
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_assigned, parent, false);
+                .inflate(R.layout.list_student_assigned, parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -129,7 +129,7 @@ public class StudentAssignedAdapter extends  RecyclerView.Adapter<StudentAssigne
             holder.linearLayout.startAnimation(slideDown);
         }
 
-        holder.textView.setOnClickListener(new View.OnClickListener() {
+        holder.row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
