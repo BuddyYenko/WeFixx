@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".rsa.RSA">
+        <activity android:name=".FAQ">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,8 +30,8 @@
         <activity android:name=".NewRequest" />
         <activity android:name=".History" />
         <activity android:name=".Hist" />
-        <!-- <activity android:name=".Main3Activity"></activity> -->
-        <activity android:name=".student.StudentHistory"></activity>
+         <activity android:name=".rsa.RSA"></activity>
+        <activity android:name=".student.StudentHistory" />
     </application>
 
 </manifest>
