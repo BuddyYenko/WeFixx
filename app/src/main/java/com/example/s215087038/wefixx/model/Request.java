@@ -1,7 +1,7 @@
 package com.example.s215087038.wefixx.model;
 
 public class Request {
-    private String fault_id, request_date,fault_type_id, request_type, room, description,image_url, provider, priority, comment, date_assigned, date_closed;
+    private String fault_id, request_date,fault_type_id, request_type, room, description,image_url, provider, priority, comment, date_assigned, date_closed, requester, contact_number, turnaround, email, status;
     private float rating ;
 
     public Request() {
@@ -79,7 +79,22 @@ public class Request {
         this.image_url = image_url;
 
     }
+//delayed
+public Request( String request_date, String date_assigned, String request_type, String description, String room, String requester, String priority , String turnaround, String contact_number, String email, String status, String image_url) {
+    this.request_date = request_date;
+    this.date_assigned = date_assigned;
+    this.request_type = request_type;
+    this.description = description;
+    this.room = room;
+    this.requester = requester;
+    this.priority = priority;
+    this.turnaround = turnaround;
+    this.contact_number = contact_number;
+    this.email = email;
+    this.status = status;
+    this.image_url = image_url;
 
+}
 
 
     public String getRequestDate() {

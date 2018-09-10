@@ -79,7 +79,7 @@ public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedReques
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView request_date, request_type, room, description, textView, date_label, date_assigned, provider, priority, file_name;
+        public TextView request_date, request_type, room, description, textView, date_label, date_assigned, provider, priority, file_name, desc_label;
         public ImageView imageView;
         public LinearLayout linearLayout;
         public Button bn_close;
@@ -90,6 +90,8 @@ public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedReques
             request_date = (TextView) view.findViewById(R.id.tv_date);
             request_type = (TextView) view.findViewById(R.id.tv_type);
             description = (TextView) view.findViewById(R.id.tv_desc);
+            desc_label = (TextView) view.findViewById(R.id.desc_label);
+
             room = (TextView) view.findViewById(R.id.tv_room);
             textView = (TextView) view.findViewById(R.id.room_label);
             date_label = (TextView) view.findViewById(R.id.date_label);
@@ -147,6 +149,7 @@ public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedReques
         holder.room.setText(request.getRoom());
         holder.textView.setText(request.getRoom());
         holder.date_label.setText(request.getRequestDate());
+        holder.desc_label.setText(request.getDescription());
 
         fault_type_id = request.getFaultTypeID();
         fault_id = request.getFaultID();

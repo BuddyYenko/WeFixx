@@ -91,7 +91,7 @@ public class ProviderRequests extends Fragment {
 
                         //get selected fault type
                         selected_month = position + 1;
-                        Toast.makeText(getActivity(), monthName[position], Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), monthName[position], Toast.LENGTH_SHORT).show();
 
                     }
                     public void onNothingSelected(AdapterView<?> parent) {
