@@ -1,7 +1,7 @@
 package com.example.s215087038.wefixx.model;
 
 public class Request {
-    private String fault_id, request_date,fault_type_id, request_type, room, description,image_url, provider, priority, comment, date_assigned, date_closed, requester, contact_number, turnaround, email, status;
+    private String fault_id, request_date,fault_type_id, request_type, room, description,image_url, provider, priority, comment, date_assigned, date_closed, requester, contact_number, turnaround, email, status, provider_status;
     private float rating ;
 
     public Request() {
@@ -80,7 +80,7 @@ public class Request {
 
     }
 //delayed
-public Request( String request_date, String date_assigned, String request_type, String description, String room, String requester, String priority , String turnaround, String contact_number, String email, String status, String image_url) {
+public Request( String request_date, String date_assigned, String request_type, String description, String room, String requester, String priority , String turnaround, String contact_number, String email, String provider_status, String image_url) {
     this.request_date = request_date;
     this.date_assigned = date_assigned;
     this.request_type = request_type;
@@ -91,7 +91,7 @@ public Request( String request_date, String date_assigned, String request_type, 
     this.turnaround = turnaround;
     this.contact_number = contact_number;
     this.email = email;
-    this.status = status;
+    this.provider_status = provider_status;
     this.image_url = image_url;
 
 }
@@ -191,4 +191,25 @@ public Request( String request_date, String date_assigned, String request_type, 
     public void setPriority(String priority) {
         this.priority = priority;
     }
+    //
+    public String getTurnaround() {
+        return turnaround;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getContactNumber(){
+        return contact_number;
+    }
+
+    public String getProviderStatus() {
+        return provider_status;
+    }
+
+    public String getRequester() {
+        return requester;
+    }
+
 }

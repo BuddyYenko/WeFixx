@@ -35,8 +35,7 @@ public class DelayedAdapter extends RecyclerView.Adapter<DelayedAdapter.MyViewHo
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView request_date, request_type, room, description, textView, date_label, priority, provider, date_assigned, date_closed, comment;
-        public RatingBar rating;
+        public TextView request_date, request_type, room, description, textView, date_label, priority, provider, date_assigned, date_closed, requester, turnaround, contact_number, email, provider_status;
         public ImageView imageView;
         public LinearLayout linearLayout;
 
@@ -55,8 +54,11 @@ public class DelayedAdapter extends RecyclerView.Adapter<DelayedAdapter.MyViewHo
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
             priority = (TextView) view.findViewById(R.id.tv_priority);
             provider = (TextView) view.findViewById(R.id.tv_provider);
-            comment = (TextView) view.findViewById(R.id.tv_comment);
-            rating = (RatingBar) view.findViewById(R.id.rb_rating);
+            requester = (TextView) view.findViewById(R.id.tv_requester);
+            contact_number = (TextView) view.findViewById(R.id.tv_contact);
+            email = (TextView) view.findViewById(R.id.tv_email);
+            provider_status = (TextView) view.findViewById(R.id.tv_status);
+            turnaround = (TextView) view.findViewById(R.id.tv_turnaround);
 
 
         }
@@ -65,7 +67,7 @@ public class DelayedAdapter extends RecyclerView.Adapter<DelayedAdapter.MyViewHo
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_history, parent, false);
+                .inflate(R.layout.list_delayed, parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -84,8 +86,11 @@ public class DelayedAdapter extends RecyclerView.Adapter<DelayedAdapter.MyViewHo
         holder.date_label.setText(request.getRequestDate());
         holder.priority.setText(request.getPriority());
         holder.provider.setText(request.getProvider());
-        holder.comment.setText(request.getComment() + " "  + request.getRating());
-        holder.rating.setRating(request.getRating());
+        holder.requester.setText(request.getRequester());
+        holder.contact_number.setText(request.getContactNumber());
+        holder.email.setText(request.getEmail());
+        holder.provider_status.setText(request.getProviderStatus());
+        holder.turnaround.setText(request.getTurnaround());
         Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
         holder.linearLayout.setVisibility(View.GONE);
 
