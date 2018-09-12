@@ -65,7 +65,8 @@ public class Request {
         this.comment = comment;
         this.rating = rating;
     }
-    public Request( String request_date, String date_assigned, String date_closed, String request_type, String description, String room, String comment, float rating , String provider, String priority, String image_url) {
+    //history
+    public Request( String request_date, String date_assigned, String date_closed, String request_type, String description, String room, String comment, float rating , String provider, String priority, String requester, String image_url) {
         this.request_date = request_date;
         this.date_assigned = date_assigned;
         this.date_closed = date_closed;
@@ -76,6 +77,7 @@ public class Request {
         this.provider = provider;
         this.priority = priority;
         this.comment = comment;
+        this.requester = requester;
         this.image_url = image_url;
 
     }

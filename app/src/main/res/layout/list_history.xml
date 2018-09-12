@@ -29,32 +29,50 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:weightSum="2">
-
-                <TextView
-                    android:id="@+id/room_label"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_weight="1"
-                    android:background="@color/colorAccent"
-                    android:padding="5dp"
-                    android:text="room"
-                    android:textAlignment="textStart"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large.Inverse" />
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/room_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_weight="1"
+                        android:background="@color/colorAccent"
+                        android:padding="5dp"
+                        android:text="room"
+                        android:textStyle="bold"
+                        android:textAlignment="textStart"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium.Inverse" />
 
+                    <TextView
+                        android:id="@+id/date_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_weight="1"
+                        android:background="@color/colorAccent"
+                        android:padding="5dp"
+                        android:text="date"
+                        android:textStyle="bold"
+                        android:textAlignment="textEnd"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium.Inverse" />
+
+
+                </LinearLayout>
                 <TextView
-                    android:id="@+id/date_label"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/desc_label"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_weight="1"
                     android:background="@color/colorAccent"
                     android:padding="5dp"
-                    android:text="date"
-                    android:textAlignment="textEnd"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large.Inverse" />
+                    android:text="desc"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small.Inverse" />
             </LinearLayout>
 
             <LinearLayout
@@ -69,7 +87,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="15dp">
+                    <TableRow>
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Requester " />
+
+                        <TextView
+                            android:id="@+id/tv_requester"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="date opened"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="20dp"/>
+                    </TableRow>
                     <TableRow>
 
                         <TextView

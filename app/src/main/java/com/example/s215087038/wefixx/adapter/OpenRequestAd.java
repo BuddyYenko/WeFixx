@@ -83,7 +83,7 @@ public class OpenRequestAd extends RecyclerView.Adapter<OpenRequestAdapter.MyVie
             holder.linearLayout.startAnimation(slideDown);
         }
 
-        holder.textView.setOnClickListener(new View.OnClickListener() {
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

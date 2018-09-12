@@ -107,7 +107,7 @@ public class DelayedAdapter extends RecyclerView.Adapter<DelayedAdapter.MyViewHo
             holder.linearLayout.startAnimation(slideDown);
         }
 
-        holder.textView.setOnClickListener(new View.OnClickListener() {
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

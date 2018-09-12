@@ -66,7 +66,7 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView request_date, request_type, room, description, textView, date_label;
+        public TextView request_date, request_type, room, description, textView, date_label, desc_label;
         public ImageView imageView;
         public LinearLayout linearLayout;
         public Spinner sp_priority, sp_provider;
@@ -80,6 +80,8 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
             room = (TextView) view.findViewById(R.id.tv_room);
             textView = (TextView) view.findViewById(R.id.room_label);
             date_label = (TextView) view.findViewById(R.id.date_label);
+            desc_label = (TextView) view.findViewById(R.id.desc_label);
+
             imageView = (ImageView)view.findViewById(R.id.imageView);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
             sp_priority = (Spinner) view.findViewById(R.id.sp_priority);
@@ -106,6 +108,7 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
         holder.room.setText(request.getRoom());
         holder.textView.setText(request.getRoom());
         holder.date_label.setText(request.getRequestDate());
+        holder.desc_label.setText(request.getDescription());
 
         fault_type_id = request.getFaultTypeID();
         fault_id = request.getFaultID();
@@ -200,7 +203,7 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
             holder.linearLayout.startAnimation(slideDown);
         }
 
-        holder.textView.setOnClickListener(new View.OnClickListener() {
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

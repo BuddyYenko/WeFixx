@@ -35,7 +35,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView request_date, request_type, room, description, textView, date_label, priority, provider, date_assigned, date_closed, comment;
+        public TextView request_date, request_type, room, description, textView, date_label, priority, provider, date_assigned, date_closed, comment, desc_label;
         public RatingBar rating;
         public ImageView imageView;
         public LinearLayout linearLayout;
@@ -45,6 +45,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
             request_date = (TextView) view.findViewById(R.id.tv_date);
             date_assigned = (TextView) view.findViewById(R.id.tv_date_assigned);
             date_closed = (TextView) view.findViewById(R.id.tv_date_closed);
+            desc_label = (TextView) view.findViewById(R.id.desc_label);
 
             request_type = (TextView) view.findViewById(R.id.tv_type);
             description = (TextView) view.findViewById(R.id.tv_desc);
@@ -76,9 +77,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         holder.request_date.setText(request.getRequestDate());
         holder.date_assigned.setText(request.getDateAssigned());
         holder.date_closed.setText(request.getDateClosed());
+        holder.desc_label.setText(request.getDescription());
 
         holder.request_type.setText(request.getRequestType());
         holder.description.setText(request.getDescription());
+
         holder.room.setText(request.getRoom());
         holder.textView.setText(request.getRoom());
         holder.date_label.setText(request.getRequestDate());
@@ -97,12 +100,13 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
 
             //toggling visibility
             holder.linearLayout.setVisibility(View.VISIBLE);
+            holder.desc_label.setVisibility(View.INVISIBLE);
 
             //adding sliding effect
             holder.linearLayout.startAnimation(slideDown);
         }
 
-        holder.textView.setOnClickListener(new View.OnClickListener() {
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
