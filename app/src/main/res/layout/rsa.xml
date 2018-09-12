@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.s215087038.wefixx.rsa.RSA"
     android:orientation="vertical"
+    android:gravity="center_vertical"
     android:background="@color/background">
     <!--android:weightSum="4">-->
 
@@ -13,48 +14,61 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="3"
-        android:gravity="center"
-        android:layout_marginTop="90dp">
+        android:weightSum="2">
 
-        <ImageButton
-            android:id="@+id/manage_request"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/picture7"
-            android:layout_weight="1"
-            android:background="@null"/>
 
-        <ImageButton
-            android:id="@+id/history"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:id="@+id/manage_request_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             android:layout_weight="1"
-            android:background="@null"
-            app:srcCompat="@drawable/rsa_history" />
+            android:weightSum="2">
+            <ImageButton
+                android:id="@+id/manage_request"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/picture7"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textColor="@color/labelColor"
+                android:textSize="@dimen/label"
+                android:text="Manage Request"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/history_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:weightSum="2">
+            <ImageButton
+                android:id="@+id/history"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/rsa_history"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textColor="@color/labelColor"
+                android:textSize="@dimen/label"
+                android:text="History"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center_horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="57dp"
-            android:textColor="@color/labelColor"
-            android:textSize="@dimen/label"
-            android:text="Manage Request"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="5dp"
-            android:textColor="@color/labelColor"
-            android:textSize="@dimen/label"
-            android:text="History"/>
-    </LinearLayout>
+
 
 
 

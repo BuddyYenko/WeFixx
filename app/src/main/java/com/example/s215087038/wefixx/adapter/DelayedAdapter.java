@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -37,7 +38,9 @@ public class DelayedAdapter extends RecyclerView.Adapter<DelayedAdapter.MyViewHo
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView request_date, request_type, room, description, textView, date_label, priority, provider, date_assigned, date_closed, requester, turnaround, contact_number, email, provider_status;
         public ImageView imageView;
-        public LinearLayout linearLayout;
+        public LinearLayout linearLayout, row;
+        public Button hide_photo, view_photo;
+
 
         public MyViewHolder(View view) {
             super(view);
@@ -51,7 +54,9 @@ public class DelayedAdapter extends RecyclerView.Adapter<DelayedAdapter.MyViewHo
             textView = (TextView) view.findViewById(R.id.room_label);
             date_label = (TextView) view.findViewById(R.id.date_label);
             imageView = (ImageView)view.findViewById(R.id.imageView);
-            linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
+            linearLayout = (LinearLayout) view.findViewById(R.id.linearLayout);
+            row = (LinearLayout) view.findViewById(R.id.row);
+
             priority = (TextView) view.findViewById(R.id.tv_priority);
             provider = (TextView) view.findViewById(R.id.tv_provider);
             requester = (TextView) view.findViewById(R.id.tv_requester);
@@ -59,6 +64,9 @@ public class DelayedAdapter extends RecyclerView.Adapter<DelayedAdapter.MyViewHo
             email = (TextView) view.findViewById(R.id.tv_email);
             provider_status = (TextView) view.findViewById(R.id.tv_status);
             turnaround = (TextView) view.findViewById(R.id.tv_turnaround);
+
+            view_photo = (Button) view.findViewById(R.id.btn_view_photo);
+            hide_photo = (Button) view.findViewById(R.id.btn_hide_photo);
 
 
         }
@@ -77,7 +85,6 @@ public class DelayedAdapter extends RecyclerView.Adapter<DelayedAdapter.MyViewHo
         Request request = requestList.get(position);
         holder.request_date.setText(request.getRequestDate());
         holder.date_assigned.setText(request.getDateAssigned());
-        holder.date_closed.setText(request.getDateClosed());
 
         holder.request_type.setText(request.getRequestType());
         holder.description.setText(request.getDescription());
@@ -94,6 +101,23 @@ public class DelayedAdapter extends RecyclerView.Adapter<DelayedAdapter.MyViewHo
         Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
         holder.linearLayout.setVisibility(View.GONE);
 
+        holder.view_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.imageView.setVisibility(View.VISIBLE);
+                holder.hide_photo.setVisibility(View.VISIBLE);
+                holder.view_photo.setVisibility(View.GONE);
+
+            }
+        });
+        holder.hide_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.imageView.setVisibility(View.INVISIBLE);
+                holder.view_photo.setVisibility(View.VISIBLE);
+                holder.hide_photo.setVisibility(View.GONE);
+            }
+        });
 
         //if the position is equals to the item position which is to be expanded
         if (currentPosition == position) {
@@ -107,7 +131,7 @@ public class DelayedAdapter extends RecyclerView.Adapter<DelayedAdapter.MyViewHo
             holder.linearLayout.startAnimation(slideDown);
         }
 
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

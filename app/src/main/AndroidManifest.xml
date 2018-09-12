@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".rsa.RSA">
+        <activity android:name=".manager.Manager">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,14 +23,14 @@
         </activity>
         <activity android:name=".student.Student" />
         <!-- <activity android:name=".Login" /> -->
-        <activity android:name=".manager.Manager" />
+        <!--<activity android:name=".manager.Manager" />-->
         <activity android:name=".rsa.Manage" />
         <activity android:name=".manager.Reports" />
         <!-- <activity android:name=".Main2Activity" /> -->
         <activity android:name=".manager.Delayed" />
         <activity android:name=".History" />
         <activity android:name=".Hist" />
-        <!--<activity android:name=".rsa.RSA" />-->
+        <activity android:name=".rsa.RSA" />
         <activity android:name=".student.StudentHistory" />
         <activity android:name=".FAQ" />
         <activity android:name=".NewRequest"></activity>

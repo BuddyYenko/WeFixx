@@ -6,123 +6,103 @@
     android:layout_height="match_parent"
     tools:context="com.example.s215087038.wefixx.student.Student"
     android:orientation="vertical"
+    android:weightSum="2"
+    android:gravity="center_vertical"
     android:background="@color/background">
     <!--android:weightSum="4">-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:layout_gravity="center_vertical"
         android:orientation="horizontal"
-        android:weightSum="3"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="90dp">
+        android:paddingBottom="30dp">
 
-        <ImageButton
-            android:id="@+id/btn_new_request"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/new_req_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/new_req"
+            android:orientation="vertical"
             android:layout_weight="1"
-            android:background="@null"/>
+            android:clickable="true">
+            <ImageButton
+                android:id="@+id/btn_new_request"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/new_req"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:background="@null"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textColor="@color/labelColor"
+                android:text="New Request"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large.Inverse"
+                android:layout_weight="1"/>
 
-        <ImageButton
-            android:id="@+id/btn_notifications"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/history_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@null"
-            app:srcCompat="@drawable/notifications" />
+            android:orientation="vertical"
+            android:weightSum="2"
+            android:clickable="true">
+
+            <ImageButton
+                android:id="@+id/btn_history"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@null"
+                app:srcCompat="@drawable/history" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="History"
+                android:textColor="@color/labelColor"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large.Inverse" />
+
+        </LinearLayout>
+
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center_horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="57dp"
-            android:textColor="@color/labelColor"
-            android:textSize="@dimen/label"
-            android:text="New Request"
-            android:textStyle="bold"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="5dp"
-            android:textColor="@color/labelColor"
-            android:textSize="@dimen/label"
-            android:text="Notifications"/>
-    </LinearLayout>
 
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/help_layout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="3"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="45dp">
-
-        <ImageButton
-            android:id="@+id/btn_history"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/history"
-            android:layout_weight="1"
-            android:background="@null"/>
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <ImageButton
             android:id="@+id/btn_help"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:background="@null"
             app:srcCompat="@drawable/help" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center_horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="46dp"
-            android:textColor="@color/labelColor"
-            android:textSize="@dimen/label"
-            android:text="Request History"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@color/labelColor"
-            android:textSize="@dimen/label"
-            android:text="Help"/>
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:text="FAQs"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large.Inverse"
+            android:textColor="@color/labelColor" />
+
+    </LinearLayout>
     </LinearLayout>
 
-
-    <!--<LinearLayout-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:weightSum="1">-->
-
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:weightSum="1">-->
-
-    <!--</LinearLayout>-->
-    <!---->
-    <!--<LinearLayout-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:weightSum="1">-->
-
-    <!--</LinearLayout>-->
-</LinearLayout>

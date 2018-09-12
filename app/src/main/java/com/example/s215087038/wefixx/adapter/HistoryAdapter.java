@@ -38,7 +38,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         public TextView request_date, request_type, room, description, textView, date_label, priority, provider, date_assigned, date_closed, comment, desc_label;
         public RatingBar rating;
         public ImageView imageView;
-        public LinearLayout linearLayout;
+        public LinearLayout linearLayout, row;
 
         public MyViewHolder(View view) {
             super(view);
@@ -53,6 +53,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
             textView = (TextView) view.findViewById(R.id.room_label);
             date_label = (TextView) view.findViewById(R.id.date_label);
             imageView = (ImageView)view.findViewById(R.id.imageView);
+            linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
             priority = (TextView) view.findViewById(R.id.tv_priority);
             provider = (TextView) view.findViewById(R.id.tv_provider);
@@ -106,7 +107,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
             holder.linearLayout.startAnimation(slideDown);
         }
 
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

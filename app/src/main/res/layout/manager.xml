@@ -6,58 +6,66 @@
     android:layout_height="match_parent"
     tools:context="com.example.s215087038.wefixx.rsa.RSA"
     android:orientation="vertical"
+    android:gravity="center_vertical"
     android:background="@color/background">
+
     <!--android:weightSum="4">-->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="3"
-        android:gravity="center"
+        android:weightSum="2">
 
-        android:layout_marginTop="160dp">
 
-        <ImageButton
-            android:id="@+id/btn_delayed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/history"
+        <LinearLayout
+            android:id="@+id/delayed_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             android:layout_weight="1"
-            android:background="@null"/>
+            android:weightSum="2">
+            <ImageButton
+                android:id="@+id/btn_delayed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/delayed"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textColor="@color/labelColor"
+                android:textSize="@dimen/label"
+                android:text="Delayed Request"
+                android:layout_weight="1"/>
 
-        <ImageButton
-            android:id="@+id/btn_history"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/history_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             android:layout_weight="1"
-            android:background="@null"
-            app:srcCompat="@drawable/help" />
+            android:weightSum="2">
+            <ImageButton
+                android:id="@+id/btn_history"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/rsa_history"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textColor="@color/labelColor"
+                android:textSize="@dimen/label"
+                android:text="History"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center_horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="40dp"
-            android:textColor="@color/labelColor"
-            android:textSize="@dimen/label"
-            android:text="Delayed Request"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginRight="15dp"
-            android:textColor="@color/labelColor"
-            android:textSize="@dimen/label"
-            android:text="History"/>
-    </LinearLayout>
-
-
-
-
 </LinearLayout>

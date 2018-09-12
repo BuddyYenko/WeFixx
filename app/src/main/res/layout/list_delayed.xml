@@ -30,7 +30,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:weightSum="2">
+                android:weightSum="2"
+                android:id="@+id/row">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -90,13 +91,7 @@
                     android:layout_height="wrap_content"
                     android:padding="15dp">
 
-                    <TableRow>
-                        <ImageView
-                            android:id="@+id/imageView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left"/>
-                    </TableRow>
+
                     <TableRow>
 
                         <TextView
@@ -134,15 +129,15 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Room No   " />
+                            android:text="Requester   " />
 
                         <TextView
                             android:id="@+id/tv_requester"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="requester"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="20dp"/>
+                            android:layout_marginLeft="20dp"
+                            android:textStyle="bold"/>
                     </TableRow>
                     <TableRow>
 
@@ -157,7 +152,8 @@
                             android:layout_height="wrap_content"
                             android:text="room"
                             android:textStyle="bold"
-                            android:layout_marginLeft="20dp"/>
+                            android:layout_marginLeft="20dp"
+                            />
                     </TableRow>
 
                     <TableRow>
@@ -199,7 +195,7 @@
                             android:text="Priority" />
 
                         <TextView
-                            android:id="@+id/tv_turnaround"
+                            android:id="@+id/tv_priority"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="priority"
@@ -213,7 +209,7 @@
                             android:text="Priority Turnaround Time" />
 
                         <TextView
-                            android:id="@+id/tv_turnarounnd"
+                            android:id="@+id/tv_turnaround"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="turnaround"
@@ -227,8 +223,7 @@
                             android:layout_height="wrap_content"
                             android:text="MAINTENANCE PROVIDER DETAILS:"
                             android:textStyle="bold"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="5dp"/>
+                            android:layout_marginTop="15dp"/>
                     </RelativeLayout>
 
 
@@ -269,7 +264,33 @@
                     </TableRow>
 
 
+
                 </TableLayout>
+                <Button
+                    android:id="@+id/btn_view_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View Photo"
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/rounded_button"
+                    />
+                <Button
+                    android:id="@+id/btn_hide_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hide Photo"
+                    android:layout_marginLeft="15dp"
+                    android:visibility="gone"
+                    android:background="@drawable/rounded_button"
+                    android:layout_marginBottom="5dp"
+                    />
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="20dp"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 

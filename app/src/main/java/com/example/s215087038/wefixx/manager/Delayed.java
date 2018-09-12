@@ -13,6 +13,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.s215087038.wefixx.MyDividerItemDecoration;
 import com.example.s215087038.wefixx.R;
+import com.example.s215087038.wefixx.adapter.DelayedAdapter;
 import com.example.s215087038.wefixx.adapter.HistoryAdapter;
 import com.example.s215087038.wefixx.model.Request;
 
@@ -26,7 +27,7 @@ import java.util.List;
 public class Delayed extends AppCompatActivity {
     private List<Request> requestList;
     private RecyclerView recyclerView;
-    private HistoryAdapter mAdapter;
+    private DelayedAdapter mAdapter;
     String historyUrl = "http://sict-iis.nmmu.ac.za/wefixx/manager/delayed.php";
 
     @Override
@@ -36,7 +37,7 @@ public class Delayed extends AppCompatActivity {
         requestList = new ArrayList<>();
 
         recyclerView = (RecyclerView)findViewById(R.id.recylcerView);
-        mAdapter = new HistoryAdapter(requestList);
+        mAdapter = new DelayedAdapter(requestList);
 
         // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(Delayed.this));
@@ -82,7 +83,7 @@ public class Delayed extends AppCompatActivity {
                     }
 
                     //creating adapter object and setting it to recyclerview
-                    HistoryAdapter adapter = new HistoryAdapter(Delayed.this, requestList);
+                    DelayedAdapter adapter = new DelayedAdapter(Delayed.this, requestList);
                     recyclerView.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
