@@ -20,15 +20,18 @@ import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -77,7 +80,8 @@ public class NewRequest extends AppCompatActivity {
     protected List<DataObject> spinnerData;
     private RequestQueue queue;
     String user_id, name, fault;
-
+    private ProgressBar progressBar;
+    private int progressStatus = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +101,7 @@ public class NewRequest extends AppCompatActivity {
         //Getting id by their xml
         Description = (EditText) findViewById(R.id.et_description);
         btn_request = (Button) findViewById(R.id.btn_request);
+        progressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
 
         //checking the permission
         //if the permission is not given we will open setting to add permission
@@ -119,10 +124,14 @@ public class NewRequest extends AppCompatActivity {
                 startActivityForResult(i, 100);
             }
         });
+        builder = new AlertDialog.Builder(NewRequest.this);
+
 
         btn_request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                progressBar.setVisibility(View.VISIBLE);
 
                 description = Description.getText().toString();
 
@@ -145,6 +154,8 @@ public class NewRequest extends AppCompatActivity {
                                         builder.setTitle("WeFixx Response");
                                         builder.setMessage(message);
                                         displayAlert(code);
+                                        progressBar.setVisibility(View.INVISIBLE);
+
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -153,7 +164,8 @@ public class NewRequest extends AppCompatActivity {
                             new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
-                                    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), error.getMessage() +"error " , Toast.LENGTH_LONG).show();
+                                    progressBar.setVisibility(View.INVISIBLE);
 
                                 }
                             }) {
@@ -162,24 +174,36 @@ public class NewRequest extends AppCompatActivity {
                         @Override
                         protected Map<String, String> getParams() {
                             Map<String, String> params = new HashMap<>();
-                            params.put("user_id", user_id);
+                            params.put("user_id", "1");//user_id);
                             params.put("description", description);
                             params.put("fault_type", fault);
+
+                           // params.put("photo", imageOne);
+
                             return params;
                         }
                          //Here we are passing image by renaming it with a unique name
+
                         @Override
                         protected Map<String, DataPart> getByteData() {
+
+
                             Map<String, DataPart> params = new HashMap<>();
-                            String imagename = "me";
-                            params.put("photo", new DataPart(imagename + ".jpeg", getFileDataFromDrawable(bitmap)));
+                            if(bitmap !=null)
+                            {
+                                String imagename = "photo";
+                                params.put("photo", new DataPart(imagename + ".jpeg", getFileDataFromDrawable(scaledBitmap)));
+                            }
                             return params;
+
                         }
                     };
+                    volleyMultipartRequest.setRetryPolicy(new DefaultRetryPolicy(0,0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
                     //adding the request to volley
                     Volley.newRequestQueue(NewRequest.this).add(volleyMultipartRequest);
                 }
+
             }
 
             private void displayAlert(final String code) {
@@ -206,6 +230,13 @@ public class NewRequest extends AppCompatActivity {
 
         });
 }
+    public String getStringImage(Bitmap bmp) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
+    }
 
     private void Display(final String code) {
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -410,6 +441,7 @@ public class NewRequest extends AppCompatActivity {
             e.printStackTrace();
         }
         imageView.setImageBitmap(scaledBitmap);
+
         return filename;
 
     }
@@ -435,6 +467,7 @@ public class NewRequest extends AppCompatActivity {
             int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
             return cursor.getString(index);
         }
+
     }
 
     public int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
