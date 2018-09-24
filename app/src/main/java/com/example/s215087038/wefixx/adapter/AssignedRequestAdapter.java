@@ -79,10 +79,10 @@ public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedReques
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView request_date, request_type, room, description, textView, date_label, date_assigned, provider, priority, file_name, desc_label;
+        public TextView no_photo, request_date, request_type, room, description, textView, date_label, date_assigned, provider, priority, file_name, desc_label;
         public ImageView imageView;
         public LinearLayout linearLayout;
-        public Button bn_close;
+        public Button bn_close, view_photo;
         public ImageButton choose_file;
 
         public MyViewHolder(View view) {
@@ -103,6 +103,8 @@ public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedReques
             file_name = (TextView) view.findViewById(R.id.tv_file_name);
             choose_file = (ImageButton) view.findViewById(R.id.ib_report);
             bn_close = (Button) view.findViewById(R.id.btn_close);
+            no_photo = (TextView) view.findViewById(R.id.tv_no_photo);
+            view_photo = (Button) view.findViewById(R.id.btn_view_photo);
 
             choose_file.setOnClickListener(new View.OnClickListener() {
 
@@ -174,7 +176,23 @@ public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedReques
             holder.linearLayout.startAnimation(slideDown);
         }
 
-        holder.textView.setOnClickListener(new View.OnClickListener() {
+
+      //  holder.choose_file.setOnClickListener(mCtx);
+        holder.view_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.view_photo.setVisibility(View.GONE);
+                if(holder.imageView.getDrawable() == null){
+                    holder.no_photo.setVisibility(View.VISIBLE);
+                }
+                else if (holder.imageView.getDrawable() != null){
+                    holder.imageView.setVisibility(View.VISIBLE);
+                    //holder.hide_photo.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -185,8 +203,6 @@ public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedReques
                 notifyDataSetChanged();
             }
         });
-      //  holder.choose_file.setOnClickListener(mCtx);
-
         holder.bn_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

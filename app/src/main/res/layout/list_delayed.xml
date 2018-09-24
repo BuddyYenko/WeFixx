@@ -8,7 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true">
 
         <LinearLayout
@@ -27,15 +26,17 @@
             <!--android:textAppearance="@style/Base.TextAppearance.AppCompat.Large.Inverse" />-->
 
             <LinearLayout
+                android:id="@+id/row"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:weightSum="2"
-                android:id="@+id/row">
+                android:weightSum="2">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
+
                     <TextView
                         android:id="@+id/room_label"
                         android:layout_width="wrap_content"
@@ -45,9 +46,9 @@
                         android:background="@color/colorAccent"
                         android:padding="5dp"
                         android:text="room"
-                        android:textStyle="bold"
                         android:textAlignment="textStart"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium.Inverse" />
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium.Inverse"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/date_label"
@@ -58,12 +59,13 @@
                         android:background="@color/colorAccent"
                         android:padding="5dp"
                         android:text="date"
-                        android:textStyle="bold"
                         android:textAlignment="textEnd"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium.Inverse" />
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium.Inverse"
+                        android:textStyle="bold" />
 
 
                 </LinearLayout>
+
                 <TextView
                     android:id="@+id/desc_label"
                     android:layout_width="match_parent"
@@ -85,7 +87,6 @@
                 android:visibility="visible">
 
 
-
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -103,11 +104,11 @@
                             android:id="@+id/tv_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:text="date reported"
                             android:layout_marginLeft="20dp"
-                            />
+                            android:text="date reported"
+                            android:textStyle="bold" />
                     </TableRow>
+
                     <TableRow>
 
                         <TextView
@@ -119,9 +120,9 @@
                             android:id="@+id/tv_date_assigned"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
                             android:text="date assigned"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="20dp"/>
+                            android:textStyle="bold" />
                     </TableRow>
 
                     <TableRow>
@@ -135,10 +136,11 @@
                             android:id="@+id/tv_requester"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="requester"
                             android:layout_marginLeft="20dp"
-                            android:textStyle="bold"/>
+                            android:text="requester"
+                            android:textStyle="bold" />
                     </TableRow>
+
                     <TableRow>
 
                         <TextView
@@ -150,10 +152,9 @@
                             android:id="@+id/tv_room"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="room"
-                            android:textStyle="bold"
                             android:layout_marginLeft="20dp"
-                            />
+                            android:text="room"
+                            android:textStyle="bold" />
                     </TableRow>
 
                     <TableRow>
@@ -167,9 +168,9 @@
                             android:id="@+id/tv_type"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
                             android:text="category"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="20dp"/>
+                            android:textStyle="bold" />
                     </TableRow>
 
                     <TableRow>
@@ -183,12 +184,13 @@
                             android:id="@+id/tv_desc"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
                             android:text="desc"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="20dp"/>
+                            android:textStyle="bold" />
                     </TableRow>
 
                     <TableRow>
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -198,11 +200,13 @@
                             android:id="@+id/tv_priority"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
                             android:text="priority"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="20dp"/>
+                            android:textStyle="bold" />
                     </TableRow>
+
                     <TableRow>
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -212,18 +216,19 @@
                             android:id="@+id/tv_turnaround"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
                             android:text="turnaround"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="20dp"/>
+                            android:textStyle="bold" />
                     </TableRow>
 
                     <RelativeLayout>
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
                             android:text="MAINTENANCE PROVIDER DETAILS:"
-                            android:textStyle="bold"
-                            android:layout_marginTop="15dp"/>
+                            android:textStyle="bold" />
                     </RelativeLayout>
 
 
@@ -233,9 +238,11 @@
                             android:id="@+id/tv_provider"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Provider"/>
+                            android:text="Provider" />
                     </TableRow>
+
                     <TableRow>
+
                         <TextView
                             android:id="@+id/tv_email"
                             android:layout_width="wrap_content"
@@ -244,7 +251,9 @@
 
 
                     </TableRow>
+
                     <TableRow>
+
                         <TextView
                             android:id="@+id/tv_contact"
                             android:layout_width="wrap_content"
@@ -253,7 +262,9 @@
 
 
                     </TableRow>
+
                     <TableRow>
+
                         <TextView
                             android:id="@+id/tv_status"
                             android:layout_width="wrap_content"
@@ -264,33 +275,34 @@
                     </TableRow>
 
 
-
                 </TableLayout>
+
                 <Button
                     android:id="@+id/btn_view_photo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="View Photo"
                     android:layout_marginLeft="15dp"
                     android:background="@drawable/rounded_button"
-                    />
-                <Button
-                    android:id="@+id/btn_hide_photo"
+                    android:text="View Photo" />
+
+
+                <TextView
+                    android:id="@+id/tv_no_photo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Hide Photo"
                     android:layout_marginLeft="15dp"
-                    android:visibility="gone"
-                    android:background="@drawable/rounded_button"
-                    android:layout_marginBottom="5dp"
-                    />
+                    android:paddingBottom="5dp"
+                    android:text="***No Photo***"
+                    android:visibility="gone" />
                 <ImageView
                     android:id="@+id/imageView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
-                    android:layout_marginLeft="20dp"
-                    android:visibility="gone"/>
+                    android:layout_marginLeft="18dp"
+                    android:paddingBottom="5dp"
+                    android:visibility="gone" />
+
 
             </LinearLayout>
 

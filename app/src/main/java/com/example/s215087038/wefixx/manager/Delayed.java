@@ -76,7 +76,7 @@ public class Delayed extends AppCompatActivity {
                                 request.getString("contact_number"),
                                 request.getString("email"),
                                 request.getString("provider_status"),
-                                "http://sict-iis.nmmu.ac.za/wefixx/files/photos/" + request.getString("photo") + ".jpeg"
+                                "http://sict-iis.nmmu.ac.za/wefixx/files/photos/" + request.getString("photo")
 
                         ));
 

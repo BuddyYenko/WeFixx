@@ -66,11 +66,11 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView request_date, request_type, room, description, textView, date_label, desc_label;
+        public TextView no_photo, request_date, request_type, room, description, textView, date_label, desc_label;
         public ImageView imageView;
         public LinearLayout linearLayout;
         public Spinner sp_priority, sp_provider;
-        public Button bn_assign;
+        public Button bn_assign, view_photo;
 
         public MyViewHolder(View view) {
             super(view);
@@ -87,7 +87,8 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
             sp_priority = (Spinner) view.findViewById(R.id.sp_priority);
             sp_provider = (Spinner) view.findViewById(R.id.sp_provider);
             bn_assign = (Button) view.findViewById(R.id.btn_submit);
-
+            no_photo = (TextView) view.findViewById(R.id.tv_no_photo);
+            view_photo = (Button) view.findViewById(R.id.btn_view_photo);
         }
     }
 
@@ -115,6 +116,21 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
 
         Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
         holder.linearLayout.setVisibility(View.GONE);
+
+        holder.view_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.view_photo.setVisibility(View.GONE);
+                if(holder.imageView.getDrawable() == null){
+                    holder.no_photo.setVisibility(View.VISIBLE);
+                }
+                else{
+                    holder.imageView.setVisibility(View.VISIBLE);
+                    //holder.hide_photo.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
 
         builder = new AlertDialog.Builder(mCtx);
         StringRequest stringRequest = new StringRequest(com.android.volley.Request.Method.POST, providerUrl,
@@ -204,6 +220,17 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
         }
 
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //getting the position of the item to expand it
+                currentPosition = position;
+
+                //reloading the list
+                notifyDataSetChanged();
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

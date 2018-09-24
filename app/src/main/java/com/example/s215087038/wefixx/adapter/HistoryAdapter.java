@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -35,10 +36,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView request_date, request_type, room, description, textView, date_label, priority, provider, date_assigned, date_closed, comment, desc_label;
+        public TextView no_photo, request_date, request_type, room, description, textView, date_label, priority, provider, date_assigned, date_closed, comment, desc_label;
         public RatingBar rating;
         public ImageView imageView;
         public LinearLayout linearLayout, row;
+        public Button view_photo;
 
         public MyViewHolder(View view) {
             super(view);
@@ -54,12 +56,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
             date_label = (TextView) view.findViewById(R.id.date_label);
             imageView = (ImageView)view.findViewById(R.id.imageView);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
-            linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
             priority = (TextView) view.findViewById(R.id.tv_priority);
             provider = (TextView) view.findViewById(R.id.tv_provider);
             comment = (TextView) view.findViewById(R.id.tv_comment);
             rating = (RatingBar) view.findViewById(R.id.rb_rating);
-
+            no_photo = (TextView) view.findViewById(R.id.tv_no_photo);
+            view_photo = (Button) view.findViewById(R.id.btn_view_photo);
 
         }
     }
@@ -93,7 +95,20 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
         holder.linearLayout.setVisibility(View.GONE);
 
+        holder.view_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.view_photo.setVisibility(View.GONE);
+                if(holder.imageView.getDrawable() == null){
+                    holder.no_photo.setVisibility(View.VISIBLE);
+                }
+                else{
+                    holder.imageView.setVisibility(View.VISIBLE);
+                    //holder.hide_photo.setVisibility(View.VISIBLE);
+                }
 
+            }
+        });
         //if the position is equals to the item position which is to be expanded
         if (currentPosition == position) {
             //creating an animation

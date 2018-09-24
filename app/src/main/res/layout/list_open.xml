@@ -92,14 +92,6 @@
                     android:padding="15dp">
 
                     <TableRow>
-                        <ImageView
-                            android:id="@+id/imageView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left"/>
-
-                    </TableRow>
-                    <TableRow>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -194,18 +186,43 @@
                             android:layout_marginLeft="20dp"></Spinner>
                     </TableRow>
 
-                    <TableRow>
-                        <Button
-                            android:id="@+id/btn_submit"
-                            android:layout_width="115dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="start"
-                            android:background="@drawable/rounded_button"
-                            android:text="submit" />
-                    </TableRow>
+
 
                 </TableLayout>
 
+                <Button
+                    android:id="@+id/btn_view_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/rounded_button"
+                    android:text="View Photo"
+                    android:layout_marginBottom="10dp"/>
+
+
+                <TextView
+                    android:id="@+id/tv_no_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:paddingBottom="5dp"
+                    android:text="***No Photo***"
+                    android:visibility="gone" />
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="20dp"
+                    android:paddingBottom="5dp"
+                    android:visibility="gone" />
+                <Button
+                    android:id="@+id/btn_submit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/rounded_button"
+                    android:text="submit" />
             </LinearLayout>
 
         </LinearLayout>
