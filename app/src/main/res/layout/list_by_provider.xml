@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
@@ -15,8 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <!--<TextView-->
             <!--android:id="@+id/room"-->
@@ -32,7 +30,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:id="@+id/row"
                 android:weightSum="2">
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -86,6 +83,8 @@
                 android:orientation="vertical"
                 android:visibility="visible">
 
+
+
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -95,30 +94,15 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Requester " />
-
-                        <TextView
-                            android:id="@+id/tv_requester"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="date opened"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="20dp"/>
-                    </TableRow>
-                    <TableRow>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Date Request " />
+                            android:text="Date Reported" />
 
                         <TextView
                             android:id="@+id/tv_date"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="date opened"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="20dp"/>
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="20dp"
+                            android:text="date reported"
+                            android:textStyle="bold" />
                     </TableRow>
                     <TableRow>
 
@@ -136,17 +120,47 @@
                             android:layout_marginLeft="20dp"/>
                     </TableRow>
                     <TableRow>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Expected Close Date" />
+
+                        <TextView
+                            android:id="@+id/tv_expected_close"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="expected close"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="20dp"/>
+                    </TableRow>
+                    <TableRow>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Date Closed " />
-
+                            android:text="Priority"
+                            />
                         <TextView
-                            android:id="@+id/tv_date_closed"
+                            android:id="@+id/tv_priority"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="date closed"
+                            android:text="priority"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="20dp"/>
+
+                    </TableRow>
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Days Overdue" />
+
+                        <TextView
+                            android:id="@+id/tv_overdue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="days overdue"
                             android:textStyle="bold"
                             android:layout_marginLeft="20dp"/>
                     </TableRow>
@@ -198,128 +212,63 @@
                             android:layout_marginLeft="20dp"/>
                     </TableRow>
 
-                    <TableRow>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Maintenance Provider"
-                            />
-                        <TextView
-                            android:id="@+id/tv_provider"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="provider"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="20dp"/>
-
-
-                    </TableRow>
 
                     <TableRow>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Priority" />
+                            android:text="Status" />
 
                         <TextView
-                            android:id="@+id/tv_priority"
+                            android:id="@+id/tv_status"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="priority"
+                            android:text="status"
                             android:textStyle="bold"
                             android:layout_marginLeft="20dp"/>
                     </TableRow>
+
                     <TableRow>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Report" />
 
                         <TextView
-                            android:id="@+id/tv_report"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="report"
+                            android:text="REQUEST REPORT:"
                             android:textStyle="bold"
-                            android:layout_marginLeft="20dp"/>
+                            android:layout_marginTop="20dp"/>
                     </TableRow>
-                    <TableRow>
+                    <RelativeLayout>
+
+                        <ImageButton
+                            android:id="@+id/ib_report"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginBottom="15dp"
+                            android:background="@null"
+                            android:src="@drawable/choose_report" />
 
                         <TextView
+                            android:id="@+id/tv_file_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Comment   " />
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/ib_report"
+                            android:gravity="center_vertical"
+                            android:text="Choose Report" />
+                    </RelativeLayout>
 
-                        <TextView
-                            android:id="@+id/tv_comment"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="comment"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="20dp"/>
-                    </TableRow>
-                    <TableRow>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Rating"/>
 
-                        <com.iarcuschin.simpleratingbar.SimpleRatingBar
-                            android:id="@+id/rb_rating"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srb_starSize="20dp"
-                            app:srb_starBorderWidth="3"
-                            app:srb_numberOfStars="5"
-                            app:srb_gravity="left"
-                            app:srb_isIndicator="true"
-                            android:layout_marginLeft="20dp"
-                            app:srb_pressedStarBackgroundColor ="@color/golden_stars"
-                            />
-                    </TableRow>
                 </TableLayout>
-                <!--<LinearLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:orientation="horizontal"-->
-                    <!--android:weightSum="2">-->
-                    <!--<TextView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="Rating"-->
-                        <!--android:layout_weight="1"-->
-                        <!--android:paddingLeft="15dp"/>-->
-                    <!--<com.iarcuschin.simpleratingbar.SimpleRatingBar-->
-                        <!--android:layout_weight="1"-->
-                        <!--android:id="@+id/rb_rating"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--app:srb_starSize="20dp"-->
-                        <!--app:srb_starBorderWidth="3"-->
-                        <!--app:srb_numberOfStars="5"-->
-                        <!--app:srb_gravity="left"-->
-                        <!--app:srb_isIndicator="true"-->
-                        <!--app:srb_pressedStarBackgroundColor ="@color/golden_stars"-->
-                        <!--/>-->
-                    <!--&lt;!&ndash;<RatingBar&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:id="@+id/rb_rating"&ndash;&gt;-->
-                        <!--&lt;!&ndash;style="?android:attr/ratingBarStyleSmall"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:layout_weight="1"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:numStars="5"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:isIndicator="true" />&ndash;&gt;-->
-
-                <!--</LinearLayout>-->
                 <Button
                     android:id="@+id/btn_view_photo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:background="@drawable/rounded_button"
-                    android:text="View Photo" />
-
+                    android:text="View Photo"
+                    android:layout_marginBottom="10dp"/>
 
                 <TextView
                     android:id="@+id/tv_no_photo"
@@ -329,7 +278,6 @@
                     android:paddingBottom="5dp"
                     android:text="***No Photo***"
                     android:visibility="gone" />
-
                 <ImageView
                     android:id="@+id/imageView"
                     android:layout_width="wrap_content"
@@ -337,8 +285,16 @@
                     android:layout_gravity="left"
                     android:layout_marginLeft="20dp"
                     android:paddingBottom="5dp"
-                    android:visibility="gone"
-                    />
+                    android:visibility="gone" />
+                <Button
+                    android:id="@+id/btn_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:background="@drawable/rounded_button"
+                    android:layout_marginLeft="15dp"
+                    android:text="close request" />
+
             </LinearLayout>
 
         </LinearLayout>

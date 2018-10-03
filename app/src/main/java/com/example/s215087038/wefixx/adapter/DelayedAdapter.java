@@ -98,7 +98,7 @@ public class DelayedAdapter extends RecyclerView.Adapter<DelayedAdapter.MyViewHo
         holder.email.setText(request.getEmail());
         holder.provider_status.setText(request.getProviderStatus());
         holder.turnaround.setText(request.getTurnaround());
-        if( request.getImageUrl() != "http://sict-iis.nmmu.ac.za/wefixx/files/photos/null") {
+        if( request.getImageUrl() != "null") {
             Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
 
         }
@@ -108,7 +108,7 @@ public class DelayedAdapter extends RecyclerView.Adapter<DelayedAdapter.MyViewHo
             @Override
             public void onClick(View view) {
                 holder.view_photo.setVisibility(View.GONE);
-                if(request.getImageUrl()!= "http://sict-iis.nmmu.ac.za/wefixx/files/photos/null"){
+                if(request.getImageUrl()!= "null"){
                     holder.imageView.setVisibility(View.VISIBLE);
 
                 }

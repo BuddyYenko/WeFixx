@@ -1,7 +1,7 @@
-package com.example.s215087038.wefixx.student;
+package com.example.s215087038.wefixx.rsa;
 
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -19,8 +18,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.s215087038.wefixx.MyDividerItemDecoration;
 import com.example.s215087038.wefixx.R;
-import com.example.s215087038.wefixx.adapter.OpenRequestAdapter;
-import com.example.s215087038.wefixx.adapter.StudentAssignedAdapter;
+import com.example.s215087038.wefixx.adapter.AssignedRequestAdapter;
+import com.example.s215087038.wefixx.adapter.CriticalAdapter;
 import com.example.s215087038.wefixx.model.Request;
 
 import org.json.JSONArray;
@@ -28,56 +27,47 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-public class StudentAssignedFragment extends Fragment {
-    private List<Request> requestList;
-    private RecyclerView recyclerView;
-    private StudentAssignedAdapter mAdapter;
-    String requestsUrl = "http://sict-iis.nmmu.ac.za/wefixx/student/student_assigned.php";
-    String user_id, name;
-    Context context;
-
-    public StudentAssignedFragment() {
+public class CriticalFragment extends Fragment {
+    private List<Request> criticalList;
+    private RecyclerView criticalRecyclerView;
+    private AssignedRequestAdapter aAdapter;
+    String criticalUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/critical.php";
+    public CriticalFragment() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //********************************************
-        SharedPreferences preferences =  this.getActivity().getSharedPreferences("MYPREFS", context.MODE_PRIVATE);
 
-        user_id = preferences.getString("user_id", "");
-        name = preferences.getString("name", "");
-        //********************************************
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View myFragmentView = inflater.inflate(R.layout.fragment_student_assigned, container, false);
+        View myFragmentView = inflater.inflate(R.layout.fragment_critical, container, false);
+        criticalList = new ArrayList<>();
+        criticalRecyclerView = (RecyclerView) myFragmentView.findViewById(R.id.criticalRecylcerView);
 
-        requestList = new ArrayList<>();
-        recyclerView = (RecyclerView) myFragmentView.findViewById(R.id.recylcerView);
-
-        mAdapter = new StudentAssignedAdapter(requestList);
+        aAdapter = new AssignedRequestAdapter(criticalList);
 
         // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new MyDividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL, 16));
-        recyclerView.setAdapter(mAdapter);
+        criticalRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        criticalRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        criticalRecyclerView.addItemDecoration(new MyDividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL, 16));
+        criticalRecyclerView.setAdapter(aAdapter);
         prepareRequestData();
         return myFragmentView;
     }
 
     private void prepareRequestData() {
+
+
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        StringRequest stringRequest = new StringRequest(com.android.volley.Request.Method.POST, requestsUrl, new Response.Listener<String>() {
+        StringRequest stringRequest1 = new StringRequest(com.android.volley.Request.Method.GET, criticalUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -91,22 +81,25 @@ public class StudentAssignedFragment extends Fragment {
                         JSONObject request = array.getJSONObject(i);
 
                         //adding the request to request list_open
-                        requestList.add(new Request(
+                        criticalList.add(new Request(
                                 request.getString("fault_id"),
                                 request.getString("request_date"),
                                 request.getString("date_assigned"),
+                                request.getString("expected_close"),
+                                request.getString("days_overdue"),
+                                request.getString("room"),
                                 request.getString("request_type"),
                                 request.getString("description"),
                                 request.getString("provider"),
-                                request.getString("priority"),
+                                request.getString("status"),
                                 request.getString("photo")
                         ));
 
                     }
 
                     //creating adapter object and setting it to recyclerview
-                    StudentAssignedAdapter adapter = new StudentAssignedAdapter(getActivity(), requestList);
-                    recyclerView.setAdapter(adapter);
+                    CriticalAdapter adapter = new CriticalAdapter(getActivity(), criticalList);
+                    criticalRecyclerView.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -116,17 +109,9 @@ public class StudentAssignedFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
             }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
+        });
+        queue.add(stringRequest1);
 
-                params.put("user_id", user_id);
-                return params;
-            }
-        };
-        queue.add(stringRequest);
-        mAdapter.notifyDataSetChanged();
     }
 
 }

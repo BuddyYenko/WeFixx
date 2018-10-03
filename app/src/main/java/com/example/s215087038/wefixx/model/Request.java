@@ -2,6 +2,7 @@ package com.example.s215087038.wefixx.model;
 
 public class Request {
     private String fault_id, request_date,fault_type_id, request_type, room, description,image_url, provider, priority, comment, date_assigned, date_closed, requester, contact_number, turnaround, email, status, provider_status;
+    private String expected_close, days_overdue, request_status;
     private float rating ;
 
     public Request() {
@@ -97,7 +98,20 @@ public Request( String request_date, String date_assigned, String request_type, 
     this.image_url = image_url;
 
 }
-
+//manage by priority
+public Request(String fault_id, String request_date, String date_assigned, String expected_close, String days_overdue, String room, String request_type, String description, String provider, String status, String image_url) {
+    this.fault_id = fault_id;
+    this.request_date = request_date;
+    this.date_assigned = date_assigned;
+    this.request_type = request_type;
+    this.description = description;
+    this.image_url = image_url;
+    this.provider = provider;
+    this.request_status = status;
+    this.expected_close = expected_close;
+    this.days_overdue = days_overdue;
+    this.room = room;
+}
 
     public String getRequestDate() {
         return request_date;
@@ -212,6 +226,15 @@ public Request( String request_date, String date_assigned, String request_type, 
 
     public String getRequester() {
         return requester;
+    }
+    public String getDaysOverdue() {
+        return days_overdue;
+    }
+    public String getExpectedClose() {
+        return expected_close;
+    }
+    public String getRequestStatus() {
+        return request_status;
     }
 
 }

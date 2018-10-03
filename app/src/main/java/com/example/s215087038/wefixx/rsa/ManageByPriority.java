@@ -13,17 +13,14 @@ import com.example.s215087038.wefixx.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Manage extends AppCompatActivity {
-
-    private android.support.v7.widget.Toolbar toolbar;
+public class ManageByPriority extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manage);
-
+        setContentView(R.layout.activity_manage_by_priority);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -36,8 +33,9 @@ public class Manage extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new OpenFragment(), " OPEN / NEW");
-        adapter.addFragment(new AssignedFragment(), "ASSIGNED");
+        adapter.addFragment(new CriticalFragment(), "CRITICAL");
+        adapter.addFragment(new ModerateFragment(), "MODERATE");
+        adapter.addFragment(new LowFragment()   , "LOW");
         viewPager.setAdapter(adapter);
     }
 

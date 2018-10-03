@@ -85,7 +85,7 @@ public class OpenFragment extends Fragment {
                                 request.getString("request_type"),
                                 request.getString("description"),
                                 request.getString("room"),
-                                "http://sict-iis.nmmu.ac.za/wefixx/files/photos/" + request.getString("photo") + ".jpeg"
+                                request.getString("photo")
                         ));
 
                     }

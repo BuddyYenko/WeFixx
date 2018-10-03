@@ -50,10 +50,10 @@ public class StudentOpenAdapter extends  RecyclerView.Adapter<StudentOpenAdapter
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView request_date, request_type, room, description, textView, date_label, date_assigned, provider, priority;
+        public TextView no_photo, request_date, request_type, room, description, textView, date_label, date_assigned, provider, priority;
         public ImageView imageView;
         public LinearLayout linearLayout, row;
-
+        public Button view_photo;
 
         public MyViewHolder(View view) {
             super(view);
@@ -65,7 +65,8 @@ public class StudentOpenAdapter extends  RecyclerView.Adapter<StudentOpenAdapter
             imageView = (ImageView)view.findViewById(R.id.imageView);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
             row = (LinearLayout) itemView.findViewById(R.id.row);
-
+            no_photo = (TextView) view.findViewById(R.id.tv_no_photo);
+            view_photo = (Button) view.findViewById(R.id.btn_view_photo);
         }
 
     }
@@ -81,7 +82,7 @@ public class StudentOpenAdapter extends  RecyclerView.Adapter<StudentOpenAdapter
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        Request request = requestList.get(position);
+        final Request request = requestList.get(position);
         holder.request_date.setText(request.getRequestDate());
         holder.request_type.setText(request.getRequestType());
         holder.description.setText(request.getDescription());
@@ -94,9 +95,26 @@ public class StudentOpenAdapter extends  RecyclerView.Adapter<StudentOpenAdapter
 //        holder.date_assigned.setText(request.getDateAssigned());
     //    holder.provider.setText(request.getProvider());
    //     holder.priority.setText(request.getPriority());
+        if( request.getImageUrl() != "null") {
+            Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
 
-        Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
+        }
         holder.linearLayout.setVisibility(View.GONE);
+        holder.view_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.view_photo.setVisibility(View.GONE);
+                if(request.getImageUrl()!= "null"){
+                    holder.imageView.setVisibility(View.VISIBLE);
+
+                }
+                else{
+                    holder.no_photo.setVisibility(View.VISIBLE);
+                    //holder.hide_photo.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
 
         builder = new AlertDialog.Builder(mCtx);
 

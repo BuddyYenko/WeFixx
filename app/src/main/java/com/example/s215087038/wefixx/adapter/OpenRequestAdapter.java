@@ -102,7 +102,7 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        Request request = requestList.get(position);
+        final Request request = requestList.get(position);
         holder.request_date.setText(request.getRequestDate());
         holder.request_type.setText(request.getRequestType());
         holder.description.setText(request.getDescription());
@@ -113,19 +113,21 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
 
         fault_type_id = request.getFaultTypeID();
         fault_id = request.getFaultID();
-
-        Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
+        if( request.getImageUrl() != "null") {
+            Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
+        }
         holder.linearLayout.setVisibility(View.GONE);
 
         holder.view_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 holder.view_photo.setVisibility(View.GONE);
-                if(holder.imageView.getDrawable() == null){
-                    holder.no_photo.setVisibility(View.VISIBLE);
+                if(request.getImageUrl()!= "null"){
+                    holder.imageView.setVisibility(View.VISIBLE);
+
                 }
                 else{
-                    holder.imageView.setVisibility(View.VISIBLE);
+                    holder.no_photo.setVisibility(View.VISIBLE);
                     //holder.hide_photo.setVisibility(View.VISIBLE);
                 }
 

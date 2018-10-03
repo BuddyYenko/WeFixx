@@ -73,8 +73,7 @@ public class History extends AppCompatActivity {
                                 request.getString("provider"),
                                 request.getString("priority"),
                                 request.getString("requester"),
-                                "http://sict-iis.nmmu.ac.za/wefixx/files/photos/" + request.getString("photo") + ".jpeg"
-
+                                request.getString("photo")
                                 ));
 
                 }

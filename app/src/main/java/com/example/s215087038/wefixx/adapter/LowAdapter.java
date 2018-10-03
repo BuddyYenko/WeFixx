@@ -1,14 +1,11 @@
 package com.example.s215087038.wefixx.adapter;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,45 +13,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.s215087038.wefixx.R;
 import com.example.s215087038.wefixx.model.MySingleton;
 import com.example.s215087038.wefixx.model.PriorityDataObject;
 import com.example.s215087038.wefixx.model.ProviderDataObject;
 import com.example.s215087038.wefixx.model.Request;
-import com.example.s215087038.wefixx.rsa.AssignedFragment;
 import com.example.s215087038.wefixx.rsa.Manage;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static android.app.Activity.RESULT_OK;
-import static android.support.v4.app.ActivityCompat.startActivityForResult;
-
-public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedRequestAdapter.MyViewHolder> {
-
+public class LowAdapter extends RecyclerView.Adapter<LowAdapter.MyViewHolder>{
     private List<Request> requestList;
     private Context mCtx;
     private static Context context = null;
@@ -68,18 +53,18 @@ public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedReques
     protected List<PriorityDataObject> priorityData;
     String fault_id, fault_type_id;
 
-    public AssignedRequestAdapter(List<Request> requestList) {
+    public LowAdapter(List<Request> requestList) {
         this.requestList = requestList;
     }
 
-    public AssignedRequestAdapter(Context mCtx, List<Request> requestList) {
+    public LowAdapter(Context mCtx, List<Request> requestList) {
         this.mCtx = mCtx;
         this.requestList = requestList;
         this.context = mCtx;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView no_photo, request_date, request_type, room, description, textView, date_label, date_assigned, provider, priority, file_name, desc_label;
+        public TextView expected_close, days_overdue, no_photo, request_date, request_type, room, description, textView, date_label, date_assigned, provider, status, file_name, desc_label;
         public ImageView imageView;
         public LinearLayout linearLayout;
         public Button bn_close, view_photo;
@@ -91,13 +76,15 @@ public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedReques
             request_type = (TextView) view.findViewById(R.id.tv_type);
             description = (TextView) view.findViewById(R.id.tv_desc);
             desc_label = (TextView) view.findViewById(R.id.desc_label);
+            expected_close = (TextView) view.findViewById(R.id.tv_expected_close);
+            days_overdue = (TextView) view.findViewById(R.id.tv_overdue);
 
             room = (TextView) view.findViewById(R.id.tv_room);
             textView = (TextView) view.findViewById(R.id.room_label);
             date_label = (TextView) view.findViewById(R.id.date_label);
             imageView = (ImageView)view.findViewById(R.id.imageView);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
-            priority = (TextView) view.findViewById(R.id.tv_priority);
+            status = (TextView) view.findViewById(R.id.tv_status);
             provider = (TextView) view.findViewById(R.id.tv_provider);
             date_assigned = (TextView) view.findViewById(R.id.tv_date_assigned);
             file_name = (TextView) view.findViewById(R.id.tv_file_name);
@@ -116,7 +103,7 @@ public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedReques
 
                     intent.setAction(Intent.ACTION_GET_CONTENT);
 
-                   // startActivityForResult(Intent.createChooser(intent, "Select Pdf"), PDF_REQ_CODE);
+                    // startActivityForResult(Intent.createChooser(intent, "Select Pdf"), PDF_REQ_CODE);
 
                 }
             });
@@ -134,16 +121,15 @@ public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedReques
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public LowAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_assigned, parent, false);
+                .inflate(R.layout.list_low, parent, false);
 
-        return new MyViewHolder(itemView);
+        return new LowAdapter.MyViewHolder(itemView);
     }
 
-
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final LowAdapter.MyViewHolder holder, final int position) {
         final Request request = requestList.get(position);
         holder.request_date.setText(request.getRequestDate());
         holder.request_type.setText(request.getRequestType());
@@ -152,12 +138,14 @@ public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedReques
         holder.textView.setText(request.getRoom());
         holder.date_label.setText(request.getRequestDate());
         holder.desc_label.setText(request.getDescription());
+        holder.status.setText(request.getRequestStatus());
+        holder.expected_close.setText(request.getExpectedClose());
+        holder.days_overdue.setText(request.getDaysOverdue());
 
         fault_type_id = request.getFaultTypeID();
         fault_id = request.getFaultID();
         holder.date_assigned.setText(request.getDateAssigned());
         holder.provider.setText(request.getProvider());
-        holder.priority.setText(request.getPriority());
         if( request.getImageUrl() != "null") {
             Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
         }
@@ -178,7 +166,7 @@ public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedReques
         }
 
 
-      //  holder.choose_file.setOnClickListener(mCtx);
+        //  holder.choose_file.setOnClickListener(mCtx);
         holder.view_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -264,7 +252,6 @@ public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedReques
                 alertDialog.show();
             }
         });
-
     }
 
 

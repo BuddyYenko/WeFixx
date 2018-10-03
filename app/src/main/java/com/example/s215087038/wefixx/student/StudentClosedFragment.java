@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -28,7 +29,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class StudentClosedFragment extends Fragment {
     private List<Request> requestList;
@@ -75,7 +78,7 @@ public class StudentClosedFragment extends Fragment {
 
     private void prepareRequestData() {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        StringRequest stringRequest = new StringRequest(com.android.volley.Request.Method.GET, requestsUrl, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(com.android.volley.Request.Method.POST, requestsUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -96,12 +99,11 @@ public class StudentClosedFragment extends Fragment {
                                 request.getString("date_closed"),
                                 request.getString("request_type"),
                                 request.getString("description"),
-                                request.getString("priority"),
                                 request.getString("provider"),
+                                request.getString("priority"),
                                 request.getString("comment"),
                                 request.getInt("rating"),
-
-                                "http://sict-iis.nmmu.ac.za/wefixx/files/photos/" + request.getString("photo") + ".jpeg"
+                                request.getString("photo")
                         ));
 
                     }
@@ -118,7 +120,15 @@ public class StudentClosedFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
             }
-        });
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("user_id", user_id);
+                return params;
+            }
+        };
         queue.add(stringRequest);
         mAdapter.notifyDataSetChanged();
     }

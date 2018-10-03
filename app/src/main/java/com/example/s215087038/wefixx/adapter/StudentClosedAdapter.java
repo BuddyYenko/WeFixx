@@ -23,6 +23,7 @@ import com.example.s215087038.wefixx.R;
 import com.example.s215087038.wefixx.model.PriorityDataObject;
 import com.example.s215087038.wefixx.model.ProviderDataObject;
 import com.example.s215087038.wefixx.model.Request;
+import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 
 import java.util.List;
 
@@ -33,7 +34,6 @@ public class StudentClosedAdapter extends  RecyclerView.Adapter<StudentClosedAda
     private static Context context = null;
 
     private static int currentPosition = -1;
-    String closeUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/update_request.php";
     AlertDialog.Builder builder;
 
     protected List<ProviderDataObject> providerData;
@@ -51,11 +51,11 @@ public class StudentClosedAdapter extends  RecyclerView.Adapter<StudentClosedAda
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView request_date, request_type, room, description,comment, textView, date_label, date_closed, date_assigned, provider, priority, file_name;
+        public TextView no_photo, request_date, request_type, room, description,comment, textView, date_label, date_closed, date_assigned, provider, priority, file_name;
         public ImageView imageView;
         public LinearLayout linearLayout, row;
-
-        public RatingBar rating;
+        public Button view_photo;
+        public SimpleRatingBar rating;
 
 
         public MyViewHolder(View view) {
@@ -73,9 +73,10 @@ public class StudentClosedAdapter extends  RecyclerView.Adapter<StudentClosedAda
             date_assigned = (TextView) view.findViewById(R.id.tv_date_assigned);
             date_closed= (TextView) view.findViewById(R.id.tv_date_closed);
             comment = (TextView) view.findViewById(R.id.tv_comment);
-            rating = (RatingBar) view.findViewById(R.id.rb_rating);
+            rating = (SimpleRatingBar) view.findViewById(R.id.rb_rating);
             row = (LinearLayout) itemView.findViewById(R.id.row);
-
+            no_photo = (TextView) view.findViewById(R.id.tv_no_photo);
+            view_photo = (Button) view.findViewById(R.id.btn_view_photo);
         }
     }
     @Override
@@ -89,7 +90,7 @@ public class StudentClosedAdapter extends  RecyclerView.Adapter<StudentClosedAda
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        Request request = requestList.get(position);
+        final Request request = requestList.get(position);
         holder.request_date.setText(request.getRequestDate());
         holder.date_assigned.setText(request.getDateAssigned());
         holder.date_closed.setText(request.getDateClosed());
@@ -105,11 +106,33 @@ public class StudentClosedAdapter extends  RecyclerView.Adapter<StudentClosedAda
         holder.date_assigned.setText(request.getDateAssigned());
         holder.provider.setText(request.getProvider());
         holder.priority.setText(request.getPriority());
-        holder.comment.setText(request.getComment() + " "  + request.getRating());
-        holder.rating.setRating(request.getRating());
+        if(request.getComment() != "null"){
+            holder.comment.setText(request.getComment());
+        }else{
+            holder.comment.setText("***No Comment***");
+        }
+            holder.rating.setRating(request.getRating());
 
-        Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
+        if( request.getImageUrl() != "null") {
+            Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
+
+        }
         holder.linearLayout.setVisibility(View.GONE);
+        holder.view_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.view_photo.setVisibility(View.GONE);
+                if(request.getImageUrl()!= "null"){
+                    holder.imageView.setVisibility(View.VISIBLE);
+
+                }
+                else{
+                    holder.no_photo.setVisibility(View.VISIBLE);
+                    //holder.hide_photo.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
 
         builder = new AlertDialog.Builder(mCtx);
 

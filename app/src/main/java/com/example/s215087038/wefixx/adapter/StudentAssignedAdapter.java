@@ -45,7 +45,6 @@ public class StudentAssignedAdapter extends  RecyclerView.Adapter<StudentAssigne
     private static Context context = null;
 
     private static int currentPosition = -1;
-    String closeUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/update_request.php";
     AlertDialog.Builder builder;
 
     protected List<ProviderDataObject> providerData;
@@ -63,9 +62,10 @@ public class StudentAssignedAdapter extends  RecyclerView.Adapter<StudentAssigne
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView request_date, request_type, room, description, textView, date_label, date_assigned, provider, priority;
+        public TextView no_photo, request_date, request_type, room, description, textView, date_label, date_assigned, provider, priority;
         public ImageView imageView;
         public LinearLayout linearLayout, row;
+        public Button view_photo;
 
         public MyViewHolder(View view) {
             super(view);
@@ -80,10 +80,8 @@ public class StudentAssignedAdapter extends  RecyclerView.Adapter<StudentAssigne
             provider = (TextView) view.findViewById(R.id.tv_provider);
             date_assigned = (TextView) view.findViewById(R.id.tv_date_assigned);
             row = (LinearLayout) itemView.findViewById(R.id.row);
-
-
-
-
+            no_photo = (TextView) view.findViewById(R.id.tv_no_photo);
+            view_photo = (Button) view.findViewById(R.id.btn_view_photo);
         }
     }
 
@@ -98,7 +96,7 @@ public class StudentAssignedAdapter extends  RecyclerView.Adapter<StudentAssigne
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        Request request = requestList.get(position);
+        final Request request = requestList.get(position);
         holder.request_date.setText(request.getRequestDate());
         holder.request_type.setText(request.getRequestType());
         holder.description.setText(request.getDescription());
@@ -112,8 +110,26 @@ public class StudentAssignedAdapter extends  RecyclerView.Adapter<StudentAssigne
         holder.provider.setText(request.getProvider());
         holder.priority.setText(request.getPriority());
 
-        Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
+        if( request.getImageUrl() != "null") {
+            Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
+
+        }
         holder.linearLayout.setVisibility(View.GONE);
+        holder.view_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.view_photo.setVisibility(View.GONE);
+                if(request.getImageUrl()!= "null"){
+                    holder.imageView.setVisibility(View.VISIBLE);
+
+                }
+                else{
+                    holder.no_photo.setVisibility(View.VISIBLE);
+                    //holder.hide_photo.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
 
         builder = new AlertDialog.Builder(mCtx);
 

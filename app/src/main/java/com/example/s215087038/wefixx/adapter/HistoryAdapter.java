@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.BounceInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.s215087038.wefixx.R;
 import com.example.s215087038.wefixx.model.Request;
+import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 
 import java.util.List;
 
@@ -37,13 +39,15 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView no_photo, request_date, request_type, room, description, textView, date_label, priority, provider, date_assigned, date_closed, comment, desc_label;
-        public RatingBar rating;
+        public SimpleRatingBar rating;
         public ImageView imageView;
         public LinearLayout linearLayout, row;
         public Button view_photo;
 
         public MyViewHolder(View view) {
             super(view);
+
+
             request_date = (TextView) view.findViewById(R.id.tv_date);
             date_assigned = (TextView) view.findViewById(R.id.tv_date_assigned);
             date_closed = (TextView) view.findViewById(R.id.tv_date_closed);
@@ -59,7 +63,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
             priority = (TextView) view.findViewById(R.id.tv_priority);
             provider = (TextView) view.findViewById(R.id.tv_provider);
             comment = (TextView) view.findViewById(R.id.tv_comment);
-            rating = (RatingBar) view.findViewById(R.id.rb_rating);
+            rating = (SimpleRatingBar) view.findViewById(R.id.rb_rating);
             no_photo = (TextView) view.findViewById(R.id.tv_no_photo);
             view_photo = (Button) view.findViewById(R.id.btn_view_photo);
 
@@ -76,7 +80,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        Request request = requestList.get(position);
+        final Request request = requestList.get(position);
         holder.request_date.setText(request.getRequestDate());
         holder.date_assigned.setText(request.getDateAssigned());
         holder.date_closed.setText(request.getDateClosed());
@@ -90,20 +94,23 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         holder.date_label.setText(request.getRequestDate());
         holder.priority.setText(request.getPriority());
         holder.provider.setText(request.getProvider());
-        holder.comment.setText(request.getComment() + " "  + request.getRating());
+        holder.comment.setText(request.getComment());
         holder.rating.setRating(request.getRating());
-        Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
-        holder.linearLayout.setVisibility(View.GONE);
 
+        if( request.getImageUrl() != "null") {
+            Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
+        }
+        holder.linearLayout.setVisibility(View.GONE);
         holder.view_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 holder.view_photo.setVisibility(View.GONE);
-                if(holder.imageView.getDrawable() == null){
-                    holder.no_photo.setVisibility(View.VISIBLE);
+                if(request.getImageUrl()!= "null"){
+                    holder.imageView.setVisibility(View.VISIBLE);
+
                 }
                 else{
-                    holder.imageView.setVisibility(View.VISIBLE);
+                    holder.no_photo.setVisibility(View.VISIBLE);
                     //holder.hide_photo.setVisibility(View.VISIBLE);
                 }
 

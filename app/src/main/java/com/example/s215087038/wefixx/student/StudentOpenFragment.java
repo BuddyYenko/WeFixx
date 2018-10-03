@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -27,13 +28,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class StudentOpenFragment extends Fragment {
     private List<Request> requestList;
     private RecyclerView recyclerView;
     private OpenRequestAdapter mAdapter;
-    String openRequestsUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/open_requests.php";
+    String openRequestsUrl = "http://sict-iis.nmmu.ac.za/wefixx/student/student_open.php";
     String user_id, name;
     Context context;
 
@@ -74,7 +77,7 @@ public class StudentOpenFragment extends Fragment {
 
     private void prepareRequestData() {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        StringRequest stringRequest = new StringRequest(com.android.volley.Request.Method.GET, openRequestsUrl, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(com.android.volley.Request.Method.POST, openRequestsUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -93,7 +96,7 @@ public class StudentOpenFragment extends Fragment {
                                 request.getString("request_date"),
                                 request.getString("request_type"),
                                 request.getString("description"),
-                                "http://sict-iis.nmmu.ac.za/wefixx/files/photos/" + request.getString("photo") + ".jpeg"
+                                request.getString("photo")
                         ));
 
 
@@ -111,7 +114,15 @@ public class StudentOpenFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
             }
-        });
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("user_id", user_id);
+                return params;
+            }
+        };
         queue.add(stringRequest);
         mAdapter.notifyDataSetChanged();
     }
