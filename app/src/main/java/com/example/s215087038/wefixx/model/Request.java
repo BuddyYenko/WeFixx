@@ -4,6 +4,7 @@ public class Request {
     private String fault_id, request_date,fault_type_id, request_type, room, description,image_url, provider, priority, comment, date_assigned, date_closed, requester, contact_number, turnaround, email, status, provider_status;
     private String expected_close, days_overdue, request_status;
     private float rating ;
+    private int user_id;
 
     public Request() {
     }
@@ -82,37 +83,80 @@ public class Request {
         this.image_url = image_url;
 
     }
-//delayed
-public Request( String request_date, String date_assigned, String request_type, String description, String room, String requester, String priority , String turnaround, String contact_number, String email, String provider_status, String image_url) {
-    this.request_date = request_date;
-    this.date_assigned = date_assigned;
-    this.request_type = request_type;
-    this.description = description;
-    this.room = room;
-    this.requester = requester;
-    this.priority = priority;
-    this.turnaround = turnaround;
-    this.contact_number = contact_number;
-    this.email = email;
-    this.provider_status = provider_status;
-    this.image_url = image_url;
+    //delayed
+    public Request( String request_date, String date_assigned, String request_type, String expected_close, String description, String room, String requester, String priority , String turnaround, String contact_number, String email, String provider_status, String image_url) {
+        this.request_date = request_date;
+        this.date_assigned = date_assigned;
+        this.request_type = request_type;
+        this.description = description;
+        this.room = room;
+        this.requester = requester;
+        this.priority = priority;
+        this.turnaround = turnaround;
+        this.contact_number = contact_number;
+        this.email = email;
+        this.provider_status = provider_status;
+        this.image_url = image_url;
+        this.expected_close = expected_close;
 
-}
-//manage by priority
-public Request(String fault_id, String request_date, String date_assigned, String expected_close, String days_overdue, String room, String request_type, String description, String provider, String status, String image_url) {
-    this.fault_id = fault_id;
-    this.request_date = request_date;
-    this.date_assigned = date_assigned;
-    this.request_type = request_type;
-    this.description = description;
-    this.image_url = image_url;
-    this.provider = provider;
-    this.request_status = status;
-    this.expected_close = expected_close;
-    this.days_overdue = days_overdue;
-    this.room = room;
-}
-
+    }
+    //manage by priority
+    public Request(String fault_id, String request_date, String date_assigned, String expected_close, String days_overdue, String room, String request_type, String description, String provider, String status, String image_url) {
+        this.fault_id = fault_id;
+        this.request_date = request_date;
+        this.date_assigned = date_assigned;
+        this.request_type = request_type;
+        this.description = description;
+        this.image_url = image_url;
+        this.provider = provider;
+        this.request_status = status;
+        this.expected_close = expected_close;
+        this.days_overdue = days_overdue;
+        this.room = room;
+    }
+    //manage by provider
+    public Request(String fault_id, String request_date, String date_assigned, String expected_close, String days_overdue,String priority, String request_type, String description, String provider, String status, String image_url, String room) {
+        this.fault_id = fault_id;
+        this.request_date = request_date;
+        this.date_assigned = date_assigned;
+        this.request_type = request_type;
+        this.description = description;
+        this.image_url = image_url;
+        this.provider = provider;
+        this.request_status = status;
+        this.expected_close = expected_close;
+        this.days_overdue = days_overdue;
+        this.room = room;
+        this.priority = priority;
+    }
+    //manage by category assign
+    public Request(String fault_id, String request_date, String room, String request_type, String fault_type_id, int user_id, String description, String status, String image_url) {
+        this.fault_id = fault_id;
+        this.request_date = request_date;
+        this.room = room;
+        this.fault_type_id = fault_type_id;
+        this.description = description;
+        this.image_url = image_url;
+        this.request_type = request_type;
+        this.user_id = user_id;
+        this.request_status = status;
+    }
+    //manage by category close
+    public Request(int user_id, String fault_id, String request_date, String date_assigned, String expected_close, String days_overdue,String priority, String request_type, String description, String provider, String status, String image_url, String room) {
+        this.fault_id = fault_id;
+        this.request_date = request_date;
+        this.date_assigned = date_assigned;
+        this.request_type = request_type;
+        this.description = description;
+        this.image_url = image_url;
+        this.provider = provider;
+        this.expected_close = expected_close;
+        this.days_overdue = days_overdue;
+        this.room = room;
+        this.priority = priority;
+        this.request_status = status;
+        this.user_id = user_id;
+    }
     public String getRequestDate() {
         return request_date;
     }

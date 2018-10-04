@@ -75,6 +75,7 @@
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small.Inverse" />
             </LinearLayout>
 
+
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
@@ -89,83 +90,37 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="15dp">
+
                     <TableRow>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Date Reported" />
+                            android:text="Date Requested" />
 
                         <TextView
                             android:id="@+id/tv_date"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="20dp"
-                            android:text="date reported"
-                            android:textStyle="bold" />
-                    </TableRow>
-                    <TableRow>
-
-                        <TextView
-                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Date Assigned" />
-
-                        <TextView
-                            android:id="@+id/tv_date_assigned"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="date assigned"
+                            android:text="date"
                             android:textStyle="bold"
                             android:layout_marginLeft="20dp"/>
                     </TableRow>
+
                     <TableRow>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Expected Close Date" />
 
                         <TextView
-                            android:id="@+id/tv_expected_close"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="expected close"
+                            android:text="Room No   " />
+
+                        <TextView
+                            android:id="@+id/tv_room"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="room"
                             android:textStyle="bold"
                             android:layout_marginLeft="20dp"/>
-                    </TableRow>
-                    <TableRow>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Priority"
-                            />
-                        <TextView
-                            android:id="@+id/tv_priority"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="priority"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="20dp"/>
-
-                    </TableRow>
-                    <TableRow>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Days Overdue" />
-
-                        <TextView
-                            android:id="@+id/tv_overdue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="days overdue"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="20dp"/>
-                    </TableRow>
-                    <TableRow>
-
                     </TableRow>
 
                     <TableRow>
@@ -199,14 +154,12 @@
                             android:textStyle="bold"
                             android:layout_marginLeft="20dp"/>
                     </TableRow>
-
-
-
                     <TableRow>
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Status" />
+                            android:text="Status   " />
 
                         <TextView
                             android:id="@+id/tv_status"
@@ -216,39 +169,41 @@
                             android:textStyle="bold"
                             android:layout_marginLeft="20dp"/>
                     </TableRow>
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Maintenance Provider" />
+
+                        <Spinner
+                            android:id="@+id/sp_provider"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp">
+
+                        </Spinner>
+
+                    </TableRow>
 
                     <TableRow>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="REQUEST REPORT:"
-                            android:textStyle="bold"
-                            android:layout_marginTop="20dp"/>
+                            android:text="Priority" />
+
+                        <Spinner
+                            android:id="@+id/sp_priority"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"></Spinner>
                     </TableRow>
-                    <RelativeLayout>
 
-                        <ImageButton
-                            android:id="@+id/ib_report"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:layout_marginBottom="15dp"
-                            android:background="@null"
-                            android:src="@drawable/choose_report" />
-
-                        <TextView
-                            android:id="@+id/tv_file_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/ib_report"
-                            android:gravity="center_vertical"
-                            android:text="Choose Report" />
-                    </RelativeLayout>
 
 
                 </TableLayout>
+
                 <Button
                     android:id="@+id/btn_view_photo"
                     android:layout_width="wrap_content"
@@ -257,6 +212,7 @@
                     android:background="@drawable/rounded_button"
                     android:text="View Photo"
                     android:layout_marginBottom="10dp"/>
+
 
                 <TextView
                     android:id="@+id/tv_no_photo"
@@ -275,14 +231,12 @@
                     android:paddingBottom="5dp"
                     android:visibility="gone" />
                 <Button
-                    android:id="@+id/btn_close"
+                    android:id="@+id/btn_submit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:background="@drawable/rounded_button"
                     android:layout_marginLeft="15dp"
-                    android:text="close request" />
-
+                    android:background="@drawable/rounded_button"
+                    android:text="submit" />
             </LinearLayout>
 
         </LinearLayout>

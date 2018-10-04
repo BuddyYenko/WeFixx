@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:textColor="@color/labelColor"
-                android:text="Manage by Priority"
+                android:text="By Priority"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large.Inverse"
                 android:layout_weight="1"/>
 
@@ -75,30 +75,67 @@
 
     </LinearLayout>
 
-
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:weightSum="2"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="30dp">
 
-        <ImageButton
-            android:id="@+id/btn_by_status"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@null"
-            app:srcCompat="@drawable/help" />
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:clickable="true">
+            <ImageButton
+                android:id="@+id/btn_by_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/new_req"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:background="@null"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textColor="@color/labelColor"
+                android:text="By Status"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large.Inverse"
+                android:layout_weight="1"/>
 
-        <TextView
-            android:layout_width="wrap_content"
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center_horizontal"
-            android:text="Manage by Status"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large.Inverse"
-            android:textColor="@color/labelColor" />
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:weightSum="2"
+            android:clickable="true">
+
+            <ImageButton
+                android:id="@+id/btn_by_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@null"
+                app:srcCompat="@drawable/history" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="By Category"
+                android:textColor="@color/labelColor"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large.Inverse" />
+
+        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>

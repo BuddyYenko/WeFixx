@@ -10,7 +10,7 @@ import com.example.s215087038.wefixx.History;
 import com.example.s215087038.wefixx.R;
 
 public class ManageBy extends AppCompatActivity {
-    ImageButton by_provider, by_priority, by_status;
+    ImageButton by_provider, by_priority, by_status, by_category;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +19,7 @@ public class ManageBy extends AppCompatActivity {
         by_provider = (ImageButton) findViewById(R.id.btn_by_provider);
         by_priority = (ImageButton) findViewById(R.id.btn_by_priority);
         by_status = (ImageButton) findViewById(R.id.btn_by_status);
+        by_category = (ImageButton) findViewById(R.id.btn_by_category);
 
         by_provider.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,6 +39,13 @@ public class ManageBy extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent activity = new Intent(ManageBy.this, ManageByPriority.class);
+                startActivity(activity);
+            }
+        });
+        by_category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent activity = new Intent(ManageBy.this, ManageByCategory.class);
                 startActivity(activity);
             }
         });
