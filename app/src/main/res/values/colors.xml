@@ -8,7 +8,7 @@
     <color name="placeholders">#6F6D6C</color>
     <color name="status">#999999</color>
     <color name="date">#222222</color>
-
+    <color name="tabColor">#FFFFFF</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
 </resources>

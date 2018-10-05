@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".rsa.CarpentryFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text"
+            android:text="Choose Action Below To Manage Requests"/>
+        <RadioGroup
+            android:id="@+id/radioAction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/text">
+
+            <RadioButton
+                android:id="@+id/radioAssign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Assign Request"
+                android:checked="true" />
+            <RadioButton
+                android:id="@+id/radioClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Close Request" />
+
+        </RadioGroup>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recylcerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioAction"
+            android:visibility="invisible"
+            />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/closeRecylcerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioAction"
+            android:visibility="invisible"
+            />
+    </RelativeLayout>
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</FrameLayout>

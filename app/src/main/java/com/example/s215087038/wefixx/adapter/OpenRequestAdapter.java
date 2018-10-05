@@ -264,6 +264,7 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             notifyDataSetChanged();
+                                            currentPosition = -1;
                                         }
                                     });
                                     builder.show();

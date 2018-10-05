@@ -42,11 +42,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CarpentryAdapter extends RecyclerView.Adapter<CarpentryAdapter.MyViewHolder> {
+public class CarpentryAssignAdapter extends RecyclerView.Adapter<CarpentryAssignAdapter.MyViewHolder> {
 
     private List<Request> requestList;
     private Context mCtx;
-    static String action;
     private static int currentPosition = -1;
     String providerUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/fault_provider.php";
     String priorityUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/priority.php";
@@ -57,14 +56,13 @@ public class CarpentryAdapter extends RecyclerView.Adapter<CarpentryAdapter.MyVi
     protected List<PriorityDataObject> priorityData;
     String provider, priority, fault_id, fault_type_id;
 
-    public CarpentryAdapter(List<Request> requestList) {
+    public CarpentryAssignAdapter(List<Request> requestList) {
         this.requestList = requestList;
     }
 
-    public CarpentryAdapter(Context mCtx, List<Request> requestList, String action) {
+    public CarpentryAssignAdapter(Context mCtx, List<Request> requestList ) {
         this.mCtx = mCtx;
         this.requestList = requestList;
-        this.action = action;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -77,20 +75,10 @@ public class CarpentryAdapter extends RecyclerView.Adapter<CarpentryAdapter.MyVi
 
         public MyViewHolder(View view) {
             super(view);
-            if(action == "Assign Request")
-            {
-                sp_priority = (Spinner) view.findViewById(R.id.sp_priority);
-                sp_provider = (Spinner) view.findViewById(R.id.sp_provider);
-                bn_assign = (Button) view.findViewById(R.id.btn_submit);
-            }
-            else if (action == "Close Request")
-            {
-                expected_close = (TextView) view.findViewById(R.id.tv_expected_close);
-                days_overdue = (TextView) view.findViewById(R.id.tv_overdue);
-                tv_priority = (TextView) view.findViewById(R.id.tv_priority);
-                tv_provider = (TextView) view.findViewById(R.id.tv_provider);
 
-            }
+            sp_priority = (Spinner) view.findViewById(R.id.sp_priority);
+            sp_provider = (Spinner) view.findViewById(R.id.sp_provider);
+            bn_assign = (Button) view.findViewById(R.id.btn_submit);
             request_date = (TextView) view.findViewById(R.id.tv_date);
             request_type = (TextView) view.findViewById(R.id.tv_type);
             description = (TextView) view.findViewById(R.id.tv_desc);
@@ -102,28 +90,15 @@ public class CarpentryAdapter extends RecyclerView.Adapter<CarpentryAdapter.MyVi
 
             imageView = (ImageView)view.findViewById(R.id.imageView);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
-
-
-
             no_photo = (TextView) view.findViewById(R.id.tv_no_photo);
             view_photo = (Button) view.findViewById(R.id.btn_view_photo);
-
-
         }
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_carpentry_assign, parent, false);
-        if(action == "Assign Request"){
-            itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.list_carpentry_assign, parent, false);
-        }
-        else if(action == "Close Request"){
-            itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.list_carpentry_close, parent, false);
-        }
         return new MyViewHolder(itemView);
     }
 
@@ -160,17 +135,7 @@ public class CarpentryAdapter extends RecyclerView.Adapter<CarpentryAdapter.MyVi
             }
         });
 
-        if (action == "Close Request") {
-            holder.expected_close.setText(request.getExpectedClose());
-            holder.tv_provider.setText(request.getProvider());
-            holder.tv_priority.setText(request.getPriority());
-            holder.days_overdue.setText(request.getDaysOverdue());
-        }
-
-
         builder = new AlertDialog.Builder(mCtx);
-        if (action == "Assign Request") {
-
             StringRequest stringRequest = new StringRequest(com.android.volley.Request.Method.POST, providerUrl,
                     new Response.Listener<String>() {
                         @Override
@@ -188,7 +153,6 @@ public class CarpentryAdapter extends RecyclerView.Adapter<CarpentryAdapter.MyVi
                                                 //get selected fault type
                                                 provider = selected.getID();
                                             }
-
                                             public void onNothingSelected(AdapterView<?> parent) {
                                             }
                                         });
@@ -243,8 +207,6 @@ public class CarpentryAdapter extends RecyclerView.Adapter<CarpentryAdapter.MyVi
                 }
             });
             que.add(stringReq);
-        }
-
 
         //if the position is equals to the item position which is to be expanded
         if (currentPosition == position) {
@@ -280,8 +242,6 @@ public class CarpentryAdapter extends RecyclerView.Adapter<CarpentryAdapter.MyVi
                 notifyDataSetChanged();
             }
         });
-        if (action == "Assign Request") {
-
             holder.bn_assign.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -344,7 +304,6 @@ public class CarpentryAdapter extends RecyclerView.Adapter<CarpentryAdapter.MyVi
                     alertDialog.show();
                 }
             });
-        }
     }
 
     @Override

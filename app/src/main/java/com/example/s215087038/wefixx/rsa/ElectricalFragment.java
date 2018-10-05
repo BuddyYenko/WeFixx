@@ -1,47 +1,61 @@
 package com.example.s215087038.wefixx.rsa;
 
+import android.content.Context;
+import android.net.Uri;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.RadioButton;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.s215087038.wefixx.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManageByCategory extends AppCompatActivity {
+public class ElectricalFragment extends Fragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    public ElectricalFragment() {
+        // Required empty public constructor
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manage_by_category);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        final View myFragmentView = inflater.inflate(R.layout.fragment_electrical, container, false);
+
+
+        ((ManageByCategory)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        viewPager = (ViewPager) myFragmentView.findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = (TabLayout) myFragmentView.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+        return myFragmentView;
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        ManageByCategory.ViewPagerAdapter adapter = new ManageByCategory.ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new CarpentryFragment(), "CARPENTRY");
-        adapter.addFragment(new ElectricalFragment(), "ELECTRICAL");
-        adapter.addFragment(new PlumbingFragment(), "PLUMBING");
-        adapter.addFragment(new OtherFragment(), "OTHER");
+        ElectricalFragment.ViewPagerAdapter adapter = new ElectricalFragment.ViewPagerAdapter(getChildFragmentManager());
+        adapter.addFragment(new ElectricalAssignFragment(), "ASSIGN");
+        adapter.addFragment(new ElectricalCloseFragment(), "CLOSE");
+
         viewPager.setAdapter(adapter);
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
+    private class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
@@ -70,3 +84,4 @@ public class ManageByCategory extends AppCompatActivity {
         }
     }
 }
+
