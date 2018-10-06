@@ -1,3 +1,5 @@
+package com.example.s215087038.wefixx;
+
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;

@@ -282,6 +282,12 @@
                     android:background="@drawable/rounded_button"
                     android:layout_marginLeft="15dp"
                     android:text="close request" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:id="@+id/tv_fault_id"/>
+
 
             </LinearLayout>
 
