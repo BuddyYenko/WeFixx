@@ -98,7 +98,7 @@ public class AssignedFragment extends Fragment {
                     }
 
                     //creating adapter object and setting it to recyclerview
-                    AssignedRequestAdapter adapter = new AssignedRequestAdapter(getActivity(), assignedRequestList);
+                    AssignedRequestAdapter adapter = new AssignedRequestAdapter(getActivity(), assignedRequestList, AssignedFragment.this );
                     assignedRecyclerView.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();

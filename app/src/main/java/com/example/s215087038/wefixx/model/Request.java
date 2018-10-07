@@ -84,7 +84,7 @@ public class Request {
 
     }
     //delayed
-    public Request( String request_date, String date_assigned, String request_type, String expected_close, String description, String room, String requester, String priority , String turnaround, String contact_number, String email, String provider_status, String image_url) {
+    public Request( String request_date, String date_assigned,String expected_close, int days_overdue, String request_type, String description, String room, String requester, String priority , String turnaround, String contact_number, String email, String provider_status, String image_url) {
         this.request_date = request_date;
         this.date_assigned = date_assigned;
         this.request_type = request_type;
@@ -98,6 +98,8 @@ public class Request {
         this.provider_status = provider_status;
         this.image_url = image_url;
         this.expected_close = expected_close;
+        this.days_overdue = String.valueOf(days_overdue);
+
 
     }
     //manage by priority

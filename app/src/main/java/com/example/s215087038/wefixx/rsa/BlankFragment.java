@@ -1,7 +1,5 @@
 package com.example.s215087038.wefixx.rsa;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -10,9 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
@@ -23,7 +18,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.s215087038.wefixx.MyDividerItemDecoration;
 import com.example.s215087038.wefixx.R;
 import com.example.s215087038.wefixx.adapter.CarpentryAssignAdapter;
-import com.example.s215087038.wefixx.adapter.CarpentryCloseAdapter;
 import com.example.s215087038.wefixx.model.Request;
 
 import org.json.JSONArray;
@@ -59,7 +53,7 @@ public class BlankFragment extends Fragment {
         carpentryList = new ArrayList<>();
         recyclerView = (RecyclerView) myFragmentView.findViewById(R.id.recylcerView);
 
-        aAdapter = new CarpentryAssignAdapter(carpentryList);
+        //aAdapter = new CarpentryAssignAdapter(getActivity(), carpentryList);//, CarpentryAssignFragment.this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new MyDividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL, 16));
@@ -100,8 +94,8 @@ public class BlankFragment extends Fragment {
                     }
 
                     //creating adapter object and setting it to recyclerview
-                    CarpentryAssignAdapter adapter = new CarpentryAssignAdapter(getActivity(), carpentryList);
-                    recyclerView.setAdapter(adapter);
+                   // CarpentryAssignAdapter adapter = new CarpentryAssignAdapter(getActivity(), carpentryList);
+                    //recyclerView.setAdapter(adapter);
 
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -67,6 +67,8 @@ public class Delayed extends AppCompatActivity {
                         requestList.add(new Request(
                                 request.getString("request_date"),
                                 request.getString("date_assigned"),
+                                request.getString("expected_close"),
+                                request.getInt("days_overdue"),
                                 request.getString("request_type"),
                                 request.getString("description"),
                                 request.getString("room"),
@@ -79,9 +81,7 @@ public class Delayed extends AppCompatActivity {
                                 request.getString("photo")
 
                         ));
-
                     }
-
                     //creating adapter object and setting it to recyclerview
                     DelayedAdapter adapter = new DelayedAdapter(Delayed.this, requestList);
                     recyclerView.setAdapter(adapter);

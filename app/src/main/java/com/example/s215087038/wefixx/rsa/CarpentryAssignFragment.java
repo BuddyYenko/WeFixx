@@ -62,9 +62,9 @@ public class CarpentryAssignFragment extends Fragment {
         return myFragmentView;
     }
 
-    private void prepareRequestData() {
+    public void prepareRequestData() {
 
-
+        carpentryList.clear();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         StringRequest stringRequest1 = new StringRequest(com.android.volley.Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -94,7 +94,7 @@ public class CarpentryAssignFragment extends Fragment {
                     }
 
                     //creating adapter object and setting it to recyclerview
-                    CarpentryAssignAdapter adapter = new CarpentryAssignAdapter(getActivity(), carpentryList);
+                    CarpentryAssignAdapter adapter = new CarpentryAssignAdapter(getActivity(), carpentryList, CarpentryAssignFragment.this);
                     recyclerView.setAdapter(adapter);
 
                 } catch (JSONException e) {

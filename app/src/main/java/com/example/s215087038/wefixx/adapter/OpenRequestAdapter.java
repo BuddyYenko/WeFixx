@@ -30,6 +30,7 @@ import com.example.s215087038.wefixx.model.ProviderDataObject;
 import com.example.s215087038.wefixx.R;
 import com.example.s215087038.wefixx.model.Request;
 import com.example.s215087038.wefixx.rsa.Manage;
+import com.example.s215087038.wefixx.rsa.OpenFragment;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -51,6 +52,7 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
     String priorityUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/priority.php";
     String assignUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/update_request.php";
     AlertDialog.Builder builder;
+    OpenFragment fragment;
 
     protected List<ProviderDataObject> providerData;
     protected List<PriorityDataObject> priorityData;
@@ -60,13 +62,14 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
         this.requestList = requestList;
     }
 
-    public OpenRequestAdapter(Context mCtx, List<Request> requestList) {
+    public OpenRequestAdapter(Context mCtx, List<Request> requestList, OpenFragment fragment) {
         this.mCtx = mCtx;
         this.requestList = requestList;
+        this.fragment = fragment;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView no_photo, request_date, request_type, room, description, textView, date_label, desc_label;
+        public TextView no_photo, request_date, request_type, room, description, textView, date_label, desc_label,tv_fault_type_id, tv_fault_id;
         public ImageView imageView;
         public LinearLayout linearLayout;
         public Spinner sp_priority, sp_provider;
@@ -81,6 +84,8 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
             textView = (TextView) view.findViewById(R.id.room_label);
             date_label = (TextView) view.findViewById(R.id.date_label);
             desc_label = (TextView) view.findViewById(R.id.desc_label);
+            tv_fault_id = (TextView) view.findViewById(R.id.tv_fault_id);
+            tv_fault_type_id = (TextView) view.findViewById(R.id.tv_fault_type_id);
 
             imageView = (ImageView)view.findViewById(R.id.imageView);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
@@ -113,6 +118,9 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
 
         fault_type_id = request.getFaultTypeID();
         fault_id = request.getFaultID();
+        holder.tv_fault_type_id.setText(request.getFaultTypeID());
+        holder.tv_fault_id.setText(request.getFaultID());
+
         if( request.getImageUrl() != "null") {
             Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
         }
@@ -170,7 +178,7 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
 
-                params.put("fault_type_id", fault_type_id);
+                params.put("fault_type_id", holder.tv_fault_id.getText().toString());
                 return params;
             }
         };
@@ -265,6 +273,8 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
                                         public void onClick(DialogInterface dialog, int which) {
                                             notifyDataSetChanged();
                                             currentPosition = -1;
+                                            fragment.prepareRequestData();
+
                                         }
                                     });
                                     builder.show();
@@ -283,7 +293,7 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<String, String>();
 
-                        params.put("fault_id", fault_id);
+                        params.put("fault_id", holder.tv_fault_id.getText().toString());
                         params.put("priority", priority);
                         params.put("provider", provider);
 

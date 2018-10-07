@@ -23,7 +23,7 @@ ImageButton manage_req, history;
         manage_req.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent manage_req = new Intent(RSA.this, Manage.class);
+                Intent manage_req = new Intent(RSA.this, ManageBy.class);
                 startActivity(manage_req);
             }
         });

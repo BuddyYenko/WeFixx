@@ -29,6 +29,8 @@ import com.example.s215087038.wefixx.model.MySingleton;
 import com.example.s215087038.wefixx.model.PriorityDataObject;
 import com.example.s215087038.wefixx.model.ProviderDataObject;
 import com.example.s215087038.wefixx.model.Request;
+import com.example.s215087038.wefixx.rsa.ElectricalAssignFragment;
+import com.example.s215087038.wefixx.rsa.ElectricalFragment;
 import com.example.s215087038.wefixx.rsa.Manage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -55,18 +57,20 @@ public class ElectricalAssignAdapter extends RecyclerView.Adapter<ElectricalAssi
     protected List<ProviderDataObject> providerData;
     protected List<PriorityDataObject> priorityData;
     String provider, priority, fault_id, fault_type_id;
+    ElectricalAssignFragment fragment;
 
     public ElectricalAssignAdapter(List<Request> requestList) {
         this.requestList = requestList;
     }
 
-    public ElectricalAssignAdapter(Context mCtx, List<Request> requestList ) {
+    public ElectricalAssignAdapter(Context mCtx, List<Request> requestList, ElectricalAssignFragment fragment ) {
         this.mCtx = mCtx;
         this.requestList = requestList;
+        this.fragment = fragment;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView no_photo, request_date, request_type, room, description, textView, date_label, desc_label, status;
+        public TextView no_photo, request_date, request_type, room, description, textView, date_label, desc_label, status, tv_fault_id, tv_fault_type_id;
         public TextView expected_close, days_overdue, tv_provider, tv_priority;
         public ImageView imageView;
         public LinearLayout linearLayout;
@@ -87,7 +91,8 @@ public class ElectricalAssignAdapter extends RecyclerView.Adapter<ElectricalAssi
             date_label = (TextView) view.findViewById(R.id.date_label);
             desc_label = (TextView) view.findViewById(R.id.desc_label);
             status = (TextView) view.findViewById(R.id.tv_status);
-
+            tv_fault_id = (TextView) view.findViewById(R.id.tv_fault_id);
+            tv_fault_type_id = (TextView) view.findViewById(R.id.tv_fault_type_id);
             imageView = (ImageView)view.findViewById(R.id.imageView);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
             no_photo = (TextView) view.findViewById(R.id.tv_no_photo);
@@ -113,6 +118,8 @@ public class ElectricalAssignAdapter extends RecyclerView.Adapter<ElectricalAssi
         holder.date_label.setText(request.getRequestDate());
         holder.desc_label.setText(request.getDescription());
         holder.status.setText(request.getRequestStatus());
+        holder.tv_fault_type_id.setText(request.getFaultTypeID());
+        holder.tv_fault_id.setText(request.getFaultID());
 
         fault_type_id = request.getFaultTypeID();
         fault_id = request.getFaultID();
@@ -261,6 +268,7 @@ public class ElectricalAssignAdapter extends RecyclerView.Adapter<ElectricalAssi
                                         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
+                                                fragment.prepareRequestData();
                                                 notifyDataSetChanged();
                                             }
                                         });
@@ -280,7 +288,7 @@ public class ElectricalAssignAdapter extends RecyclerView.Adapter<ElectricalAssi
                         protected Map<String, String> getParams() throws AuthFailureError {
                             Map<String, String> params = new HashMap<String, String>();
 
-                            params.put("fault_id", fault_id);
+                            params.put("fault_id", holder.tv_fault_id.getText().toString());
                             params.put("priority", priority);
                             params.put("provider", provider);
 

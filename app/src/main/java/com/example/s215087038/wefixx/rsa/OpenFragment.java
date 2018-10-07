@@ -62,7 +62,8 @@ public class OpenFragment extends Fragment {
         return myFragmentView;
     }
 
-    private void prepareRequestData() {
+    public void prepareRequestData() {
+        requestList.clear();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         StringRequest stringRequest = new StringRequest(com.android.volley.Request.Method.GET, openRequestsUrl, new Response.Listener<String>() {
             @Override
@@ -91,7 +92,7 @@ public class OpenFragment extends Fragment {
                     }
 
                     //creating adapter object and setting it to recyclerview
-                    OpenRequestAdapter adapter = new OpenRequestAdapter(getActivity(), requestList);
+                    OpenRequestAdapter adapter = new OpenRequestAdapter(getActivity(), requestList, OpenFragment.this);
                     openRecyclerView.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();

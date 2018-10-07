@@ -63,7 +63,8 @@ public class OtherAssignFragment extends Fragment {
         return myFragmentView;
     }
 
-    private void prepareRequestData() {
+    public void prepareRequestData() {
+        list.clear();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         StringRequest stringRequest1 = new StringRequest(com.android.volley.Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -89,7 +90,7 @@ public class OtherAssignFragment extends Fragment {
                         ));
                     }
                     //creating adapter object and setting it to recyclerview
-                    OtherAssignAdapter adapter = new OtherAssignAdapter(getActivity(), list);
+                    OtherAssignAdapter adapter = new OtherAssignAdapter(getActivity(), list, OtherAssignFragment.this);
                     recyclerView.setAdapter(adapter);
 
                 } catch (JSONException e) {

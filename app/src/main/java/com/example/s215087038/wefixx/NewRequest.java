@@ -31,6 +31,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -41,6 +42,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.s215087038.wefixx.manager.Manager;
 import com.example.s215087038.wefixx.model.DataObject;
+import com.example.s215087038.wefixx.model.MySingleton;
 import com.example.s215087038.wefixx.model.VolleyMultipartRequest;
 import com.example.s215087038.wefixx.rsa.RSA;
 import com.example.s215087038.wefixx.student.Student;
@@ -130,12 +132,8 @@ public class NewRequest extends AppCompatActivity {
         btn_request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 progressBar.setVisibility(View.VISIBLE);
-
                 description = Description.getText().toString();
-
-
                 if (description.equals("")) {
                     builder.setTitle("Something Went Wrong...");
                     builder.setMessage("Please fill in description");
@@ -155,7 +153,6 @@ public class NewRequest extends AppCompatActivity {
                                         builder.setMessage(message);
                                         displayAlert(code);
                                         progressBar.setVisibility(View.INVISIBLE);
-
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -174,16 +171,15 @@ public class NewRequest extends AppCompatActivity {
                         @Override
                         protected Map<String, String> getParams() {
                             Map<String, String> params = new HashMap<>();
-                            params.put("user_id", "1");//user_id);
+                            params.put("user_id", user_id);
                             params.put("description", description);
                             params.put("fault_type", fault);
-
-                           // params.put("photo", imageOne);
-
+                            if(bitmap !=null) {
+                                params.put("photo_uploaded", "true");
+                            }
                             return params;
                         }
                          //Here we are passing image by renaming it with a unique name
-
                         @Override
                         protected Map<String, DataPart> getByteData() {
 

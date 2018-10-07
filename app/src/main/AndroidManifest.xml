@@ -15,14 +15,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".rsa.ManageBy">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".rsa.ManageBy" />
         <!-- <activity android:name=".Login" /> -->
         <activity android:name=".student.Student" />
         <activity android:name=".rsa.Manage" />
@@ -30,7 +30,6 @@
         <!-- <activity android:name=".Main2Activity" /> -->
         <activity android:name=".manager.Delayed" />
         <activity android:name=".History" />
-        <activity android:name=".Hist" />
         <activity android:name=".manager.Manager" />
         <activity android:name=".student.StudentHistory" />
         <activity android:name=".FAQ" />

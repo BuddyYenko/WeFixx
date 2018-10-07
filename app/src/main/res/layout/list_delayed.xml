@@ -221,6 +221,21 @@
                             android:textStyle="bold" />
                     </TableRow>
 
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Days Overdue" />
+
+                        <TextView
+                            android:id="@+id/tv_overdue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:text="overdue"
+                            android:textStyle="bold" />
+                    </TableRow>
                     <RelativeLayout>
 
                         <TextView

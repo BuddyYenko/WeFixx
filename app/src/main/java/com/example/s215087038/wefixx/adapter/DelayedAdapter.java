@@ -36,7 +36,7 @@ public class DelayedAdapter extends RecyclerView.Adapter<DelayedAdapter.MyViewHo
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView no_photo, request_date, request_type, room, description, textView, date_label, priority, provider, date_assigned, date_closed, requester, turnaround, contact_number, email, provider_status;
+        public TextView days_overdue,no_photo, request_date, request_type, room, description, textView, date_label, priority, provider, date_assigned, date_closed, requester, turnaround, contact_number, email, provider_status;
         public ImageView imageView;
         public LinearLayout linearLayout, row;
         public Button view_photo;
@@ -64,11 +64,10 @@ public class DelayedAdapter extends RecyclerView.Adapter<DelayedAdapter.MyViewHo
             email = (TextView) view.findViewById(R.id.tv_email);
             provider_status = (TextView) view.findViewById(R.id.tv_status);
             turnaround = (TextView) view.findViewById(R.id.tv_turnaround);
+            days_overdue = (TextView) view.findViewById(R.id.tv_overdue);
             no_photo = (TextView) view.findViewById(R.id.tv_no_photo);
             view_photo = (Button) view.findViewById(R.id.btn_view_photo);
             //hide_photo = (Button) view.findViewById(R.id.btn_hide_photo);
-
-
         }
     }
 
@@ -98,6 +97,8 @@ public class DelayedAdapter extends RecyclerView.Adapter<DelayedAdapter.MyViewHo
         holder.email.setText(request.getEmail());
         holder.provider_status.setText(request.getProviderStatus());
         holder.turnaround.setText(request.getTurnaround());
+        holder.days_overdue.setText(request.getDaysOverdue());
+
         if( request.getImageUrl() != "null") {
             Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
 

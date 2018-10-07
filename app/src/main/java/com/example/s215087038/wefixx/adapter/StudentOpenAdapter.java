@@ -50,7 +50,7 @@ public class StudentOpenAdapter extends  RecyclerView.Adapter<StudentOpenAdapter
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView no_photo, request_date, request_type, room, description, textView, date_label, date_assigned, provider, priority;
+        public TextView no_photo, request_date, request_type, room, description, textView, date_label, date_assigned, provider, priority, category_label, desc_label;
         public ImageView imageView;
         public LinearLayout linearLayout, row;
         public Button view_photo;
@@ -67,6 +67,9 @@ public class StudentOpenAdapter extends  RecyclerView.Adapter<StudentOpenAdapter
             row = (LinearLayout) itemView.findViewById(R.id.row);
             no_photo = (TextView) view.findViewById(R.id.tv_no_photo);
             view_photo = (Button) view.findViewById(R.id.btn_view_photo);
+            category_label = (TextView) view.findViewById(R.id.category_label);
+            desc_label = (TextView) view.findViewById(R.id.desc_label);
+
         }
 
     }
@@ -87,14 +90,14 @@ public class StudentOpenAdapter extends  RecyclerView.Adapter<StudentOpenAdapter
         holder.request_type.setText(request.getRequestType());
         holder.description.setText(request.getDescription());
         //holder.room.setText(request.getRoom());
-        holder.textView.setText(request.getRoom());
+       // holder.textView.setText(request.getRoom());
         holder.date_label.setText(request.getRequestDate());
-
+        holder.category_label.setText(request.getRequestType());
         fault_type_id = request.getFaultTypeID();
         fault_id = request.getFaultID();
 //        holder.date_assigned.setText(request.getDateAssigned());
     //    holder.provider.setText(request.getProvider());
-   //     holder.priority.setText(request.getPriority());
+        holder.desc_label.setText(request.getDescription());
         if( request.getImageUrl() != "null") {
             Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
 
@@ -130,7 +133,7 @@ public class StudentOpenAdapter extends  RecyclerView.Adapter<StudentOpenAdapter
             holder.linearLayout.startAnimation(slideDown);
         }
 
-        holder.row.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

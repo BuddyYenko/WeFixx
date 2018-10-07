@@ -62,7 +62,7 @@ public class StudentAssignedAdapter extends  RecyclerView.Adapter<StudentAssigne
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView no_photo, request_date, request_type, room, description, textView, date_label, date_assigned, provider, priority;
+        public TextView no_photo, request_date, request_type, room, description, textView, date_label, date_assigned, provider, priority, category_label, desc_label;
         public ImageView imageView;
         public LinearLayout linearLayout, row;
         public Button view_photo;
@@ -82,6 +82,8 @@ public class StudentAssignedAdapter extends  RecyclerView.Adapter<StudentAssigne
             row = (LinearLayout) itemView.findViewById(R.id.row);
             no_photo = (TextView) view.findViewById(R.id.tv_no_photo);
             view_photo = (Button) view.findViewById(R.id.btn_view_photo);
+            category_label = (TextView) view.findViewById(R.id.category_label);
+            desc_label = (TextView) view.findViewById(R.id.desc_label);
         }
     }
 
@@ -89,10 +91,8 @@ public class StudentAssignedAdapter extends  RecyclerView.Adapter<StudentAssigne
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_student_assigned, parent, false);
-
         return new MyViewHolder(itemView);
     }
-
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
@@ -103,6 +103,8 @@ public class StudentAssignedAdapter extends  RecyclerView.Adapter<StudentAssigne
         //holder.room.setText(request.getRoom());
         holder.textView.setText(request.getRoom());
         holder.date_label.setText(request.getRequestDate());
+        holder.category_label.setText(request.getRequestType());
+        holder.desc_label.setText(request.getDescription());
 
         fault_type_id = request.getFaultTypeID();
         fault_id = request.getFaultID();
@@ -121,13 +123,11 @@ public class StudentAssignedAdapter extends  RecyclerView.Adapter<StudentAssigne
                 holder.view_photo.setVisibility(View.GONE);
                 if(request.getImageUrl()!= "null"){
                     holder.imageView.setVisibility(View.VISIBLE);
-
                 }
                 else{
                     holder.no_photo.setVisibility(View.VISIBLE);
                     //holder.hide_photo.setVisibility(View.VISIBLE);
                 }
-
             }
         });
 
@@ -137,29 +137,22 @@ public class StudentAssignedAdapter extends  RecyclerView.Adapter<StudentAssigne
         if (currentPosition == position) {
             //creating an animation
             Animation slideDown = AnimationUtils.loadAnimation(mCtx, R.anim.slide_down);
-
             //toggling visibility
             holder.linearLayout.setVisibility(View.VISIBLE);
-
             //adding sliding effect
             holder.linearLayout.startAnimation(slideDown);
         }
 
-        holder.row.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 //getting the position of the item to expand it
                 currentPosition = position;
-
                 //reloading the list
                 notifyDataSetChanged();
             }
         });
       //  holder.choose_file.setOnClickListener(mCtx);
-
-
-
     }
 
 

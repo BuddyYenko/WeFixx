@@ -58,24 +58,22 @@ public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedReques
     private List<Request> requestList;
     private Context mCtx;
     private static Context context = null;
-    Uri uri;
-
     private static int currentPosition = -1;
     String closeUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/update_request.php";
     AlertDialog.Builder builder;
-
     protected List<ProviderDataObject> providerData;
     protected List<PriorityDataObject> priorityData;
     String fault_id, fault_type_id;
+    AssignedFragment fragment;
 
     public AssignedRequestAdapter(List<Request> requestList) {
         this.requestList = requestList;
     }
 
-    public AssignedRequestAdapter(Context mCtx, List<Request> requestList) {
+    public AssignedRequestAdapter(Context mCtx, List<Request> requestList, AssignedFragment fragment) {
         this.mCtx = mCtx;
         this.requestList = requestList;
-        this.context = mCtx;
+        this.fragment = fragment;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {

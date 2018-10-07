@@ -51,7 +51,7 @@ public class StudentClosedAdapter extends  RecyclerView.Adapter<StudentClosedAda
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView no_photo, request_date, request_type, room, description,comment, textView, date_label, date_closed, date_assigned, provider, priority, file_name;
+        public TextView no_photo, request_date, request_type, room, description,comment, textView, date_label, date_closed, date_assigned, provider, priority, category_label, desc_label;
         public ImageView imageView;
         public LinearLayout linearLayout, row;
         public Button view_photo;
@@ -77,6 +77,10 @@ public class StudentClosedAdapter extends  RecyclerView.Adapter<StudentClosedAda
             row = (LinearLayout) itemView.findViewById(R.id.row);
             no_photo = (TextView) view.findViewById(R.id.tv_no_photo);
             view_photo = (Button) view.findViewById(R.id.btn_view_photo);
+            category_label = (TextView) view.findViewById(R.id.category_label);
+            desc_label = (TextView) view.findViewById(R.id.desc_label);
+
+
         }
     }
     @Override
@@ -94,11 +98,13 @@ public class StudentClosedAdapter extends  RecyclerView.Adapter<StudentClosedAda
         holder.request_date.setText(request.getRequestDate());
         holder.date_assigned.setText(request.getDateAssigned());
         holder.date_closed.setText(request.getDateClosed());
+        holder.category_label.setText(request.getRequestType());
+        holder.desc_label.setText(request.getDescription());
 
         holder.request_type.setText(request.getRequestType());
         holder.description.setText(request.getDescription());
         //holder.room.setText(request.getRoom());
-        holder.textView.setText(request.getRoom());
+        //holder.textView.setText(request.getRoom());
         holder.date_label.setText(request.getRequestDate());
 
         fault_type_id = request.getFaultTypeID();
@@ -148,7 +154,7 @@ public class StudentClosedAdapter extends  RecyclerView.Adapter<StudentClosedAda
             holder.linearLayout.startAnimation(slideDown);
         }
 
-        holder.row.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

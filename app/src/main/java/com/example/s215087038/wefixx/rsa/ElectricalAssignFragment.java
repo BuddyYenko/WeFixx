@@ -64,7 +64,8 @@ public class ElectricalAssignFragment extends Fragment {
         return myFragmentView;
     }
 
-    private void prepareRequestData() {
+    public void prepareRequestData() {
+        list.clear();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         StringRequest stringRequest1 = new StringRequest(com.android.volley.Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -90,7 +91,7 @@ public class ElectricalAssignFragment extends Fragment {
                         ));
                     }
                     //creating adapter object and setting it to recyclerview
-                    ElectricalAssignAdapter adapter = new ElectricalAssignAdapter(getActivity(), list);
+                    ElectricalAssignAdapter adapter = new ElectricalAssignAdapter(getActivity(), list, ElectricalAssignFragment.this);
                     recyclerView.setAdapter(adapter);
 
                 } catch (JSONException e) {
