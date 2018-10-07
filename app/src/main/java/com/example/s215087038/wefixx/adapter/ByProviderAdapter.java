@@ -256,10 +256,9 @@ public class ByProviderAdapter extends RecyclerView.Adapter<ByProviderAdapter.My
         holder.bn_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String id = holder.tv_fault_id.getText().toString();
                 Intent intent = new Intent("custom-message");
                 //            intent.putExtra("quantity",Integer.parseInt(quantity.getText().toString()));
-                intent.putExtra("id",id);
+                intent.putExtra("id",holder.tv_fault_id.getText().toString());
                 LocalBroadcastManager.getInstance(mCtx).sendBroadcast(intent);
 //                StringRequest stringRequest = new StringRequest(com.android.volley.Request.Method.POST, closeUrl,
 //                        new Response.Listener<String>() {

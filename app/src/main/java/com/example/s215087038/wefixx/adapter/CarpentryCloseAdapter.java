@@ -36,6 +36,7 @@ import com.google.gson.GsonBuilder;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -66,7 +67,7 @@ public class CarpentryCloseAdapter extends RecyclerView.Adapter<CarpentryCloseAd
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView no_photo, request_date, request_type, room, description, textView, date_label, desc_label, status;
+        public TextView no_photo, request_date, request_type, room, description, textView, date_label, desc_label, status, tv_fault_id;
         public TextView expected_close, days_overdue, tv_provider, tv_priority;
         public ImageView imageView;
         public LinearLayout linearLayout;
@@ -92,6 +93,8 @@ public class CarpentryCloseAdapter extends RecyclerView.Adapter<CarpentryCloseAd
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
             no_photo = (TextView) view.findViewById(R.id.tv_no_photo);
             view_photo = (Button) view.findViewById(R.id.btn_view_photo);
+            tv_fault_id = (TextView) view.findViewById(R.id.tv_fault_id);
+
         }
     }
 
@@ -113,6 +116,7 @@ public class CarpentryCloseAdapter extends RecyclerView.Adapter<CarpentryCloseAd
         holder.date_label.setText(request.getRequestDate());
         holder.desc_label.setText(request.getDescription());
         holder.status.setText(request.getRequestStatus());
+        holder.tv_fault_id.setText(request.getFaultID());
 
         fault_type_id = request.getFaultTypeID();
         fault_id = request.getFaultID();

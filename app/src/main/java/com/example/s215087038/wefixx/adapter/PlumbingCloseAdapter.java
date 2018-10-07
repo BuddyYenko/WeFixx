@@ -46,7 +46,7 @@ public class PlumbingCloseAdapter extends RecyclerView.Adapter<PlumbingCloseAdap
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView no_photo, request_date, request_type, room, description, textView, date_label, desc_label, status;
+        public TextView no_photo, request_date, request_type, room, description, textView, date_label, desc_label, status, tv_fault_id;
         public TextView expected_close, days_overdue, tv_provider, tv_priority;
         public ImageView imageView;
         public LinearLayout linearLayout;
@@ -72,6 +72,8 @@ public class PlumbingCloseAdapter extends RecyclerView.Adapter<PlumbingCloseAdap
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
             no_photo = (TextView) view.findViewById(R.id.tv_no_photo);
             view_photo = (Button) view.findViewById(R.id.btn_view_photo);
+            tv_fault_id = (TextView) view.findViewById(R.id.tv_fault_id);
+
         }
     }
 

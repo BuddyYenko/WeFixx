@@ -3,6 +3,7 @@ package com.example.s215087038.wefixx.rsa;
 import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -14,6 +15,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -36,6 +38,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.s215087038.wefixx.FilePath;
+import com.example.s215087038.wefixx.LoginActivity;
 import com.example.s215087038.wefixx.MyDividerItemDecoration;
 import com.example.s215087038.wefixx.NewRequest;
 import com.example.s215087038.wefixx.R;
@@ -86,8 +89,8 @@ public class ManageByProvider extends AppCompatActivity implements ByProviderAda
     byte[] result;
     String newRequestUrl = "http://sict-iis.nmmu.ac.za/wefixx/student/new.php";
     private static final int STORAGE_PERMISSION_CODE = 123;
-
-
+    AlertDialog.Builder builder;
+    String id;
     String UPLOAD_URL = "http://sict-iis.nmmu.ac.za/wefixx/rsa/update_request.php";
 
     public static void startDoc(Intent intent) {
@@ -116,6 +119,8 @@ public class ManageByProvider extends AppCompatActivity implements ByProviderAda
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter("custom-message"));
+        builder = new AlertDialog.Builder(ManageByProvider.this);
+
     }
     //Requesting permission
     private void requestStoragePermission() {
@@ -153,19 +158,12 @@ public class ManageByProvider extends AppCompatActivity implements ByProviderAda
         @Override
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
-            String id = intent.getStringExtra("id" );
+            id = intent.getStringExtra("id" );
             String path = FilePath.getPath(ManageByProvider.this, fileuri);
 
-            Toast.makeText(ManageByProvider.this,id + " " + path ,Toast.LENGTH_SHORT).show();
+            //Toast.makeText(ManageByProvider.this,id + " " + path ,Toast.LENGTH_SHORT).show();
 
-                String encodedfile = null;
                 try {
-                    //File file = new FilePath()
-//                    File file = new File(fileuri.toString());
-//                    FileInputStream fileInputStreamReader = new FileInputStream(file);
-//                    byte[] bytes = new byte[(int)file.length()];
-//                    fileInputStreamReader.read(bytes);
-//                    result = Base64.encodeToString(bytes, Base64.DEFAULT);
 
                     File file = new File(path);
                     int length = (int) file.length();
@@ -191,11 +189,15 @@ public class ManageByProvider extends AppCompatActivity implements ByProviderAda
                         public void onResponse(NetworkResponse response) {
 
                             try {
-                                Toast.makeText(ManageByProvider.this, response.data.toString() + " " + response.toString(), Toast.LENGTH_SHORT).show();
+                             //   Toast.makeText(ManageByProvider.this, response.data.toString() + " " + response.toString(), Toast.LENGTH_SHORT).show();
                                 JSONArray jsonArray = new JSONArray(new String (response.data));
                                 JSONObject jsonObject = jsonArray.getJSONObject(0);
                                 String code = jsonObject.getString("code");
                                 String message = jsonObject.getString("message");
+
+                                builder.setTitle("WeFixx Response");
+                                builder.setMessage(message);
+                                DisplayAlert(code);
 
 
                             } catch (JSONException e) {
@@ -215,12 +217,7 @@ public class ManageByProvider extends AppCompatActivity implements ByProviderAda
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
-                    params.put("user_id", "1");//user_id);
-                    params.put("description", "dsd");
-                    params.put("fault_type", "1");
-
-                    // params.put("photo", imageOne);
-
+                    params.put("fault_id", id);
                     return params;
                 }
                 @Override
@@ -235,37 +232,24 @@ public class ManageByProvider extends AppCompatActivity implements ByProviderAda
                     return params;
                 }
 
-                    //Here we are passing image by renaming it with a unique name
-
             };
             volleyMultipartRequest.setRetryPolicy(new DefaultRetryPolicy(0,0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             //adding the request to volley
             Volley.newRequestQueue(ManageByProvider.this).add(volleyMultipartRequest);
-//                if (path == null) {
-//
-//                    Toast.makeText(ManageByProvider.this, "Please move your .pdf file to internal storage and retry", Toast.LENGTH_LONG).show();
-//                } else {
-//                    //Uploading code
-//                    try {
-//                        String uploadId = UUID.randomUUID().toString();
-//
-//                        //Creating a multi part request
-//                        new MultipartUploadRequest(ManageByProvider.this, uploadId, UPLOAD_URL)
-//                                .addFileToUpload(path, "report") //Adding file
-//                                .addParameter("name", "report") //Adding text parameter to the request
-//                                .setNotificationConfig(new UploadNotificationConfig())
-//                                .setMaxRetries(2)
-//                                .startUpload(); //Starting the upload
-//                        Toast.makeText(ManageByProvider.this, "Please move your .pdf file to internal storage and retry", Toast.LENGTH_LONG).show();
-//
-//                    } catch (Exception exc) {
-//                        Toast.makeText(ManageByProvider.this, exc.getMessage(), Toast.LENGTH_SHORT).show();
-//                    }
-//                }
 
         }
     };
+    public void DisplayAlert(final String code) {
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                prepareRequestData(provider);
+            }
+        });
 
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
     private void requestJsonObject() {
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -365,14 +349,6 @@ public class ManageByProvider extends AppCompatActivity implements ByProviderAda
         };
         queue.add(stringRequest1);
 
-//        public void startDoc()
-//        {
-//            Intent intent = new Intent();
-//            intent.setType("application/pdf");
-//            intent.setAction(Intent.ACTION_GET_CONTENT);
-//            startActivityForResult(Intent.createChooser(intent, "Select PDF"), 1);
-//
-//        }
 
     }
 
@@ -386,8 +362,8 @@ public class ManageByProvider extends AppCompatActivity implements ByProviderAda
             fileuri = data.getData();
             String docFilePath = getFileNameByUri(this, fileuri);
             String file = fileuri.getPath();
-            Toast.makeText(this, "path " + file, Toast.LENGTH_SHORT).show();
             path = FilePath.getPath(this, fileuri);
+            Toast.makeText(this, "Document chosen: " + path, Toast.LENGTH_LONG).show();
 
             adapter = new ByProviderAdapter(path);
 

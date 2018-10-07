@@ -178,7 +178,7 @@ public class CarpentryAssignAdapter extends RecyclerView.Adapter<CarpentryAssign
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> params = new HashMap<String, String>();
-                    params.put("fault_type_id", fault_type_id);
+                    params.put("fault_type_id", holder.tv_fault_type_id.getText().toString());
                     return params;
                 }
             };
@@ -270,6 +270,7 @@ public class CarpentryAssignAdapter extends RecyclerView.Adapter<CarpentryAssign
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 fragment.prepareRequestData();
+
                                             }
                                         });
                                         builder.show();

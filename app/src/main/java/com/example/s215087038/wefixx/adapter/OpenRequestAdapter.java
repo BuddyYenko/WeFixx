@@ -178,7 +178,7 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
 
-                params.put("fault_type_id", holder.tv_fault_id.getText().toString());
+                params.put("fault_type_id", holder.tv_fault_type_id.getText().toString());
                 return params;
             }
         };
