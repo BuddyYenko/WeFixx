@@ -40,6 +40,7 @@ public class DelayedAdapter extends RecyclerView.Adapter<DelayedAdapter.MyViewHo
         public ImageView imageView;
         public LinearLayout linearLayout, row;
         public Button view_photo;
+        public TextView desc_label;
 
 
         public MyViewHolder(View view) {
@@ -47,6 +48,7 @@ public class DelayedAdapter extends RecyclerView.Adapter<DelayedAdapter.MyViewHo
             request_date = (TextView) view.findViewById(R.id.tv_date);
             date_assigned = (TextView) view.findViewById(R.id.tv_date_assigned);
             date_closed = (TextView) view.findViewById(R.id.tv_date_closed);
+            desc_label = (TextView) view.findViewById(R.id.desc_label);
 
             request_type = (TextView) view.findViewById(R.id.tv_type);
             description = (TextView) view.findViewById(R.id.tv_desc);
@@ -84,6 +86,7 @@ public class DelayedAdapter extends RecyclerView.Adapter<DelayedAdapter.MyViewHo
         final Request request = requestList.get(position);
         holder.request_date.setText(request.getRequestDate());
         holder.date_assigned.setText(request.getDateAssigned());
+        holder.desc_label.setText(request.getDescription());
 
         holder.request_type.setText(request.getRequestType());
         holder.description.setText(request.getDescription());
@@ -120,14 +123,7 @@ public class DelayedAdapter extends RecyclerView.Adapter<DelayedAdapter.MyViewHo
 
             }
         });
-//        holder.hide_photo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                holder.imageView.setVisibility(View.INVISIBLE);
-//                holder.view_photo.setVisibility(View.VISIBLE);
-//                holder.hide_photo.setVisibility(View.INVISIBLE);
-//            }
-//        });
+
 
         //if the position is equals to the item position which is to be expanded
         if (currentPosition == position) {

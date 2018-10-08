@@ -87,7 +87,6 @@ public class ManageByProvider extends AppCompatActivity implements ByProviderAda
     Uri fileuri;
     String path;
     byte[] result;
-    String newRequestUrl = "http://sict-iis.nmmu.ac.za/wefixx/student/new.php";
     private static final int STORAGE_PERMISSION_CODE = 123;
     AlertDialog.Builder builder;
     String id;
@@ -139,7 +138,7 @@ public class ManageByProvider extends AppCompatActivity implements ByProviderAda
 
     //This method will be called when the user will tap on allow or deny
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
         //Checking the request code of our request
         if (requestCode == STORAGE_PERMISSION_CODE) {
@@ -360,7 +359,6 @@ public class ManageByProvider extends AppCompatActivity implements ByProviderAda
         if (result == RESULT_OK)
         {
             fileuri = data.getData();
-            String docFilePath = getFileNameByUri(this, fileuri);
             String file = fileuri.getPath();
             path = FilePath.getPath(this, fileuri);
             Toast.makeText(this, "Document chosen: " + path, Toast.LENGTH_LONG).show();
@@ -375,43 +373,5 @@ public class ManageByProvider extends AppCompatActivity implements ByProviderAda
         }
 
     }
-    private String getFileNameByUri(Context context, Uri uri)
-    {
-        String filepath = "";//default fileName
-        //Uri filePathUri = uri;
-        File file;
-        if (uri.getScheme().toString().compareTo("content") == 0)
-        {
-            Cursor cursor = context.getContentResolver().query(uri, new String[] { android.provider.MediaStore.Images.ImageColumns.DATA, MediaStore.Images.Media.ORIENTATION }, null, null, null);
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 
-            cursor.moveToFirst();
-
-            String mImagePath = cursor.getString(column_index);
-            cursor.close();
-            filepath = mImagePath;
-
-        }
-        else
-        if (uri.getScheme().compareTo("file") == 0)
-        {
-            try
-            {
-                file = new File(new URI(uri.toString()));
-                if (file.exists())
-                    filepath = file.getAbsolutePath();
-
-            }
-            catch (URISyntaxException e)
-            {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-        else
-        {
-            filepath = uri.getPath();
-        }
-        return filepath;
-    }
 }

@@ -61,14 +61,9 @@ import static com.example.s215087038.wefixx.EndPoints.UPLOAD_URL;
 public class ByProviderAdapter extends RecyclerView.Adapter<ByProviderAdapter.MyViewHolder>{
     private List<Request> requestList;
     private Context mCtx;
-    private static Context context = null;
-    private Uri filePath;
-    Uri uri;
-    File file ;
     String stringPath;
     String path;
     private static int currentPosition = -1;
-    String UPLOAD_URL = "http://sict-iis.nmmu.ac.za/wefixx/rsa/update_request.php";
     AlertDialog.Builder builder;
 
     String fault_id, fault_type_id;
@@ -82,48 +77,12 @@ public class ByProviderAdapter extends RecyclerView.Adapter<ByProviderAdapter.My
     public ByProviderAdapter(Context mCtx, List<Request> requestList) {
         this.mCtx = mCtx;
         this.requestList = requestList;
-        this.context = mCtx;
     }
     public ByProviderAdapter(String path) {
         this.path = path;
-        this.stringPath = "ssss";
         notifyDataSetChanged();
     }
-   // public void onActivityResult(int req, int result, Intent data) {
-     //   Log.d("ManageByProvider", "onActivityResult");
-//        if (result == RESULT_OK) {
-//            uri = data.getData();
-//            File myFile = new File(uri.toString());
-//            //filePath = myFile.getAbsolutePath();
-//            //filePath = data.getData();
-//            //String docFilePath = getFileNameByUri(mCtx, uri);
-//            Toast.makeText(mCtx, "path ada " + uri, Toast.LENGTH_LONG).show();
-//            Log.d("ManageByProvider", uri.toString());
-//            notifyDataSetChanged();
-//
-//        }
-//        if (req == 1 && result == RESULT_OK && data != null && data.getData() != null) {
-//            uri = data.getData();
-//            filePath = data.getData();
-//            Toast.makeText(mCtx, uri.toString(), Toast.LENGTH_SHORT).show();
-//
-//        }
-//        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.M || Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
-//            final Uri uri = data.getData();
-//            file = new File(uri.getPath());
-//            stringPath = file.getAbsolutePath();
-//
-//            notifyDataSetChanged();
-//
-//            Toast.makeText(mCtx, "path " + file, Toast.LENGTH_SHORT).show();
-//
-//            // now you can upload your image file
-//        }else{
-//            // in android version lower than M your method must work
-//            Toast.makeText(mCtx, "path veres " , Toast.LENGTH_SHORT).show();
-//
-//        }
-  //  }
+
 
     public interface CallbackInterface {
     }
@@ -207,12 +166,11 @@ public class ByProviderAdapter extends RecyclerView.Adapter<ByProviderAdapter.My
             holder.linearLayout.startAnimation(slideDown);
         }
 
-        if(filePath != null)
-        {
-            holder.file_name.setText("fileNme");
-        }
+//        if(filePath != null)
+//        {
+//            holder.file_name.setText("fileNme");
+//        }
 
-        //  holder.choose_file.setOnClickListener(mCtx);
         holder.view_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -223,7 +181,6 @@ public class ByProviderAdapter extends RecyclerView.Adapter<ByProviderAdapter.My
                 }
                 else{
                     holder.no_photo.setVisibility(View.VISIBLE);
-                    //holder.hide_photo.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -257,82 +214,8 @@ public class ByProviderAdapter extends RecyclerView.Adapter<ByProviderAdapter.My
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent("custom-message");
-                //            intent.putExtra("quantity",Integer.parseInt(quantity.getText().toString()));
                 intent.putExtra("id",holder.tv_fault_id.getText().toString());
                 LocalBroadcastManager.getInstance(mCtx).sendBroadcast(intent);
-//                StringRequest stringRequest = new StringRequest(com.android.volley.Request.Method.POST, closeUrl,
-//                        new Response.Listener<String>() {
-//                            @Override
-//                            public void onResponse(String response) {
-//                                try {
-//                                    JSONArray jsonArray = new JSONArray(response);
-//                                    JSONObject jsonObject = jsonArray.getJSONObject(0);
-//                                    String code = jsonObject.getString("code");
-//                                    String message = jsonObject.getString("message");
-//
-//                                    final AlertDialog.Builder builder = new AlertDialog.Builder(mCtx);
-//                                    builder.setTitle("WeFixx Response");
-//                                    builder.setMessage(message);
-//                                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                                        @Override
-//                                        public void onClick(DialogInterface dialog, int which) {
-//                                            notifyDataSetChanged();
-//                                        }
-//                                    });
-//                                    builder.show();
-//
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//                        }, new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//
-//                    }
-//                }) {
-//                    @Override
-//                    protected Map<String, String> getParams() throws AuthFailureError {
-//                        Map<String, String> params = new HashMap<String, String>();
-//                        //String path = FilePath.getPath(this, filePath);
-//
-//
-//                        params.put("fault_id", fault_id);
-//                        return params;
-//                    }
-//                };
-//                MySingleton.getInstance(mCtx).addToRequestque(stringRequest);
-              //  Toast.makeText(mCtx, "Uriiii " + uri.toString(), Toast.LENGTH_SHORT).show();
-                //holder.file_name.setText(filePath.toString());
-               // String patyh = uri.toString();
-                //final File file = new File(uri.getPath());
-
-               // String path = FilePath.getPath(mCtx, filePath);
-               // Toast.makeText(mCtx, "Paaaaath " + path, Toast.LENGTH_SHORT).show();
-               // String pathe = FilePath.getPath(mCtx, filePath);
-
-//                if (path == null) {
-//
-//                    Toast.makeText(mCtx, "Please move your .pdf file to internal storage and retry", Toast.LENGTH_LONG).show();
-//                } else {
-//                    //Uploading code
-//                    try {
-//                        String uploadId = UUID.randomUUID().toString();
-//
-//                        //Creating a multi part request
-//                        new MultipartUploadRequest(mCtx, uploadId, UPLOAD_URL)
-//                                .addFileToUpload(file.toString(), "report") //Adding file
-//                                .addParameter("name", "report") //Adding text parameter to the request
-//                                .setNotificationConfig(new UploadNotificationConfig())
-//                                .setMaxRetries(2)
-//                                .startUpload(); //Starting the upload
-//                        Toast.makeText(mCtx, "Please move your .pdf file to internal storage and retry", Toast.LENGTH_LONG).show();
-//
-//                    } catch (Exception exc) {
-//                        Toast.makeText(mCtx, exc.getMessage(), Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-
             }
 
             public void DisplayAlert() {
