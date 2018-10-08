@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.s215087038.wefixx.LoginActivity"
-    android:weightSum="3"
-    android:background="@color/background">
+    android:weightSum="3">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,7 +28,7 @@
             android:textStyle="bold"
             android:textAlignment="center"
             android:textSize="@dimen/heading"
-            android:textColor="@color/labelColor"
+            android:textColor="@color/labelBlackColor"
             android:layout_gravity="center"/>
 
     </LinearLayout>
@@ -77,7 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Forgot Password?"
-            android:textColor="@color/labelColor"
+            android:textColor="@color/labelBlackColor"
             android:textAlignment="center"/>
 
     </LinearLayout>
