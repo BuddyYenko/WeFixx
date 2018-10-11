@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -33,11 +34,10 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.s215087038.wefixx.R;
 import com.example.s215087038.wefixx.model.MySingleton;
-import com.example.s215087038.wefixx.model.PriorityDataObject;
-import com.example.s215087038.wefixx.model.ProviderDataObject;
 import com.example.s215087038.wefixx.model.Request;
 import com.example.s215087038.wefixx.rsa.AssignedFragment;
 import com.example.s215087038.wefixx.rsa.Manage;
+import com.example.s215087038.wefixx.rsa.ManageByProvider;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -59,10 +59,7 @@ public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedReques
     private Context mCtx;
     private static Context context = null;
     private static int currentPosition = -1;
-    String closeUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/update_request.php";
     AlertDialog.Builder builder;
-    protected List<ProviderDataObject> providerData;
-    protected List<PriorityDataObject> priorityData;
     String fault_id, fault_type_id;
     AssignedFragment fragment;
 
@@ -77,7 +74,7 @@ public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedReques
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView no_photo, request_date, request_type, room, description, textView, date_label, date_assigned, provider, priority, file_name, desc_label;
+        public TextView tv_fault_id,no_photo, request_date, request_type, room, description, textView, date_label, date_assigned, provider, priority, file_name, desc_label;
         public ImageView imageView;
         public LinearLayout linearLayout;
         public Button bn_close, view_photo;
@@ -103,21 +100,8 @@ public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedReques
             bn_close = (Button) view.findViewById(R.id.btn_close);
             no_photo = (TextView) view.findViewById(R.id.tv_no_photo);
             view_photo = (Button) view.findViewById(R.id.btn_view_photo);
+            tv_fault_id = (TextView) view.findViewById(R.id.tv_fault_id);
 
-            choose_file.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent();
-
-                    intent.setType("application/pdf");
-
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-
-                   // startActivityForResult(Intent.createChooser(intent, "Select Pdf"), PDF_REQ_CODE);
-
-                }
-            });
 
 
         }
@@ -150,6 +134,7 @@ public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedReques
         holder.textView.setText(request.getRoom());
         holder.date_label.setText(request.getRequestDate());
         holder.desc_label.setText(request.getDescription());
+        holder.tv_fault_id.setText(request.getFaultID());
 
         fault_type_id = request.getFaultTypeID();
         fault_id = request.getFaultID();
@@ -203,52 +188,26 @@ public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedReques
                 notifyDataSetChanged();
             }
         });
+        holder.choose_file.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setType("application/pdf");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                //CarpentryCloseFragment origin = (CarpentryCloseFragment) mCtx;
+                fragment.startActivityForResult(Intent.createChooser(intent, "Select PDF"), 1);
+
+            }
+        });
+
         holder.bn_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                StringRequest stringRequest = new StringRequest(com.android.volley.Request.Method.POST, closeUrl,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                try {
-                                    JSONArray jsonArray = new JSONArray(response);
-                                    JSONObject jsonObject = jsonArray.getJSONObject(0);
-                                    String code = jsonObject.getString("code");
-                                    String message = jsonObject.getString("message");
-
-                                    final AlertDialog.Builder builder = new AlertDialog.Builder(mCtx);
-                                    builder.setTitle("WeFixx Response");
-                                    builder.setMessage(message);
-                                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            notifyDataSetChanged();
-                                        }
-                                    });
-                                    builder.show();
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<String, String>();
-
-                        params.put("fault_id", fault_id);
-                        return params;
-                    }
-                };
-                MySingleton.getInstance(mCtx).addToRequestque(stringRequest);
-
+                Intent intent = new Intent("custom-message");
+                intent.putExtra("id",holder.tv_fault_id.getText().toString());
+                LocalBroadcastManager.getInstance(mCtx).sendBroadcast(intent);
             }
-
             public void DisplayAlert() {
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override

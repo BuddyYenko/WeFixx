@@ -14,28 +14,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".manager.RegisterActivity">
+        <activity android:name=".rsa.ManageBy">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".rsa.ManageBy" />
+        <activity android:name=".manager.Manager" />
         <activity android:name=".student.Student" />
         <activity android:name=".rsa.Manage" />
         <activity android:name=".manager.Reports" />
         <activity android:name=".manager.Delayed" />
         <activity android:name=".History" />
-        <activity android:name=".manager.Manager" />
+        <activity android:name=".rsa.RSA" />
         <activity android:name=".student.StudentHistory" />
         <activity android:name=".FAQ" />
         <activity android:name=".NewRequest" />
-        <activity android:name=".rsa.RSA" />
+        <activity android:name=".LoginActivity" />
         <activity android:name=".rsa.ManageByPriority" />
         <activity android:name=".rsa.ManageByProvider" />
         <activity android:name=".rsa.ManageByCategory" />
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".manager.RegisterActivity"></activity>
     </application>
 
 </manifest>

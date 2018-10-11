@@ -63,15 +63,18 @@ public class HAdapter extends RecyclerView.Adapter<HAdapter.MyViewHolder> {
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView request_date, request_type, room, description, textView, date_label, priority, provider;
+        public TextView no_photo, request_date, request_type, room, description, textView, date_label, priority, provider, date_assigned, date_closed, comment, desc_label, tv_requester;
         public ImageView imageView;
-        public LinearLayout linearLayout;
-        public Spinner sp_priority, sp_provider;
-        public Button bn_assign;
+        public LinearLayout linearLayout, row;
+        public Button view_photo;
 
         public MyViewHolder(View view) {
             super(view);
             request_date = (TextView) view.findViewById(R.id.tv_date);
+            date_assigned = (TextView) view.findViewById(R.id.tv_date_assigned);
+            date_closed = (TextView) view.findViewById(R.id.tv_date_closed);
+            desc_label = (TextView) view.findViewById(R.id.desc_label);
+
             request_type = (TextView) view.findViewById(R.id.tv_type);
             description = (TextView) view.findViewById(R.id.tv_desc);
             room = (TextView) view.findViewById(R.id.tv_room);
@@ -81,6 +84,10 @@ public class HAdapter extends RecyclerView.Adapter<HAdapter.MyViewHolder> {
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
             priority = (TextView) view.findViewById(R.id.tv_priority);
             provider = (TextView) view.findViewById(R.id.tv_provider);
+            comment = (TextView) view.findViewById(R.id.tv_comment);
+            no_photo = (TextView) view.findViewById(R.id.tv_no_photo);
+            view_photo = (Button) view.findViewById(R.id.btn_view_photo);
+            tv_requester = (TextView) view.findViewById(R.id.tv_requester);
 
         }
     }
@@ -96,20 +103,42 @@ public class HAdapter extends RecyclerView.Adapter<HAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        Request request = requestList.get(position);
+        final Request request = requestList.get(position);
         holder.request_date.setText(request.getRequestDate());
+        holder.date_assigned.setText(request.getDateAssigned());
+        holder.date_closed.setText(request.getDateClosed());
+        holder.desc_label.setText(request.getDescription());
+        holder.tv_requester.setText(request.getRequester());
+
         holder.request_type.setText(request.getRequestType());
         holder.description.setText(request.getDescription());
+
         holder.room.setText(request.getRoom());
         holder.textView.setText(request.getRoom());
         holder.date_label.setText(request.getRequestDate());
+        holder.priority.setText(request.getPriority());
+        holder.provider.setText(request.getProvider());
+        holder.comment.setText(request.getComment());
 
-//        fault_type_id = request.getFaultTypeID();
-//        fault_id = request.getFaultID();
-
-        Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
+        if( request.getImageUrl() != "null") {
+            Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
+        }
         holder.linearLayout.setVisibility(View.GONE);
+        holder.view_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.view_photo.setVisibility(View.GONE);
+                if(request.getImageUrl()!= "null"){
+                    holder.imageView.setVisibility(View.VISIBLE);
 
+                }
+                else{
+                    holder.no_photo.setVisibility(View.VISIBLE);
+                    //holder.hide_photo.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
 
         //if the position is equals to the item position which is to be expanded
         if (currentPosition == position) {

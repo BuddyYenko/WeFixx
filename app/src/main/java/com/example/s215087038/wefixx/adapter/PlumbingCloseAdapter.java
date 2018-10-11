@@ -1,6 +1,9 @@
 package com.example.s215087038.wefixx.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -19,6 +23,8 @@ import com.example.s215087038.wefixx.R;
 import com.example.s215087038.wefixx.model.PriorityDataObject;
 import com.example.s215087038.wefixx.model.ProviderDataObject;
 import com.example.s215087038.wefixx.model.Request;
+import com.example.s215087038.wefixx.rsa.Manage;
+import com.example.s215087038.wefixx.rsa.PlumbingCloseFragment;
 
 import java.util.List;
 
@@ -27,22 +33,17 @@ public class PlumbingCloseAdapter extends RecyclerView.Adapter<PlumbingCloseAdap
     private List<Request> requestList;
     private Context mCtx;
     private static int currentPosition = -1;
-    String providerUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/fault_provider.php";
-    String priorityUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/priority.php";
-    String assignUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/update_request.php";
-    AlertDialog.Builder builder;
-
-    protected List<ProviderDataObject> providerData;
-    protected List<PriorityDataObject> priorityData;
     String provider, priority, fault_id, fault_type_id;
+    PlumbingCloseFragment fragment;
 
     public PlumbingCloseAdapter(List<Request> requestList) {
         this.requestList = requestList;
     }
 
-    public PlumbingCloseAdapter(Context mCtx, List<Request> requestList) {
+    public PlumbingCloseAdapter(Context mCtx, List<Request> requestList, PlumbingCloseFragment fragment) {
         this.mCtx = mCtx;
         this.requestList = requestList;
+        this.fragment = fragment;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -51,7 +52,8 @@ public class PlumbingCloseAdapter extends RecyclerView.Adapter<PlumbingCloseAdap
         public ImageView imageView;
         public LinearLayout linearLayout;
         public Spinner sp_priority, sp_provider;
-        public Button bn_assign, view_photo;
+        public Button bn_close, view_photo;
+        public ImageButton choose_file;
 
         public MyViewHolder(View view) {
             super(view);
@@ -73,7 +75,8 @@ public class PlumbingCloseAdapter extends RecyclerView.Adapter<PlumbingCloseAdap
             no_photo = (TextView) view.findViewById(R.id.tv_no_photo);
             view_photo = (Button) view.findViewById(R.id.btn_view_photo);
             tv_fault_id = (TextView) view.findViewById(R.id.tv_fault_id);
-
+            bn_close = (Button) view.findViewById(R.id.btn_close);
+            choose_file = (ImageButton) view.findViewById(R.id.ib_report);
         }
     }
 
@@ -121,7 +124,6 @@ public class PlumbingCloseAdapter extends RecyclerView.Adapter<PlumbingCloseAdap
         holder.tv_priority.setText(request.getPriority());
         holder.days_overdue.setText(request.getDaysOverdue());
 
-        builder = new AlertDialog.Builder(mCtx);
 
         //if the position is equals to the item position which is to be expanded
         if (currentPosition == position) {
@@ -154,6 +156,28 @@ public class PlumbingCloseAdapter extends RecyclerView.Adapter<PlumbingCloseAdap
 
                 //reloading the list
                 notifyDataSetChanged();
+            }
+        });
+
+        holder.choose_file.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setType("application/pdf");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                //CarpentryCloseFragment origin = (CarpentryCloseFragment) mCtx;
+                fragment.startActivityForResult(Intent.createChooser(intent, "Select PDF"), 1);
+
+            }
+        });
+
+        holder.bn_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent("custom-message");
+                intent.putExtra("id",holder.tv_fault_id.getText().toString());
+                LocalBroadcastManager.getInstance(mCtx).sendBroadcast(intent);
             }
         });
     }

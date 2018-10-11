@@ -38,8 +38,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView no_photo, request_date, request_type, room, description, textView, date_label, priority, provider, date_assigned, date_closed, comment, desc_label;
-        public SimpleRatingBar rating;
+        public TextView no_photo, request_date, request_type, room, description, textView, date_label, priority, provider, date_assigned, date_closed, comment, desc_label, tv_requester;
         public ImageView imageView;
         public LinearLayout linearLayout, row;
         public Button view_photo;
@@ -63,10 +62,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
             priority = (TextView) view.findViewById(R.id.tv_priority);
             provider = (TextView) view.findViewById(R.id.tv_provider);
             comment = (TextView) view.findViewById(R.id.tv_comment);
-            rating = (SimpleRatingBar) view.findViewById(R.id.rb_rating);
             no_photo = (TextView) view.findViewById(R.id.tv_no_photo);
             view_photo = (Button) view.findViewById(R.id.btn_view_photo);
-
+            tv_requester = (TextView) view.findViewById(R.id.tv_requester);
         }
     }
 
@@ -85,6 +83,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         holder.date_assigned.setText(request.getDateAssigned());
         holder.date_closed.setText(request.getDateClosed());
         holder.desc_label.setText(request.getDescription());
+        holder.tv_requester.setText(request.getRequester());
 
         holder.request_type.setText(request.getRequestType());
         holder.description.setText(request.getDescription());
@@ -94,9 +93,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         holder.date_label.setText(request.getRequestDate());
         holder.priority.setText(request.getPriority());
         holder.provider.setText(request.getProvider());
-        holder.comment.setText(request.getComment());
-        holder.rating.setRating(request.getRating());
-
+        if( request.getComment() != "null") {
+            holder.comment.setText(request.getComment());
+        }
+        else{
+            holder.comment.setText("***No Comment***");
+        }
         if( request.getImageUrl() != "null") {
             Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
         }
@@ -107,7 +109,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
                 holder.view_photo.setVisibility(View.GONE);
                 if(request.getImageUrl()!= "null"){
                     holder.imageView.setVisibility(View.VISIBLE);
-
                 }
                 else{
                     holder.no_photo.setVisibility(View.VISIBLE);
@@ -123,7 +124,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
 
             //toggling visibility
             holder.linearLayout.setVisibility(View.VISIBLE);
-            holder.desc_label.setVisibility(View.INVISIBLE);
+            //holder.desc_label.setVisibility(View.INVISIBLE);
 
             //adding sliding effect
             holder.linearLayout.startAnimation(slideDown);

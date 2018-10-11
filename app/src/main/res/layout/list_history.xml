@@ -101,7 +101,7 @@
                             android:id="@+id/tv_requester"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="date opened"
+                            android:text="req"
                             android:textStyle="bold"
                             android:layout_marginLeft="20dp"/>
                     </TableRow>
@@ -259,25 +259,7 @@
                             android:textStyle="bold"
                             android:layout_marginLeft="20dp"/>
                     </TableRow>
-                    <TableRow>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Rating"/>
 
-                        <com.iarcuschin.simpleratingbar.SimpleRatingBar
-                            android:id="@+id/rb_rating"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srb_starSize="20dp"
-                            app:srb_starBorderWidth="3"
-                            app:srb_numberOfStars="5"
-                            app:srb_gravity="left"
-                            app:srb_isIndicator="true"
-                            android:layout_marginLeft="20dp"
-                            app:srb_pressedStarBackgroundColor ="@color/golden_stars"
-                            />
-                    </TableRow>
                 </TableLayout>
                 <!--<LinearLayout-->
                     <!--android:layout_width="match_parent"-->

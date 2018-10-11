@@ -84,7 +84,7 @@ public class CarpentryCloseFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View myFragmentView = inflater.inflate(R.layout.fragment_carpentry_close, container, false);
-        requestStoragePermission();
+        //requestStoragePermission();
 
         carpentryList = new ArrayList<>();
         recyclerView = (RecyclerView) myFragmentView.findViewById(R.id.recylcerView);
