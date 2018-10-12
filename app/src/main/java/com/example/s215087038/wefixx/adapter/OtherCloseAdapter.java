@@ -3,6 +3,7 @@ package com.example.s215087038.wefixx.adapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -48,7 +49,7 @@ public class OtherCloseAdapter extends RecyclerView.Adapter<OtherCloseAdapter.My
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView no_photo, request_date, request_type, room, description, textView, date_label, desc_label, status, tv_fault_id;
+        public TextView no_photo, request_date, request_type, room, description, textView, date_label, desc_label, status, tv_fault_id, tv_date_assigned;
         public TextView expected_close, days_overdue, tv_provider, tv_priority;
         public ImageView imageView;
         public LinearLayout linearLayout;
@@ -78,13 +79,14 @@ public class OtherCloseAdapter extends RecyclerView.Adapter<OtherCloseAdapter.My
             tv_fault_id = (TextView) view.findViewById(R.id.tv_fault_id);
             bn_close = (Button) view.findViewById(R.id.btn_close);
             choose_file = (ImageButton) view.findViewById(R.id.ib_report);
+            tv_date_assigned = (TextView) view.findViewById(R.id.tv_date_assigned);
         }
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_carpentry_close, parent, false);
+                .inflate(R.layout.list_other_close, parent, false);
         return new MyViewHolder(itemView);
     }
 
@@ -99,6 +101,7 @@ public class OtherCloseAdapter extends RecyclerView.Adapter<OtherCloseAdapter.My
         holder.date_label.setText(request.getRequestDate());
         holder.desc_label.setText(request.getDescription());
         holder.status.setText(request.getRequestStatus());
+        holder.tv_date_assigned.setText(request.getDateAssigned());
 
         fault_type_id = request.getFaultTypeID();
         fault_id = request.getFaultID();
@@ -124,6 +127,7 @@ public class OtherCloseAdapter extends RecyclerView.Adapter<OtherCloseAdapter.My
         holder.tv_provider.setText(request.getProvider());
         holder.tv_priority.setText(request.getPriority());
         holder.days_overdue.setText(request.getDaysOverdue());
+        holder.tv_fault_id.setText(request.getFaultID());
 
         builder = new AlertDialog.Builder(mCtx);
 
@@ -177,9 +181,12 @@ public class OtherCloseAdapter extends RecyclerView.Adapter<OtherCloseAdapter.My
         holder.bn_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("custom-message");
-                intent.putExtra("id",holder.tv_fault_id.getText().toString());
-                LocalBroadcastManager.getInstance(mCtx).sendBroadcast(intent);
+                Bundle bundle = new Bundle();
+                bundle.putString("id", holder.tv_fault_id.getText().toString());
+
+                //PASS OVER THE BUNDLE TO OUR FRAGMENT
+                fragment.setArguments(bundle);
+                fragment.getFaultID();
             }
 
         });

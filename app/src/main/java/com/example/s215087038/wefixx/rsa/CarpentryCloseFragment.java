@@ -96,8 +96,8 @@ public class CarpentryCloseFragment extends Fragment {
         recyclerView.addItemDecoration(new MyDividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL, 16));
         recyclerView.setAdapter(aAdapter);
         prepareRequestData();
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
-                new IntentFilter("custom-message"));
+//        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
+//                new IntentFilter("custom-message"));
         builder = new AlertDialog.Builder(getActivity());
         return myFragmentView;
     }
@@ -239,8 +239,6 @@ public class CarpentryCloseFragment extends Fragment {
                                 builder.setTitle("WeFixx Response");
                                 builder.setMessage(message);
                                 DisplayAlert(code);
-
-
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -280,6 +278,94 @@ public class CarpentryCloseFragment extends Fragment {
 
         }
     };
+    public void getFaultID(){
+        id =this.getArguments().getString("id").toString();
+        if(fileuri != null && !fileuri.equals(Uri.EMPTY)) {
+
+            String path = FilePath.getPath(getActivity(), fileuri);
+
+            //Toast.makeText(ManageByProvider.this,id + " " + path ,Toast.LENGTH_SHORT).show();
+
+            try {
+
+                File file = new File(path);
+                int length = (int) file.length();
+                BufferedInputStream reader = new BufferedInputStream(new FileInputStream(file));
+                byte[] bytes = new byte[length];
+                reader.read(bytes, 0, length);
+                reader.close();
+                result = bytes;
+
+                //encodedfile = Base64.encodeBase64(bytes).toString();
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch <span id="IL_AD1" class="IL_AD">block</span>
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+
+            VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(com.android.volley.Request.Method.POST, UPLOAD_URL,
+                    new Response.Listener<NetworkResponse>() {
+                        @Override
+                        public void onResponse(NetworkResponse response) {
+
+                            try {
+                                //   Toast.makeText(ManageByProvider.this, response.data.toString() + " " + response.toString(), Toast.LENGTH_SHORT).show();
+                                JSONArray jsonArray = new JSONArray(new String(response.data));
+                                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                                String code = jsonObject.getString("code");
+                                String message = jsonObject.getString("message");
+
+                                builder.setTitle("WeFixx Response");
+                                builder.setMessage(message);
+                                DisplayAlert(code);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // Toast.makeText(getApplicationContext(), error.getMessage() +"error " , Toast.LENGTH_LONG).show();
+
+                        }
+                    }) {
+
+                //Posting parameters to php script
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("fault_id", id);
+                    return params;
+                }
+
+                @Override
+                protected Map<String, DataPart> getByteData() {
+
+
+                    Map<String, DataPart> params = new HashMap<>();
+                    if (fileuri != null) {
+                        String imagename = "report";
+                        params.put("report", new DataPart(imagename + ".pdf", result));
+                    }
+                    return params;
+                }
+
+            };
+            volleyMultipartRequest.setRetryPolicy(new DefaultRetryPolicy(0, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            //adding the request to volley
+            Volley.newRequestQueue(getActivity()).add(volleyMultipartRequest);
+        }
+        else{
+            builder.setTitle("No Report Chosen");
+            builder.setMessage("Please select a document to upload");
+            DisplayAlert("input_error");
+        }
+    }
+
     public void DisplayAlert(final String code) {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override

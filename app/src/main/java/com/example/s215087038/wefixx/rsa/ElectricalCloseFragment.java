@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -92,6 +94,9 @@ public class ElectricalCloseFragment extends Fragment {
         recyclerView.addItemDecoration(new MyDividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL, 16));
         recyclerView.setAdapter(aAdapter);
         prepareRequestData();
+//        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
+//                new IntentFilter("custom-message"));
+        builder = new AlertDialog.Builder(getActivity());
         return myFragmentView;
     }
     //Requesting permission
@@ -188,11 +193,10 @@ public class ElectricalCloseFragment extends Fragment {
         queue.add(stringRequest1);
 
     }
-    public BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // Get extra data included in the Intent
-            id = intent.getStringExtra("id" );
+    public void getFaultID(){
+        id =this.getArguments().getString("idElec").toString();
+        if(fileuri != null && !fileuri.equals(Uri.EMPTY)) {
+
             String path = FilePath.getPath(getActivity(), fileuri);
 
             //Toast.makeText(ManageByProvider.this,id + " " + path ,Toast.LENGTH_SHORT).show();
@@ -224,7 +228,7 @@ public class ElectricalCloseFragment extends Fragment {
 
                             try {
                                 //   Toast.makeText(ManageByProvider.this, response.data.toString() + " " + response.toString(), Toast.LENGTH_SHORT).show();
-                                JSONArray jsonArray = new JSONArray(new String (response.data));
+                                JSONArray jsonArray = new JSONArray(new String(response.data));
                                 JSONObject jsonObject = jsonArray.getJSONObject(0);
                                 String code = jsonObject.getString("code");
                                 String message = jsonObject.getString("message");
@@ -232,8 +236,6 @@ public class ElectricalCloseFragment extends Fragment {
                                 builder.setTitle("WeFixx Response");
                                 builder.setMessage(message);
                                 DisplayAlert(code);
-
-
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -254,6 +256,7 @@ public class ElectricalCloseFragment extends Fragment {
                     params.put("fault_id", id);
                     return params;
                 }
+
                 @Override
                 protected Map<String, DataPart> getByteData() {
 
@@ -267,17 +270,28 @@ public class ElectricalCloseFragment extends Fragment {
                 }
 
             };
-            volleyMultipartRequest.setRetryPolicy(new DefaultRetryPolicy(0,0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            volleyMultipartRequest.setRetryPolicy(new DefaultRetryPolicy(0, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             //adding the request to volley
             Volley.newRequestQueue(getActivity()).add(volleyMultipartRequest);
-
         }
-    };
+        else{
+            builder.setTitle("No Report Chosen");
+            builder.setMessage("Please select a document to upload");
+            DisplayAlert("input_error");
+        }
+    }
     public void DisplayAlert(final String code) {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                prepareRequestData();
+                if(code == "update_success")
+                {
+                    prepareRequestData();
+                }
+                else if (code=="input_error")
+                {
+
+                }
             }
         });
 

@@ -3,6 +3,7 @@ package com.example.s215087038.wefixx.adapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -32,6 +33,7 @@ import com.example.s215087038.wefixx.model.PriorityDataObject;
 import com.example.s215087038.wefixx.model.ProviderDataObject;
 import com.example.s215087038.wefixx.model.Request;
 import com.example.s215087038.wefixx.rsa.CarpentryCloseFragment;
+import com.example.s215087038.wefixx.rsa.CarpentryFragment;
 import com.example.s215087038.wefixx.rsa.Manage;
 import com.example.s215087038.wefixx.rsa.ManageByProvider;
 import com.google.gson.Gson;
@@ -70,7 +72,7 @@ public class CarpentryCloseAdapter extends RecyclerView.Adapter<CarpentryCloseAd
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView no_photo, request_date, request_type, room, description, textView, date_label, desc_label, status, tv_fault_id;
+        public TextView no_photo, request_date, request_type, room, description, textView, date_label, desc_label, status, tv_fault_id, tv_date_assigned;
         public TextView expected_close, days_overdue, tv_provider, tv_priority;
         public ImageView imageView;
         public LinearLayout linearLayout;
@@ -100,6 +102,7 @@ public class CarpentryCloseAdapter extends RecyclerView.Adapter<CarpentryCloseAd
             tv_fault_id = (TextView) view.findViewById(R.id.tv_fault_id);
             bn_close = (Button) view.findViewById(R.id.btn_close);
             choose_file = (ImageButton) view.findViewById(R.id.ib_report);
+            tv_date_assigned = (TextView) view.findViewById(R.id.tv_date_assigned);
 
 
         }
@@ -124,6 +127,7 @@ public class CarpentryCloseAdapter extends RecyclerView.Adapter<CarpentryCloseAd
         holder.desc_label.setText(request.getDescription());
         holder.status.setText(request.getRequestStatus());
         holder.tv_fault_id.setText(request.getFaultID());
+        holder.tv_date_assigned.setText(request.getDateAssigned());
 
         fault_type_id = request.getFaultTypeID();
         fault_id = request.getFaultID();
@@ -201,21 +205,16 @@ public class CarpentryCloseAdapter extends RecyclerView.Adapter<CarpentryCloseAd
         holder.bn_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("custom-message");
-                intent.putExtra("id",holder.tv_fault_id.getText().toString());
-                LocalBroadcastManager.getInstance(mCtx).sendBroadcast(intent);
-            }
-            public void DisplayAlert() {
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent refresh = new Intent(mCtx, Manage.class);
-                        mCtx.startActivity(refresh);
-                    }
-                });
+//                Intent intent = new Intent("custom-message");
+//                intent.putExtra("id", holder.tv_fault_id.getText().toString());
+//                LocalBroadcastManager.getInstance(mCtx).sendBroadcast(intent);
 
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                Bundle bundle = new Bundle();
+                bundle.putString("id", holder.tv_fault_id.getText().toString());
+
+                //PASS OVER THE BUNDLE TO OUR FRAGMENT
+                fragment.setArguments(bundle);
+                fragment.getFaultID();
             }
         });
     }

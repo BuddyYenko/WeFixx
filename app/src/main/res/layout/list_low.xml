@@ -256,7 +256,7 @@
                             android:layout_centerVertical="true"
                             android:layout_toRightOf="@+id/ib_report"
                             android:gravity="center_vertical"
-                            android:text="Choose Report" />
+                            android:text="Upload Report" />
                     </RelativeLayout>
 
 

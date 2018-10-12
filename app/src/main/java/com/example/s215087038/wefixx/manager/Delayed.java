@@ -75,6 +75,7 @@ public class Delayed extends AppCompatActivity {
                                 request.getString("requester"),
                                 request.getString("priority"),
                                 request.getString("turnaround"),
+                                request.getString("provider"),
                                 request.getString("contact_number"),
                                 request.getString("email"),
                                 request.getString("provider_status"),

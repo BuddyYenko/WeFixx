@@ -195,7 +195,6 @@ public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedReques
                 Intent intent = new Intent();
                 intent.setType("application/pdf");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                //CarpentryCloseFragment origin = (CarpentryCloseFragment) mCtx;
                 fragment.startActivityForResult(Intent.createChooser(intent, "Select PDF"), 1);
 
             }
@@ -207,18 +206,6 @@ public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedReques
                 Intent intent = new Intent("custom-message");
                 intent.putExtra("id",holder.tv_fault_id.getText().toString());
                 LocalBroadcastManager.getInstance(mCtx).sendBroadcast(intent);
-            }
-            public void DisplayAlert() {
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent refresh = new Intent(mCtx, Manage.class);
-                        mCtx.startActivity(refresh);
-                    }
-                });
-
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
             }
         });
 
