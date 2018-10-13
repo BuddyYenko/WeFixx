@@ -69,9 +69,10 @@ public class NewRequest extends AppCompatActivity {
     //ImageView to display image selected
     ImageView imageView;
     private Spinner spinner;
-    private EditText Description;
+    private EditText Description, RoomNo;
     String description, photo;
     private Button btn_request;
+
     Matrix matrix;
     Bitmap scaledBitmap = null, bitmap = null;
     //url to send student's input
@@ -81,7 +82,7 @@ public class NewRequest extends AppCompatActivity {
     AlertDialog.Builder builder;
     protected List<DataObject> spinnerData;
     private RequestQueue queue;
-    String user_id, name, fault;
+    String user_id, name, fault, room, student_no;
     private ProgressBar progressBar;
     private int progressStatus = 0;
     @Override
@@ -93,7 +94,8 @@ public class NewRequest extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
 
         user_id = preferences.getString("user_id", "");
-        name = preferences.getString("name", "");
+        name = preferences.getString("name", "") + " " + preferences.getString("surname", "");
+        student_no = preferences.getString("student_no", "");
         //********************************************
 
         //initializing controls
@@ -102,6 +104,8 @@ public class NewRequest extends AppCompatActivity {
 
         //Getting id by their xml
         Description = (EditText) findViewById(R.id.et_description);
+        RoomNo = (EditText) findViewById(R.id.tv_room_no);
+
         btn_request = (Button) findViewById(R.id.btn_request);
         progressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
 
@@ -134,9 +138,10 @@ public class NewRequest extends AppCompatActivity {
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
                 description = Description.getText().toString();
+                room = RoomNo.getText().toString();
                 if (description.equals("")) {
-                    builder.setTitle("Something Went Wrong...");
-                    builder.setMessage("Please fill in description");
+                    builder.setTitle("Empty Fields...");
+                    builder.setMessage("Description and room number are required");
                     displayAlert("input_error");
                 } else {
                     VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, newRequestUrl,
@@ -174,6 +179,10 @@ public class NewRequest extends AppCompatActivity {
                             params.put("user_id", user_id);
                             params.put("description", description);
                             params.put("fault_type", fault);
+                            params.put("room_no", room);
+                            params.put("name",name);
+                            params.put("student_no",student_no);
+
                             if(bitmap !=null) {
                                 params.put("photo_uploaded", "true");
                             }
@@ -207,8 +216,8 @@ public class NewRequest extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             if (code.equals("req_failed")) {
-                                Intent req = new Intent(NewRequest.this, NewRequest.class);
-                                startActivity(req);
+//                                Intent req = new Intent(NewRequest.this, NewRequest.class);
+//                                startActivity(req);
                             } else if (code.equals("req_success")) {
                                 Description.setText("");
                                 Intent main = new Intent(NewRequest.this, Student.class);

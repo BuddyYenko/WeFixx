@@ -47,8 +47,7 @@
             android:textAlignment="center"
             android:textColorHint="@color/placeholders"
             android:textColor="@color/placeholders"
-
-            android:text="3"/>
+            android:text="s215087038"/>
 
         <EditText
             android:id="@+id/et_password"
@@ -58,7 +57,8 @@
             android:textColorHint="@color/placeholders"
             android:textColor="@color/placeholders"
             android:hint="Password"
-            android:text="3"/>
+            android:inputType="textPassword"
+            android:text="Bittai70"/>
 
         <Button
             android:id="@+id/btn_login"

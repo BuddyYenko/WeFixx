@@ -91,12 +91,19 @@ public class LoginActivity extends AppCompatActivity {
 
                                         if(code.equals("login_success")){
 
-                                            String user_id = jsonObject.getString("user_id");
                                             String user_type = jsonObject.getString("user_type");
                                             user_type = user_type.toLowerCase();
-                                            String surname = jsonObject.getString("surname");
                                             String name = jsonObject.getString("name");
-                                            CreateSessions(user_id, name);
+                                            if (user_type.equals("student")){
+                                                String surname = jsonObject.getString("surname");
+                                                String student_no = jsonObject.getString("student_no");
+                                                String res = jsonObject.getString("res");
+                                                StudentSessions(name, surname, student_no, res );
+                                            }
+                                            else{
+                                                String user_id = jsonObject.getString("user_id");
+                                                CreateSessions(user_id, name);
+                                            }
                                             DisplayAlert(code, user_type);
 
                                         }
@@ -145,7 +152,21 @@ public class LoginActivity extends AppCompatActivity {
         editor.commit();
         //*******************************************
     }
+    public void StudentSessions(String name, String surname, String student_no, String res) {
+        //***************** Session *****************
+        SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
 
+        String name_session = preferences.getString(name + "data", name);
+
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("name", name);
+        editor.putString("surname", surname);
+        editor.putString("student_no", student_no);
+        editor.putString("res", res);
+
+        editor.commit();
+        //*******************************************
+    }
     public void DisplayAlert(final String code) {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override

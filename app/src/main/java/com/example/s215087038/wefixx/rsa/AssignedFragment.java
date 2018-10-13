@@ -292,7 +292,12 @@ public class AssignedFragment extends Fragment {
             String file = fileuri.getPath();
             path = FilePath.getPath(getActivity(), fileuri);
             Toast.makeText(getActivity(), "Document chosen: " + path, Toast.LENGTH_LONG).show();
+            Bundle bundle = new Bundle();
+            bundle.putString("docPath", path);
 
+            //PASS OVER THE BUNDLE TO OUR FRAGMENT
+            AssignedRequestAdapter ad = new AssignedRequestAdapter();
+           // ad.setArguments(bundle);
             //adapter = new CarpentryCloseAdapter(path);
 
         }

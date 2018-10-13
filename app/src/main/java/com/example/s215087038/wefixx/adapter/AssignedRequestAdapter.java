@@ -66,6 +66,9 @@ public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedReques
     public AssignedRequestAdapter(List<Request> requestList) {
         this.requestList = requestList;
     }
+    public AssignedRequestAdapter() {
+
+    }
 
     public AssignedRequestAdapter(Context mCtx, List<Request> requestList, AssignedFragment fragment) {
         this.mCtx = mCtx;
@@ -196,6 +199,7 @@ public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedReques
                 intent.setType("application/pdf");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 fragment.startActivityForResult(Intent.createChooser(intent, "Select PDF"), 1);
+               // String path =this.getArguments().getString("id").toString();
 
             }
         });
