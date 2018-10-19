@@ -29,6 +29,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -70,9 +71,9 @@ public class NewRequest extends AppCompatActivity {
     ImageView imageView;
     private Spinner spinner;
     private EditText Description, RoomNo;
-    String description, photo;
+    String description;
+    TextView example;
     private Button btn_request;
-
     Matrix matrix;
     Bitmap scaledBitmap = null, bitmap = null;
     //url to send student's input
@@ -84,31 +85,26 @@ public class NewRequest extends AppCompatActivity {
     private RequestQueue queue;
     String user_id, name, fault, room, student_no;
     private ProgressBar progressBar;
-    private int progressStatus = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_request);
-
         //********************************************
         SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
-
         user_id = preferences.getString("user_id", "");
         name = preferences.getString("name", "") + " " + preferences.getString("surname", "");
         student_no = preferences.getString("student_no", "");
         //********************************************
-
-        //initializing controls
-        imageView = (ImageView) findViewById(R.id.ib_photo);
         requestJsonObject();
 
         //Getting id by their xml
+        imageView = (ImageView) findViewById(R.id.ib_photo);
         Description = (EditText) findViewById(R.id.et_description);
         RoomNo = (EditText) findViewById(R.id.tv_room_no);
-
         btn_request = (Button) findViewById(R.id.btn_request);
         progressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
-
+        example = (TextView) findViewById(R.id.tv_example);
+        example.setText("i.e 123b".toLowerCase());
         //checking the permission
         //if the permission is not given we will open setting to add permission
         //else app will not open
@@ -131,8 +127,6 @@ public class NewRequest extends AppCompatActivity {
             }
         });
         builder = new AlertDialog.Builder(NewRequest.this);
-
-
         btn_request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,7 +162,6 @@ public class NewRequest extends AppCompatActivity {
                                 public void onErrorResponse(VolleyError error) {
                                     Toast.makeText(getApplicationContext(), error.getMessage() +"error " , Toast.LENGTH_LONG).show();
                                     progressBar.setVisibility(View.INVISIBLE);
-
                                 }
                             }) {
 
@@ -182,17 +175,14 @@ public class NewRequest extends AppCompatActivity {
                             params.put("room_no", room);
                             params.put("name",name);
                             params.put("student_no",student_no);
-
                             if(bitmap !=null) {
                                 params.put("photo_uploaded", "true");
                             }
                             return params;
                         }
-                         //Here we are passing image by renaming it with a unique name
+                        //Here we are passing image by renaming it with a unique name
                         @Override
                         protected Map<String, DataPart> getByteData() {
-
-
                             Map<String, DataPart> params = new HashMap<>();
                             if(bitmap !=null)
                             {
@@ -200,85 +190,38 @@ public class NewRequest extends AppCompatActivity {
                                 params.put("photo", new DataPart(imagename + ".jpeg", getFileDataFromDrawable(scaledBitmap)));
                             }
                             return params;
-
                         }
                     };
                     volleyMultipartRequest.setRetryPolicy(new DefaultRetryPolicy(0,0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
                     //adding the request to volley
                     Volley.newRequestQueue(NewRequest.this).add(volleyMultipartRequest);
                 }
 
             }
-
             private void displayAlert(final String code) {
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (code.equals("req_failed")) {
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (code.equals("req_failed")) {
 //                                Intent req = new Intent(NewRequest.this, NewRequest.class);
 //                                startActivity(req);
-                            } else if (code.equals("req_success")) {
-                                Description.setText("");
-                                Intent main = new Intent(NewRequest.this, Student.class);
-                                startActivity(main);
-                            }else if(code.equals("input_error")){
-
-                            }
+                        } else if (code.equals("req_success")) {
+                            Description.setText("");
+                            Intent main = new Intent(NewRequest.this, Student.class);
+                            startActivity(main);
+                        }else if(code.equals("input_error")){
 
                         }
-                    });
 
-                    AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
-                }
+                    }
+                });
 
-        });
-}
-    public String getStringImage(Bitmap bmp) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageBytes = baos.toByteArray();
-        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-        return encodedImage;
-    }
-
-    private void Display(final String code) {
-        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (code.equals("req_failed")) {
-                    imageView.setImageResource(R.drawable.upload);
-                }
-                else if (code.equals("req_success")) {
-                    Intent mainPage = new Intent(NewRequest.this, Student.class);
-                    startActivity(mainPage);
-                }
-                //recreate();
-
-
-
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
-        });
-//        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-////                if (code.equals("req_failed")) {
-////                    Intent mainPage = new Intent(NewRequest.this, RSA.class);
-////                    startActivity(mainPage);
-////                }
-////                else if (code.equals("req_success")) {
-////                    // et_password.setText("");
-////                }
-//
-//                //finish();
-//
-//            }
-//        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
 
+        });
+    }
     private void requestJsonObject() {
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, faultUrl, new Response.Listener<String>() {
@@ -312,19 +255,17 @@ public class NewRequest extends AppCompatActivity {
         });
         queue.add(stringRequest);
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
-
             //getting the image Uri
             Uri imageUri = data.getData();
             try {
                 //getting bitmap object from uri
                 matrix = new Matrix();
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-               // imageView.setImageBitmap(bitmap);
+                // imageView.setImageBitmap(bitmap);
                 compressImage(imageUri);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -333,11 +274,8 @@ public class NewRequest extends AppCompatActivity {
     }
 
     public String compressImage(Uri imageUri) {
-
         String filePath = getRealPathFromURI(imageUri.toString());
-
         BitmapFactory.Options options = new BitmapFactory.Options();
-
 //      by setting this field as true, the actual bitmap pixels are not loaded in the memory. Just the bounds are loaded. If
 //      you try the use the bitmap here, you will get null.
         options.inJustDecodeBounds = true;
@@ -347,14 +285,12 @@ public class NewRequest extends AppCompatActivity {
         int actualWidth = options.outWidth;
 
 //      max Height and width values of the compressed image is taken as 816x612
-
         float maxHeight = 816.0f;
         float maxWidth = 612.0f;
         float imgRatio = actualWidth / actualHeight;
         float maxRatio = maxWidth / maxHeight;
 
 //      width and height values are set maintaining the aspect ratio of the image
-
         if (actualHeight > maxHeight || actualWidth > maxWidth) {
             if (imgRatio < maxRatio) {
                 imgRatio = maxHeight / actualHeight;
@@ -367,12 +303,10 @@ public class NewRequest extends AppCompatActivity {
             } else {
                 actualHeight = (int) maxHeight;
                 actualWidth = (int) maxWidth;
-
             }
         }
 
 //      setting inSampleSize value allows to load a scaled down version of the original image
-
         options.inSampleSize = calculateInSampleSize(options, actualWidth, actualHeight);
 
 //      inJustDecodeBounds set to false to load the actual bitmap
@@ -388,7 +322,6 @@ public class NewRequest extends AppCompatActivity {
             bmp = BitmapFactory.decodeFile(filePath, options);
         } catch (OutOfMemoryError exception) {
             exception.printStackTrace();
-
         }
         try {
             scaledBitmap = Bitmap.createBitmap(actualWidth, actualHeight, Bitmap.Config.ARGB_8888);
@@ -450,8 +383,6 @@ public class NewRequest extends AppCompatActivity {
         return filename;
 
     }
-
-
     public String getFilename() {
         File file = new File(Environment.getExternalStorageDirectory().getPath(), "MyFolder/Images");
         if (!file.exists()) {
@@ -459,9 +390,7 @@ public class NewRequest extends AppCompatActivity {
         }
         String uriSting = (file.getAbsolutePath() + "/" + System.currentTimeMillis() + ".jpg");
         return uriSting;
-
     }
-
     private String getRealPathFromURI(String contentURI) {
         Uri contentUri = Uri.parse(contentURI);
         Cursor cursor = getContentResolver().query(contentUri, null, null, null, null);
@@ -472,7 +401,6 @@ public class NewRequest extends AppCompatActivity {
             int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
             return cursor.getString(index);
         }
-
     }
 
     public int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
@@ -490,7 +418,6 @@ public class NewRequest extends AppCompatActivity {
         while (totalPixels / (inSampleSize * inSampleSize) > totalReqPixelsCap) {
             inSampleSize++;
         }
-
         return inSampleSize;
     }
     /*

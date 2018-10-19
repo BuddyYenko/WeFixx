@@ -11,6 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+
         android:layout_marginTop="50dp"
         android:orientation="vertical">
 
@@ -20,10 +22,22 @@
             android:textColor="@color/labelBlackColor"
             android:textStyle="bold"
                 android:text="ROOM NUMBER"/>
-        <EditText
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/tv_room_no"/>
+            android:orientation="horizontal">
+            <EditText
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:id="@+id/tv_room_no"/>
+
+            <TextView
+                android:id="@+id/tv_example"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                 />
+        </LinearLayout>
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -49,7 +63,7 @@
             android:layout_height="wrap_content">
             <EditText
                 android:id="@+id/et_description"
-                android:layout_width="365dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="top|left"
                 android:inputType="textMultiLine"

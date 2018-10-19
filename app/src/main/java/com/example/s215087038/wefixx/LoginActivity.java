@@ -107,7 +107,6 @@ public class LoginActivity extends AppCompatActivity {
                                             DisplayAlert(code, user_type);
 
                                         }
-
                                         if(code.equals("login_failed")){
                                             DisplayAlert(code);
                                         }
@@ -196,9 +195,6 @@ public class LoginActivity extends AppCompatActivity {
                     et_password.setText("");
                 }
                 else if (code.equals("login_success")) {
-//                    et_password.setText("");
-//                    et_username.setText("");
-
 
                     if(user_type.equals("student") ){
                         Intent mainPage = new Intent(LoginActivity.this, Student.class);
