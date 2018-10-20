@@ -8,80 +8,25 @@
     android:orientation="vertical"
     android:weightSum="2"
     android:gravity="center_vertical"
-    android:background="@color/background">
+    android:paddingRight="20dp"
+    android:paddingLeft="20dp" >
     <!--android:weightSum="4">-->
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Assign Requests"
+        android:textColor="@android:color/white"
+        android:background="@color/colorPrimaryDark" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="2"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingBottom="30dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1"
-            android:clickable="true">
-            <ImageButton
-                android:id="@+id/btn_by_priority"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/new_req"
-                android:layout_gravity="center"
-                android:clickable="true"
-                android:background="@null"
-                android:layout_weight="1"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:textColor="@color/labelColor"
-                android:text="By Priority"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large.Inverse"
-                android:layout_weight="1"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:weightSum="2"
-            android:clickable="true">
-
-            <ImageButton
-                android:id="@+id/btn_by_provider"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="@null"
-                app:srcCompat="@drawable/history" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="By Provider"
-                android:textColor="@color/labelColor"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large.Inverse" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="2"
-        android:layout_gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingBottom="30dp">
+        android:background="@drawable/border">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -102,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:textColor="@color/labelColor"
+                android:textColor="@color/labelBlackColor"
                 android:text="By Status"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large.Inverse"
                 android:layout_weight="1"/>
@@ -132,7 +77,78 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="By Category"
-                android:textColor="@color/labelColor"
+                android:textColor="@color/labelBlackColor"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large.Inverse" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text1"
+        android:textColor="@android:color/white"
+        android:background="@color/colorPrimaryDark" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:background="@drawable/border">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:clickable="true">
+            <ImageButton
+                android:id="@+id/btn_by_priority"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/new_req"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:background="@null"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textColor="@color/labelBlackColor"
+                android:text="By Priority"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large.Inverse"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:weightSum="2"
+            android:clickable="true">
+
+            <ImageButton
+                android:id="@+id/btn_by_provider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@null"
+                app:srcCompat="@drawable/history" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="By Provider"
+                android:textColor="@color/labelBlackColor"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large.Inverse" />
 
         </LinearLayout>

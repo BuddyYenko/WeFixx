@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.s215087038.wefixx.rsa.RSA"
     android:orientation="vertical"
-    android:gravity="center_vertical"
-    android:background="@color/background">
+    android:gravity="center_vertical">
     <!--android:weightSum="4">-->
 
     <LinearLayout
@@ -36,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:textColor="@color/labelColor"
+                android:textColor="@color/labelBlackColor"
                 android:textSize="@dimen/label"
                 android:text="Manage Request"
                 android:layout_weight="1"/>
@@ -61,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:textColor="@color/labelColor"
+                android:textColor="@color/labelBlackColor"
                 android:textSize="@dimen/label"
                 android:text="History"
                 android:layout_weight="1"/>
