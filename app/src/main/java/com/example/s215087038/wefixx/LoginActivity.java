@@ -162,7 +162,6 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("surname", surname);
         editor.putString("student_no", student_no);
         editor.putString("res", res);
-
         editor.commit();
         //*******************************************
     }

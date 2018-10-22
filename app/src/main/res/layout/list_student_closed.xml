@@ -230,27 +230,6 @@
                             android:textStyle="bold"
                             android:layout_marginLeft="20dp"/>
                     </TableRow>
-                    <TableRow>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Rating"/>
-
-                        <com.iarcuschin.simpleratingbar.SimpleRatingBar
-                            android:id="@+id/rb_rating"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srb_starSize="20dp"
-                            app:srb_starBorderWidth="3"
-                            app:srb_numberOfStars="5"
-                            app:srb_gravity="left"
-                            app:srb_isIndicator="true"
-                            android:layout_marginLeft="20dp"
-                            app:srb_pressedStarBackgroundColor ="@color/golden_stars"
-                            />
-                    </TableRow>
-
-
                 </TableLayout>
                 <Button
                     android:id="@+id/btn_view_photo"

@@ -66,7 +66,7 @@ public class OpenRequestAd extends RecyclerView.Adapter<OpenRequestAdapter.MyVie
         holder.request_type.setText(request.getRequestType());
         holder.description.setText(request.getDescription());
         holder.room.setText(request.getRoom());
-        holder.textView.setText(request.getRoom());
+        holder.textView.setText( "Room " + request.getRoom());
         holder.date_label.setText(request.getRequestDate());
         Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
         holder.linearLayout.setVisibility(View.GONE);

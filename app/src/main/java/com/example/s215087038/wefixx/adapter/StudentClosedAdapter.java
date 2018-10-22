@@ -55,7 +55,6 @@ public class StudentClosedAdapter extends  RecyclerView.Adapter<StudentClosedAda
         public ImageView imageView;
         public LinearLayout linearLayout, row;
         public Button view_photo;
-        public SimpleRatingBar rating;
 
 
         public MyViewHolder(View view) {
@@ -73,7 +72,6 @@ public class StudentClosedAdapter extends  RecyclerView.Adapter<StudentClosedAda
             date_assigned = (TextView) view.findViewById(R.id.tv_date_assigned);
             date_closed= (TextView) view.findViewById(R.id.tv_date_closed);
             comment = (TextView) view.findViewById(R.id.tv_comment);
-            rating = (SimpleRatingBar) view.findViewById(R.id.rb_rating);
             row = (LinearLayout) itemView.findViewById(R.id.row);
             no_photo = (TextView) view.findViewById(R.id.tv_no_photo);
             view_photo = (Button) view.findViewById(R.id.btn_view_photo);
@@ -117,7 +115,6 @@ public class StudentClosedAdapter extends  RecyclerView.Adapter<StudentClosedAda
         }else{
             holder.comment.setText("***No Comment***");
         }
-            holder.rating.setRating(request.getRating());
 
         if( request.getImageUrl() != "null") {
             Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
@@ -130,7 +127,6 @@ public class StudentClosedAdapter extends  RecyclerView.Adapter<StudentClosedAda
                 holder.view_photo.setVisibility(View.GONE);
                 if(request.getImageUrl()!= "null"){
                     holder.imageView.setVisibility(View.VISIBLE);
-
                 }
                 else{
                     holder.no_photo.setVisibility(View.VISIBLE);

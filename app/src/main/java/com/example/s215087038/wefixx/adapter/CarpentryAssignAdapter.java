@@ -115,7 +115,7 @@ public class CarpentryAssignAdapter extends RecyclerView.Adapter<CarpentryAssign
         holder.request_type.setText(request.getRequestType());
         holder.description.setText(request.getDescription());
         holder.room.setText(request.getRoom());
-        holder.textView.setText(request.getRoom());
+        holder.textView.setText("Room " + request.getRoom());
         holder.date_label.setText(request.getRequestDate());
         holder.desc_label.setText(request.getDescription());
         holder.status.setText(request.getRequestStatus());

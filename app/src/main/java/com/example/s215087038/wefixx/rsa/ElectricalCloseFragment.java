@@ -132,8 +132,6 @@ public class ElectricalCloseFragment extends Fragment {
         }
     }
     private void prepareRequestData() {
-
-
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         StringRequest stringRequest1 = new StringRequest(com.android.volley.Request.Method.POST, url, new Response.Listener<String>() {
             @Override

@@ -134,7 +134,7 @@ public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedReques
         holder.request_type.setText(request.getRequestType());
         holder.description.setText(request.getDescription());
         holder.room.setText(request.getRoom());
-        holder.textView.setText(request.getRoom());
+        holder.textView.setText("Room " + request.getRoom());
         holder.date_label.setText(request.getRequestDate());
         holder.desc_label.setText(request.getDescription());
         holder.tv_fault_id.setText(request.getFaultID());

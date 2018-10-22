@@ -262,7 +262,7 @@
                     android:layout_gravity="left"
                     android:layout_marginLeft="20dp"
                     android:paddingBottom="5dp"
-                    android:visibility="gone" />
+                    android:visibility="invisible" />
                 <Button
                     android:id="@+id/btn_close"
                     android:layout_width="wrap_content"

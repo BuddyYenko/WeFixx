@@ -135,7 +135,7 @@ public class ByProviderAdapter extends RecyclerView.Adapter<ByProviderAdapter.My
         holder.request_date.setText(request.getRequestDate());
         holder.request_type.setText(request.getRequestType());
         holder.description.setText(request.getDescription());
-        holder.textView.setText(request.getRoom());
+        holder.textView.setText("Room " +request.getRoom());
         holder.date_label.setText(request.getRequestDate());
         holder.desc_label.setText(request.getDescription());
         holder.status.setText(request.getRequestStatus());

@@ -89,7 +89,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         holder.description.setText(request.getDescription());
 
         holder.room.setText(request.getRoom());
-        holder.textView.setText(request.getRoom());
+        holder.textView.setText("Room " + request.getRoom());
         holder.date_label.setText(request.getRequestDate());
         holder.priority.setText(request.getPriority());
         holder.provider.setText(request.getProvider());

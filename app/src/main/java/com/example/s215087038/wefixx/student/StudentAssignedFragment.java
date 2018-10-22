@@ -37,7 +37,7 @@ public class StudentAssignedFragment extends Fragment {
     private RecyclerView recyclerView;
     private StudentAssignedAdapter mAdapter;
     String requestsUrl = "http://sict-iis.nmmu.ac.za/wefixx/student/student_assigned.php";
-    String user_id, name;
+    String student_no, name;
     Context context;
 
     public StudentAssignedFragment() {
@@ -50,7 +50,7 @@ public class StudentAssignedFragment extends Fragment {
         //********************************************
         SharedPreferences preferences =  this.getActivity().getSharedPreferences("MYPREFS", context.MODE_PRIVATE);
 
-        user_id = preferences.getString("user_id", "");
+        student_no = preferences.getString("student_no", "");
         name = preferences.getString("name", "");
         //********************************************
     }
@@ -121,7 +121,7 @@ public class StudentAssignedFragment extends Fragment {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
 
-                params.put("user_id", user_id);
+                params.put("student_no", student_no);
                 return params;
             }
         };
