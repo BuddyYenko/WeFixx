@@ -146,7 +146,6 @@ public class CarpentryCloseAdapter extends RecyclerView.Adapter<CarpentryCloseAd
                     holder.no_photo.setVisibility(View.VISIBLE);
                     //holder.hide_photo.setVisibility(View.VISIBLE);
                 }
-
             }
         });
         holder.expected_close.setText(request.getExpectedClose());
@@ -196,7 +195,6 @@ public class CarpentryCloseAdapter extends RecyclerView.Adapter<CarpentryCloseAd
                 Intent intent = new Intent();
                 intent.setType("application/pdf");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                //CarpentryCloseFragment origin = (CarpentryCloseFragment) mCtx;
                 fragment.startActivityForResult(Intent.createChooser(intent, "Select PDF"), 1);
 
             }
@@ -205,10 +203,6 @@ public class CarpentryCloseAdapter extends RecyclerView.Adapter<CarpentryCloseAd
         holder.bn_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent("custom-message");
-//                intent.putExtra("id", holder.tv_fault_id.getText().toString());
-//                LocalBroadcastManager.getInstance(mCtx).sendBroadcast(intent);
-
                 Bundle bundle = new Bundle();
                 bundle.putString("id", holder.tv_fault_id.getText().toString());
 

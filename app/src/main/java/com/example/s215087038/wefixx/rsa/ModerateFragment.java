@@ -1,33 +1,51 @@
 package com.example.s215087038.wefixx.rsa;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.s215087038.wefixx.FilePath;
 import com.example.s215087038.wefixx.MyDividerItemDecoration;
 import com.example.s215087038.wefixx.R;
 import com.example.s215087038.wefixx.adapter.AssignedRequestAdapter;
+import com.example.s215087038.wefixx.adapter.CarpentryCloseAdapter;
 import com.example.s215087038.wefixx.adapter.ModerateAdapter;
 import com.example.s215087038.wefixx.model.Request;
+import com.example.s215087038.wefixx.model.VolleyMultipartRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class ModerateFragment extends Fragment {
@@ -35,7 +53,12 @@ public class ModerateFragment extends Fragment {
         private RecyclerView moderateRecyclerView;
         private AssignedRequestAdapter aAdapter;
         String moderateUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/moderate.php";
-    public ModerateFragment() {
+        String id, path;
+        String UPLOAD_URL = "http://sict-iis.nmmu.ac.za/wefixx/rsa/update_request.php";
+        Uri fileuri;
+        byte[] result;
+        AlertDialog.Builder builder;
+        public ModerateFragment() {
             // Required empty public constructor
         }
 
@@ -61,6 +84,8 @@ public class ModerateFragment extends Fragment {
             moderateRecyclerView.setItemAnimator(new DefaultItemAnimator());
             moderateRecyclerView.addItemDecoration(new MyDividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL, 16));
             moderateRecyclerView.setAdapter(aAdapter);
+            builder = new AlertDialog.Builder(getActivity());
+
             prepareRequestData();
             return myFragmentView;
         }
@@ -100,7 +125,7 @@ public class ModerateFragment extends Fragment {
                         }
 
                         //creating adapter object and setting it to recyclerview
-                        ModerateAdapter adapter = new ModerateAdapter(getActivity(), moderateList);
+                        ModerateAdapter adapter = new ModerateAdapter(getActivity(), moderateList, ModerateFragment.this);
                         moderateRecyclerView.setAdapter(adapter);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -115,5 +140,126 @@ public class ModerateFragment extends Fragment {
             queue.add(stringRequest1);
 
         }
+    public void getFaultID(){
+        id =this.getArguments().getString("id").toString();
+        if(fileuri != null && !fileuri.equals(Uri.EMPTY)) {
+
+            String path = FilePath.getPath(getActivity(), fileuri);
+
+            //Toast.makeText(ManageByProvider.this,id + " " + path ,Toast.LENGTH_SHORT).show();
+
+            try {
+
+                File file = new File(path);
+                int length = (int) file.length();
+                BufferedInputStream reader = new BufferedInputStream(new FileInputStream(file));
+                byte[] bytes = new byte[length];
+                reader.read(bytes, 0, length);
+                reader.close();
+                result = bytes;
+
+                //encodedfile = Base64.encodeBase64(bytes).toString();
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch <span id="IL_AD1" class="IL_AD">block</span>
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+
+            VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(com.android.volley.Request.Method.POST, UPLOAD_URL,
+                    new Response.Listener<NetworkResponse>() {
+                        @Override
+                        public void onResponse(NetworkResponse response) {
+
+                            try {
+                                //   Toast.makeText(ManageByProvider.this, response.data.toString() + " " + response.toString(), Toast.LENGTH_SHORT).show();
+                                JSONArray jsonArray = new JSONArray(new String(response.data));
+                                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                                String code = jsonObject.getString("code");
+                                String message = jsonObject.getString("message");
+
+                                builder.setTitle("WeFixx Response");
+                                builder.setMessage(message);
+                                DisplayAlert(code);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // Toast.makeText(getApplicationContext(), error.getMessage() +"error " , Toast.LENGTH_LONG).show();
+
+                        }
+                    }) {
+
+                //Posting parameters to php script
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("fault_id", id);
+                    return params;
+                }
+
+                @Override
+                protected Map<String, DataPart> getByteData() {
+
+
+                    Map<String, DataPart> params = new HashMap<>();
+                    if (fileuri != null) {
+                        String imagename = "report";
+                        params.put("report", new DataPart(imagename + ".pdf", result));
+                    }
+                    return params;
+                }
+
+            };
+            volleyMultipartRequest.setRetryPolicy(new DefaultRetryPolicy(0, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            //adding the request to volley
+            Volley.newRequestQueue(getActivity()).add(volleyMultipartRequest);
+        }
+        else{
+            builder.setTitle("No Report Chosen");
+            builder.setMessage("Please select a document to upload");
+            DisplayAlert("input_error");
+        }
+    }
+
+    public void DisplayAlert(final String code) {
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                prepareRequestData();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+    @Override
+    public void onActivityResult(int req, int result, Intent data)
+    {
+        ModerateAdapter adapter = new ModerateAdapter(getActivity(), moderateList, ModerateFragment.this);
+        super.onActivityResult(req, result, data);
+        if (result == RESULT_OK)
+        {
+            fileuri = data.getData();
+            String file = fileuri.getPath();
+            path = FilePath.getPath(getActivity(), fileuri);
+            Toast.makeText(getActivity(), "Document chosen: " + path, Toast.LENGTH_LONG).show();
+
+            //adapter = new CarpentryCloseAdapter(path);
+
+        }
+        else
+        {
+            Toast.makeText(getActivity(), "result " +result, Toast.LENGTH_SHORT).show();
+
+        }
+
+    }
 
     }
