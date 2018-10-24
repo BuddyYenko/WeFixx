@@ -13,13 +13,14 @@ import com.example.s215087038.wefixx.R;
 import com.example.s215087038.wefixx.rsa.RSA;
 
 public class Manager extends AppCompatActivity {
-    ImageButton history, delayed;
+    ImageButton history, delayed, provider_history;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manager);
-        history = (ImageButton) findViewById(R.id.btn_history);
-        delayed = (ImageButton) findViewById(R.id.btn_delayed);
+        history = findViewById(R.id.btn_history);
+        delayed = findViewById(R.id.btn_delayed);
+        provider_history = findViewById(R.id.btn_provider_delayed);
 
         history.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,6 +33,13 @@ public class Manager extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent delayed = new Intent(Manager.this, Delayed.class);
+                startActivity(delayed);
+            }
+        });
+        provider_history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent delayed = new Intent(Manager.this, ProviderHistory.class);
                 startActivity(delayed);
             }
         });

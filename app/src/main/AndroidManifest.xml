@@ -35,7 +35,8 @@
         <activity android:name=".rsa.ManageByPriority" />
         <activity android:name=".rsa.ManageByProvider" />
         <activity android:name=".rsa.ManageByCategory" />
-        <activity android:name=".manager.RegisterActivity"></activity>
+        <activity android:name=".manager.RegisterActivity" />
+        <activity android:name=".manager.ProviderHistory"></activity>
     </application>
 
 </manifest>
