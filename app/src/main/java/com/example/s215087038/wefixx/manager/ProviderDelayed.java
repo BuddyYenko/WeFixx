@@ -45,7 +45,7 @@ public class ProviderDelayed extends AppCompatActivity {
     private List<Request> requestList;
     private RecyclerView requestRecyclerView;
     private ProviderDelayedAdapter aAdapter;
-    TextView tv_details, tv_provider, tv_count;
+    TextView tv_details, tv_provider, tv_count, tv_contact;
     AlertDialog.Builder builder;
 
     @Override
@@ -54,10 +54,11 @@ public class ProviderDelayed extends AppCompatActivity {
         setContentView(R.layout.activity_provider_delayed);
 
         requestList = new ArrayList<>();
-        requestRecyclerView = (RecyclerView) findViewById(R.id.requestRecylcerView);
-        tv_details = (TextView) findViewById(R.id.tv_details);
-        tv_provider = (TextView) findViewById(R.id.tv_provider);
+        requestRecyclerView = findViewById(R.id.requestRecylcerView);
+        tv_details = findViewById(R.id.tv_details);
+        tv_provider = findViewById(R.id.tv_provider);
         tv_count = findViewById(R.id.tv_count);
+        tv_contact = findViewById(R.id.tv_contact);
 
         aAdapter = new ProviderDelayedAdapter(requestList);
         requestRecyclerView.setLayoutManager(new LinearLayoutManager(ProviderDelayed.this));
@@ -65,7 +66,7 @@ public class ProviderDelayed extends AppCompatActivity {
         requestRecyclerView.addItemDecoration(new MyDividerItemDecoration(ProviderDelayed.this, LinearLayoutManager.VERTICAL, 16));
         requestRecyclerView.setAdapter(aAdapter);
         requestJsonObject();
-        prepareRequestData("1");
+        //prepareRequestData("1");
 
         builder = new AlertDialog.Builder(ProviderDelayed.this);
 
@@ -131,32 +132,40 @@ public class ProviderDelayed extends AppCompatActivity {
                     //traversing through all the object
                     requestList.clear();
                     tv_count.setText("Amount: 0");
+                    JSONObject obj = array.getJSONObject(0);
+                    String contact = obj.getString("contact_number");
+                    tv_contact.setText("Contact: " + contact);
+                    int count = obj.getInt("count");
 
-                    for (int i = 0; i < array.length(); i++) {
-                        //getting request object from json array
-                        JSONObject request = array.getJSONObject(i);
+                    if(count > 0) {
+                        for (int i = 0; i < array.length(); i++) {
+                            //getting request object from json array
+                            JSONObject request = array.getJSONObject(i);
 
-                        //adding the request to request list_open
-                        requestList.add(new Request(
-                                request.getString("request_date"),
-                                request.getString("date_assigned"),
-                                request.getString("expected_close"),
-                                request.getInt("days_overdue"),
-                                request.getString("request_type"),
-                                request.getString("description"),
-                                request.getString("room"),
-                                request.getString("requester"),
-                                request.getString("priority"),
-                                request.getString("turnaround"),
-                                request.getString("provider"),
-                                request.getString("contact_number"),
-                                request.getString("email"),
-                                request.getString("provider_status"),
-                                request.getString("photo")
-                        ));
-                        int count = request.getInt("count");
-                        tv_count.setText("Amount: " + count);
+                            //adding the request to request list_open
+                            requestList.add(new Request(
+                                    request.getString("request_date"),
+                                    request.getString("date_assigned"),
+                                    request.getString("expected_close"),
+                                    request.getInt("days_overdue"),
+                                    request.getString("request_type"),
+                                    request.getString("description"),
+                                    request.getString("room"),
+                                    request.getString("requester"),
+                                    request.getString("priority"),
+                                    request.getString("turnaround"),
+                                    request.getString("provider"),
+                                    request.getString("contact_number"),
+                                    request.getString("email"),
+                                    request.getString("provider_status"),
+                                    request.getString("photo")
+                            ));
+
+                            tv_count.setText("Amount: " + count);
+                            tv_contact.setText("Contact: " + request.getString("contact_number"));
+                        }
                     }
+
                     //creating adapter object and setting it to recyclerview
                     ProviderDelayedAdapter adapter = new ProviderDelayedAdapter(ProviderDelayed.this, requestList);
                     requestRecyclerView.setAdapter(adapter);

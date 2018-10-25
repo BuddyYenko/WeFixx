@@ -47,7 +47,7 @@ import java.util.UUID;
 public class ProviderHistory extends AppCompatActivity {
     public Spinner sp_provider;
     protected List<ProviderDataObject> spinnerData;
-    String provider, sProvider;
+    String provider, sProvider, provider_id;
     String url = "http://sict-iis.nmmu.ac.za/wefixx/rsa/providers.php";
     String provider_history = "http://sict-iis.nmmu.ac.za/wefixx/manager/provider_history.php";
     private List<Request> requestList;
@@ -109,7 +109,7 @@ public class ProviderHistory extends AppCompatActivity {
         btn_go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                prepareRequestData(sProvider);
+                prepareRequestData(provider);
             }
         });
         tvFrom.setOnClickListener(new View.OnClickListener() {
@@ -150,7 +150,6 @@ public class ProviderHistory extends AppCompatActivity {
 
                                 tvFrom.setText(dateFormatter.format(calander.getTime()));
                                 from_formatted = dateFormatter2.format(calander.getTime());
-
                                 date_from = tvFrom.getText().toString();
 
                             }
@@ -197,7 +196,6 @@ public class ProviderHistory extends AppCompatActivity {
 
                                 tvTo.setText(dateFormatter.format(calander.getTime()));
                                 to_formatted = dateFormatter2.format(calander.getTime());
-
                                 date_to = tvTo.getText().toString();
 
                             }
@@ -238,7 +236,6 @@ public class ProviderHistory extends AppCompatActivity {
                                     provider = selected.getID();
                                     sProvider = selected.getName();
                                     tv_provider.setText(sProvider);
-
                                     prepareRequestData(provider);
                                 }
                                 public void onNothingSelected(AdapterView<?> parent) {
@@ -317,10 +314,10 @@ public class ProviderHistory extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
 
-                params.put("provider", provider);
                 params.put("from", from_formatted);
                 params.put("to", to_formatted);
-
+                params.put("provider", provider);
+                params.put("provider", provider);
                 return params;
             }
         };

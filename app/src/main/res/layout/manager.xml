@@ -64,64 +64,6 @@
                 android:textSize="@dimen/label"
                 android:text="History"
                 android:layout_weight="1"/>
-
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        android:paddingTop="20dp">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="1"
-            android:weightSum="2">
-            <ImageButton
-                android:id="@+id/btn_provider_delayed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/delayed"
-                android:layout_gravity="center"
-                android:background="@null"
-                android:layout_weight="1"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:textColor="@color/labelBlackColor"
-                android:textSize="@dimen/label"
-                android:text="Provider Delayed Request"
-                android:layout_weight="1"/>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="1"
-            android:weightSum="2">
-            <ImageButton
-                android:id="@+id/btn_provider_history"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/rsa_history"
-                android:layout_gravity="center"
-                android:background="@null"
-                android:layout_weight="1"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:textColor="@color/labelBlackColor"
-                android:textSize="@dimen/label"
-                android:text="Provider History"
-                android:layout_weight="1"/>
-
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

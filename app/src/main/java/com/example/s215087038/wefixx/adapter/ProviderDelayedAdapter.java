@@ -35,7 +35,7 @@ public class ProviderDelayedAdapter extends RecyclerView.Adapter<ProviderDelayed
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView days_overdue,no_photo, request_date, request_type, room, description, textView, date_label, priority, provider, date_assigned, date_closed, requester, turnaround, contact_number, email, provider_status;
+        public TextView days_overdue,no_photo, request_date, request_type, room, description, textView, date_label, priority, date_assigned, date_closed, requester, turnaround;
         public ImageView imageView;
         public LinearLayout linearLayout, row;
         public Button view_photo;
@@ -59,11 +59,7 @@ public class ProviderDelayedAdapter extends RecyclerView.Adapter<ProviderDelayed
             row = (LinearLayout) view.findViewById(R.id.row);
 
             priority = (TextView) view.findViewById(R.id.tv_priority);
-            provider = (TextView) view.findViewById(R.id.tv_provider);
             requester = (TextView) view.findViewById(R.id.tv_requester);
-            contact_number = (TextView) view.findViewById(R.id.tv_contact);
-            email = (TextView) view.findViewById(R.id.tv_email);
-            provider_status = (TextView) view.findViewById(R.id.tv_status);
             turnaround = (TextView) view.findViewById(R.id.tv_turnaround);
             days_overdue = (TextView) view.findViewById(R.id.tv_overdue);
             no_photo = (TextView) view.findViewById(R.id.tv_no_photo);
@@ -93,11 +89,7 @@ public class ProviderDelayedAdapter extends RecyclerView.Adapter<ProviderDelayed
         holder.textView.setText("Room " + request.getRoom());
         holder.date_label.setText(request.getRequestDate());
         holder.priority.setText(request.getPriority());
-        holder.provider.setText(request.getProvider());
         holder.requester.setText(request.getRequester());
-        holder.contact_number.setText(request.getContactNumber());
-        holder.email.setText(request.getEmail());
-        holder.provider_status.setText(request.getProviderStatus());
         holder.turnaround.setText(request.getTurnaround());
         holder.days_overdue.setText(request.getDaysOverdue());
 
