@@ -8,44 +8,45 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.BounceInterpolator;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.s215087038.wefixx.R;
 import com.example.s215087038.wefixx.model.Request;
-import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 
 import java.util.List;
 
-public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHolder> {
+public class ProviderHistoryAdapter extends RecyclerView.Adapter<ProviderHistoryAdapter.MyViewHolder> {
 
     private List<Request> requestList;
     private Context mCtx;
     private static int currentPosition = -1;
     AlertDialog.Builder builder;
-    public HistoryAdapter(List<Request> requestList) {
+    public ProviderHistoryAdapter(List<Request> requestList) {
         this.requestList = requestList;
     }
 
-    public HistoryAdapter(Context mCtx, List<Request> requestList) {
+    public ProviderHistoryAdapter(Context mCtx, List<Request> requestList) {
         this.mCtx = mCtx;
         this.requestList = requestList;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView no_photo, request_date, request_type, room, description, textView, date_label, priority, provider, date_assigned, date_closed, comment, desc_label, tv_requester;
+        public TextView no_photo, request_date, request_type, room, description, textView, date_label, priority, date_assigned, date_closed, comment, desc_label, tv_requester;
         public ImageView imageView;
         public LinearLayout linearLayout, row;
         public Button view_photo;
+        public WebView webView;
 
         public MyViewHolder(View view) {
             super(view);
 
+            webView = (WebView) view.findViewById(R.id.webview);
 
             request_date = (TextView) view.findViewById(R.id.tv_date);
             date_assigned = (TextView) view.findViewById(R.id.tv_date_assigned);
@@ -60,7 +61,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
             imageView = (ImageView)view.findViewById(R.id.imageView);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
             priority = (TextView) view.findViewById(R.id.tv_priority);
-            provider = (TextView) view.findViewById(R.id.tv_provider);
             comment = (TextView) view.findViewById(R.id.tv_comment);
             no_photo = (TextView) view.findViewById(R.id.tv_no_photo);
             view_photo = (Button) view.findViewById(R.id.btn_view_photo);
@@ -79,6 +79,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final Request request = requestList.get(position);
+
+
+//        holder.webView.setWebViewClient(new WebViewClient());
+        //holder.webView.addView(holder.webView.getZoomControls());
+       // holder.webView.getSettings().setJavaScriptEnabled(true);
+      //  holder.webView.loadUrl("http://docs.google.com/gview?embedded=true&url=http://sict-iis.nmmu.ac.za/wefixx/files/request_reports/5bbfeb0d2f8ef9.47784997.pdf");
+
+
         holder.request_date.setText(request.getRequestDate());
         holder.date_assigned.setText(request.getDateAssigned());
         holder.date_closed.setText(request.getDateClosed());
@@ -92,7 +100,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         holder.textView.setText("Room " + request.getRoom());
         holder.date_label.setText(request.getRequestDate());
         holder.priority.setText(request.getPriority());
-        holder.provider.setText(request.getProvider());
         if( request.getComment() != "null") {
             holder.comment.setText(request.getComment());
         }

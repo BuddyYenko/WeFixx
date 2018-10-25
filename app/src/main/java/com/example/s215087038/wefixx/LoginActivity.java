@@ -48,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
         et_username = (EditText) findViewById(R.id.et_username);
         et_password = (EditText) findViewById(R.id.et_password);
 
-        tv_forgot_password = (TextView) findViewById(R.id.tv_forgot_passoword);
 
 
         //Next Activities

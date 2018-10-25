@@ -21,7 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".manager.Manager" />
+        <activity android:name=".manager.ProviderHistory" />
         <activity android:name=".student.Student" />
         <activity android:name=".rsa.Manage" />
         <activity android:name=".manager.Reports" />
@@ -36,7 +36,11 @@
         <activity android:name=".rsa.ManageByProvider" />
         <activity android:name=".rsa.ManageByCategory" />
         <activity android:name=".manager.RegisterActivity" />
-        <activity android:name=".manager.ProviderHistory"></activity>
+        <activity android:name=".manager.Manager" />
+        <activity
+            android:name=".manager.ProviderDelayed"
+            android:label="@string/title_activity_provider_delayed"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

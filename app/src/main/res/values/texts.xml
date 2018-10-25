@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="label">18sp</dimen>
-    <dimen name="heading">25sp</dimen>
+    <dimen name="heading">20sp</dimen>
 </resources>

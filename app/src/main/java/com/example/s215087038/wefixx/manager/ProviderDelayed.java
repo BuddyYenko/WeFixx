@@ -1,6 +1,5 @@
 package com.example.s215087038.wefixx.manager;
 
-import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import com.example.s215087038.wefixx.model.Request;
@@ -23,7 +21,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.s215087038.wefixx.MyDividerItemDecoration;
 import com.example.s215087038.wefixx.R;
-import com.example.s215087038.wefixx.adapter.ProviderHistoryAdapter;
+import com.example.s215087038.wefixx.adapter.ProviderDelayedAdapter;
 import com.example.s215087038.wefixx.adapter.ProviderSpinnerAdapter;
 import com.example.s215087038.wefixx.model.ProviderDataObject;
 import com.google.gson.Gson;
@@ -31,33 +29,24 @@ import com.google.gson.GsonBuilder;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class ProviderHistory extends AppCompatActivity {
+public class ProviderDelayed extends AppCompatActivity {
     public Spinner sp_provider;
     protected List<ProviderDataObject> spinnerData;
     String provider, sProvider;
     String url = "http://sict-iis.nmmu.ac.za/wefixx/rsa/providers.php";
-    String provider_history = "http://sict-iis.nmmu.ac.za/wefixx/manager/provider_history.php";
+    String provider_history = "http://sict-iis.nmmu.ac.za/wefixx/manager/provider_delayed.php";
     private List<Request> requestList;
     private RecyclerView requestRecyclerView;
-    private ProviderHistoryAdapter aAdapter;
+    private ProviderDelayedAdapter aAdapter;
     TextView tv_details, tv_provider, tv_count;
     AlertDialog.Builder builder;
-
-    int mYear, mMonth, mDay;
-    String to, from;
-    TextView tvFrom, tvTo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,121 +59,16 @@ public class ProviderHistory extends AppCompatActivity {
         tv_provider = (TextView) findViewById(R.id.tv_provider);
         tv_count = findViewById(R.id.tv_count);
 
-        aAdapter = new ProviderHistoryAdapter(requestList);
-        requestRecyclerView.setLayoutManager(new LinearLayoutManager(ProviderHistory.this));
+        aAdapter = new ProviderDelayedAdapter(requestList);
+        requestRecyclerView.setLayoutManager(new LinearLayoutManager(ProviderDelayed.this));
         requestRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        requestRecyclerView.addItemDecoration(new MyDividerItemDecoration(ProviderHistory.this, LinearLayoutManager.VERTICAL, 16));
+        requestRecyclerView.addItemDecoration(new MyDividerItemDecoration(ProviderDelayed.this, LinearLayoutManager.VERTICAL, 16));
         requestRecyclerView.setAdapter(aAdapter);
         requestJsonObject();
-
-
-        builder = new AlertDialog.Builder(ProviderHistory.this);
-
-        tvTo = (TextView) findViewById(R.id.tv_to);
-        tvFrom = (TextView) findViewById(R.id.tv_from);
-
-        Date now = new Date();
-        SimpleDateFormat dateFormatter, timeFormatter;
-
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(now);
-        cal.add(Calendar.DATE, -30);
-        Date dateBefore30Days = cal.getTime();
-
-        dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
-
-        tvFrom.setText(dateFormatter.format(dateBefore30Days));
-        tvTo.setText(dateFormatter.format(now));
         prepareRequestData("1");
 
-        tvFrom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO Auto-generated method stub
-                final Calendar c = Calendar.getInstance();
-                mYear = c.get(Calendar.YEAR);
-                mMonth = c.get(Calendar.MONTH);
-                mDay = c.get(Calendar.DAY_OF_MONTH);
+        builder = new AlertDialog.Builder(ProviderDelayed.this);
 
-                // Launch Date Picker Dialog
-                DatePickerDialog dpd = new DatePickerDialog(ProviderHistory.this,
-                        new DatePickerDialog.OnDateSetListener() {
-
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-                                // Display Selected date in textbox
-                                if (year < mYear)
-                                    view.updateDate(mYear,mMonth,mDay);
-
-                                if (monthOfYear < mMonth && year == mYear)
-                                    view.updateDate(mYear,mMonth,mDay);
-
-                                if (dayOfMonth < mDay && year == mYear && monthOfYear == mMonth)
-                                    view.updateDate(mYear,mMonth,mDay);
-                                {
-                                    from = "0" + dayOfMonth;
-                                }
-
-                                SimpleDateFormat dateFormatter;
-                                dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
-
-                                Calendar calander = Calendar.getInstance();
-                                calander.setTimeInMillis(0);
-                                calander.set(year, monthOfYear, dayOfMonth, 0, 0, 0);
-
-                                tvFrom.setText(dateFormatter.format(calander.getTime()));
-
-                            }
-                        }, mYear, mMonth, mDay);
-                dpd.getDatePicker().setMinDate(System.currentTimeMillis());
-                dpd.show();
-            }
-        });
-        tvTo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO Auto-generated method stub
-                final Calendar c = Calendar.getInstance();
-                mYear = c.get(Calendar.YEAR);
-                mMonth = c.get(Calendar.MONTH);
-                mDay = c.get(Calendar.DAY_OF_MONTH);
-
-                // Launch Date Picker Dialog
-                DatePickerDialog dpd = new DatePickerDialog(ProviderHistory.this,
-                        new DatePickerDialog.OnDateSetListener() {
-
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-                                // Display Selected date in textbox
-                                if (year < mYear)
-                                    view.updateDate(mYear,mMonth,mDay);
-
-                                if (monthOfYear < mMonth && year == mYear)
-                                    view.updateDate(mYear,mMonth,mDay);
-
-                                if (dayOfMonth < mDay && year == mYear && monthOfYear == mMonth)
-                                    view.updateDate(mYear,mMonth,mDay);
-                                {
-                                    to = "0" + dayOfMonth;
-                                }
-
-                                SimpleDateFormat dateFormatter;
-                                dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
-
-                                Calendar calander = Calendar.getInstance();
-                                calander.setTimeInMillis(0);
-                                calander.set(year, monthOfYear, dayOfMonth, 0, 0, 0);
-
-                                tvTo.setText(dateFormatter.format(calander.getTime()));
-
-                            }
-                        }, mYear, mMonth, mDay);
-                dpd.getDatePicker().setMinDate(System.currentTimeMillis());
-                dpd.show();
-            }
-        });
     }
 
     public void DisplayAlert(final String code) {
@@ -224,7 +108,7 @@ public class ProviderHistory extends AppCompatActivity {
                                 }
                             });
                     assert sp_provider != null;
-                    ProviderSpinnerAdapter spinnerAdapter = new ProviderSpinnerAdapter(ProviderHistory.this, spinnerData);
+                    ProviderSpinnerAdapter spinnerAdapter = new ProviderSpinnerAdapter(ProviderDelayed.this, spinnerData);
                     sp_provider.setAdapter(spinnerAdapter);
                 }
             }
@@ -249,32 +133,32 @@ public class ProviderHistory extends AppCompatActivity {
                     tv_count.setText("Amount: 0");
 
                     for (int i = 0; i < array.length(); i++) {
-
-                            //getting request object from json array
+                        //getting request object from json array
                         JSONObject request = array.getJSONObject(i);
 
-                            //adding the request to request list_open
+                        //adding the request to request list_open
                         requestList.add(new Request(
                                 request.getString("request_date"),
                                 request.getString("date_assigned"),
-                                request.getString("date_closed"),
+                                request.getString("expected_close"),
+                                request.getInt("days_overdue"),
                                 request.getString("request_type"),
                                 request.getString("description"),
                                 request.getString("room"),
-                                request.getString("comment"),
-                                request.getLong("rating"),
-                                request.getString("provider"),
-                                request.getString("priority"),
                                 request.getString("requester"),
+                                request.getString("priority"),
+                                request.getString("turnaround"),
+                                request.getString("provider"),
+                                request.getString("contact_number"),
+                                request.getString("email"),
+                                request.getString("provider_status"),
                                 request.getString("photo")
                         ));
                         int count = request.getInt("count");
                         tv_count.setText("Amount: " + count);
-
-                        }
-
+                    }
                     //creating adapter object and setting it to recyclerview
-                    ProviderHistoryAdapter adapter = new ProviderHistoryAdapter(ProviderHistory.this, requestList);
+                    ProviderDelayedAdapter adapter = new ProviderDelayedAdapter(ProviderDelayed.this, requestList);
                     requestRecyclerView.setAdapter(adapter);
                     if(requestList == null || requestList.isEmpty()){
                         tv_details.setText("No  delayed requests for " + sProvider + " to manage");
@@ -297,8 +181,6 @@ public class ProviderHistory extends AppCompatActivity {
                 Map<String, String> params = new HashMap<String, String>();
 
                 params.put("provider", provider);
-                params.put("from", from);
-                params.put("to", to);
 
                 return params;
             }

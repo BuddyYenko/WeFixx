@@ -47,7 +47,7 @@
             android:textAlignment="center"
             android:textColorHint="@color/placeholders"
             android:textColor="@color/placeholders"
-            android:text="2"/>
+            android:text="3"/>
 
         <EditText
             android:id="@+id/et_password"
@@ -58,7 +58,7 @@
             android:textColor="@color/placeholders"
             android:hint="Password"
             android:inputType="textPassword"
-            android:text="2"/>
+            android:text="3"/>
 
         <Button
             android:id="@+id/btn_login"
@@ -71,13 +71,13 @@
             android:background="@drawable/rounded_button"
             android:text="Login"/>
 
-        <TextView
-            android:id="@+id/tv_forgot_passoword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Forgot Password?"
-            android:textColor="@color/labelBlackColor"
-            android:textAlignment="center"/>
+        <!--<TextView-->
+            <!--android:id="@+id/tv_forgot_passoword"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Forgot Password?"-->
+            <!--android:textColor="@color/labelBlackColor"-->
+            <!--android:textAlignment="center"/>-->
 
     </LinearLayout>
 </LinearLayout>
