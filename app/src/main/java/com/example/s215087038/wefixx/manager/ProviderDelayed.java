@@ -51,7 +51,7 @@ public class ProviderDelayed extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_provider_history);
+        setContentView(R.layout.activity_provider_delayed);
 
         requestList = new ArrayList<>();
         requestRecyclerView = (RecyclerView) findViewById(R.id.requestRecylcerView);

@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -54,9 +55,11 @@ public class ProviderHistory extends AppCompatActivity {
     private ProviderHistoryAdapter aAdapter;
     TextView tv_details, tv_provider, tv_count;
     AlertDialog.Builder builder;
+    Button btn_go;
+    SimpleDateFormat dateFormatter, dateFormatter2;
 
     int mYear, mMonth, mDay;
-    String to, from;
+    String to, from, date_to, date_from, from_formatted, to_formatted;
     TextView tvFrom, tvTo;
 
     @Override
@@ -69,6 +72,7 @@ public class ProviderHistory extends AppCompatActivity {
         tv_details = (TextView) findViewById(R.id.tv_details);
         tv_provider = (TextView) findViewById(R.id.tv_provider);
         tv_count = findViewById(R.id.tv_count);
+        btn_go = findViewById(R.id.btn_go);
 
         aAdapter = new ProviderHistoryAdapter(requestList);
         requestRecyclerView.setLayoutManager(new LinearLayoutManager(ProviderHistory.this));
@@ -84,19 +88,30 @@ public class ProviderHistory extends AppCompatActivity {
         tvFrom = (TextView) findViewById(R.id.tv_from);
 
         Date now = new Date();
-        SimpleDateFormat dateFormatter, timeFormatter;
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(now);
-        cal.add(Calendar.DATE, -30);
+        cal.add(Calendar.DATE, -15);
         Date dateBefore30Days = cal.getTime();
 
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
+        dateFormatter2 = new SimpleDateFormat("yyyy-MM-dd");
 
         tvFrom.setText(dateFormatter.format(dateBefore30Days));
         tvTo.setText(dateFormatter.format(now));
-        prepareRequestData("1");
+        date_from = tvFrom.getText().toString();
+        date_to = tvTo.getText().toString();
+        from_formatted = dateFormatter2.format(dateBefore30Days);
+        to_formatted = dateFormatter2.format(now);
 
+        //prepareRequestData("1");
+
+        btn_go.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                prepareRequestData(sProvider);
+            }
+        });
         tvFrom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,10 +149,13 @@ public class ProviderHistory extends AppCompatActivity {
                                 calander.set(year, monthOfYear, dayOfMonth, 0, 0, 0);
 
                                 tvFrom.setText(dateFormatter.format(calander.getTime()));
+                                from_formatted = dateFormatter2.format(calander.getTime());
+
+                                date_from = tvFrom.getText().toString();
 
                             }
                         }, mYear, mMonth, mDay);
-                dpd.getDatePicker().setMinDate(System.currentTimeMillis());
+                //dpd.getDatePicker().setMinDate(System.currentTimeMillis());
                 dpd.show();
             }
         });
@@ -178,10 +196,13 @@ public class ProviderHistory extends AppCompatActivity {
                                 calander.set(year, monthOfYear, dayOfMonth, 0, 0, 0);
 
                                 tvTo.setText(dateFormatter.format(calander.getTime()));
+                                to_formatted = dateFormatter2.format(calander.getTime());
+
+                                date_to = tvTo.getText().toString();
 
                             }
                         }, mYear, mMonth, mDay);
-                dpd.getDatePicker().setMinDate(System.currentTimeMillis());
+                //dpd.getDatePicker().setMinDate(System.currentTimeMillis());
                 dpd.show();
             }
         });
@@ -277,7 +298,7 @@ public class ProviderHistory extends AppCompatActivity {
                     ProviderHistoryAdapter adapter = new ProviderHistoryAdapter(ProviderHistory.this, requestList);
                     requestRecyclerView.setAdapter(adapter);
                     if(requestList == null || requestList.isEmpty()){
-                        tv_details.setText("No  delayed requests for " + sProvider + " to manage");
+                        tv_details.setText("No requests between " + date_from + " and " + date_to);
                         tv_details.setVisibility(View.VISIBLE);
                     }
                     else{
@@ -297,8 +318,8 @@ public class ProviderHistory extends AppCompatActivity {
                 Map<String, String> params = new HashMap<String, String>();
 
                 params.put("provider", provider);
-                params.put("from", from);
-                params.put("to", to);
+                params.put("from", from_formatted);
+                params.put("to", to_formatted);
 
                 return params;
             }

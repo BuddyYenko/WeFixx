@@ -62,7 +62,7 @@
                 android:layout_weight="1"
                 android:id="@+id/tv_to"/>
             <Button
-                android:id="@+id/btn_view_photo"
+                android:id="@+id/btn_go"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
