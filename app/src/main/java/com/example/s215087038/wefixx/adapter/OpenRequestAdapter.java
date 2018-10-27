@@ -3,8 +3,10 @@ package com.example.s215087038.wefixx.adapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -33,6 +36,7 @@ import com.example.s215087038.wefixx.rsa.Manage;
 import com.example.s215087038.wefixx.rsa.OpenFragment;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.tooltip.Tooltip;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -74,6 +78,7 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
         public LinearLayout linearLayout;
         public Spinner sp_priority, sp_provider;
         public Button bn_assign, view_photo;
+        public ImageButton tip;
 
         public MyViewHolder(View view) {
             super(view);
@@ -86,6 +91,7 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
             desc_label = (TextView) view.findViewById(R.id.desc_label);
             tv_fault_id = (TextView) view.findViewById(R.id.tv_fault_id);
             tv_fault_type_id = (TextView) view.findViewById(R.id.tv_fault_type_id);
+            tip = view.findViewById(R.id.tip);
 
             imageView = (ImageView)view.findViewById(R.id.imageView);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
@@ -108,6 +114,16 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final Request request = requestList.get(position);
+        holder.tip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch(v.getId()){
+                    case R.id.tip:
+                        priorityTooltip(v, Gravity.BOTTOM);
+                        break;
+                }
+            }
+        });
         holder.request_date.setText(request.getRequestDate());
         holder.request_type.setText(request.getRequestType());
         holder.description.setText(request.getDescription());
@@ -318,7 +334,17 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
             }
         });
     }
-
+    private void priorityTooltip(View v, int gravity) {
+        ImageView imgV =(ImageView) v;
+        Tooltip tooltip = new Tooltip.Builder(imgV)
+                .setText("Specifies the request turnaround time.\nLow: 3-7 days\nModerate: 2-3 days\nCritical: 1-2 days")
+                .setTextColor(Color.BLACK)
+                .setGravity(gravity)
+                .setCornerRadius(8f)
+                .setBackgroundColor(Color.LTGRAY)
+                .setDismissOnClick(true)
+                .show();
+    }
     @Override
     public int getItemCount() {
         return requestList.size();

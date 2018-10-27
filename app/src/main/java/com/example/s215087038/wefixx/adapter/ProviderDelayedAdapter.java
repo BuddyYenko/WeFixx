@@ -71,7 +71,7 @@ public class ProviderDelayedAdapter extends RecyclerView.Adapter<ProviderDelayed
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_delayed, parent, false);
+                .inflate(R.layout.activity_delayed, parent, false);
 
         return new MyViewHolder(itemView);
     }

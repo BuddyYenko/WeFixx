@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:textColor="@color/labelBlackColor"
-                android:textSize="@dimen/label"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large.Inverse"
                 android:text="Manage Request"
                 android:layout_weight="1"/>
 
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:textColor="@color/labelBlackColor"
-                android:textSize="@dimen/label"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large.Inverse"
                 android:text="History"
                 android:layout_weight="1"/>
 

@@ -2,9 +2,9 @@ package com.example.s215087038.wefixx.manager;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,34 +16,33 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.s215087038.wefixx.LoginActivity;
-import com.example.s215087038.wefixx.model.Request;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.s215087038.wefixx.LoginActivity;
 import com.example.s215087038.wefixx.MyDividerItemDecoration;
 import com.example.s215087038.wefixx.R;
 import com.example.s215087038.wefixx.adapter.ProviderDelayedAdapter;
 import com.example.s215087038.wefixx.adapter.ProviderSpinnerAdapter;
 import com.example.s215087038.wefixx.model.ProviderDataObject;
-import com.example.s215087038.wefixx.rsa.RSA;
+import com.example.s215087038.wefixx.model.Request;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
-public class ProviderDelayed extends AppCompatActivity {
+public class ProviderDelayed2 extends AppCompatActivity {
     public Spinner sp_provider;
     protected List<ProviderDataObject> spinnerData;
     String provider, sProvider;
@@ -64,7 +63,7 @@ public class ProviderDelayed extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_logout) {
-            Intent logout = new Intent(ProviderDelayed.this, LoginActivity.class);
+            Intent logout = new Intent(ProviderDelayed2.this, LoginActivity.class);
             startActivity(logout);
             return true;
         }
@@ -83,14 +82,14 @@ public class ProviderDelayed extends AppCompatActivity {
         tv_contact = findViewById(R.id.tv_contact);
 
         aAdapter = new ProviderDelayedAdapter(requestList);
-        requestRecyclerView.setLayoutManager(new LinearLayoutManager(ProviderDelayed.this));
+        requestRecyclerView.setLayoutManager(new LinearLayoutManager(ProviderDelayed2.this));
         requestRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        requestRecyclerView.addItemDecoration(new MyDividerItemDecoration(ProviderDelayed.this, LinearLayoutManager.VERTICAL, 16));
+        requestRecyclerView.addItemDecoration(new MyDividerItemDecoration(ProviderDelayed2.this, LinearLayoutManager.VERTICAL, 16));
         requestRecyclerView.setAdapter(aAdapter);
         requestJsonObject();
         //prepareRequestData("1");
 
-        builder = new AlertDialog.Builder(ProviderDelayed.this);
+        builder = new AlertDialog.Builder(ProviderDelayed2.this);
 
     }
 
@@ -131,7 +130,7 @@ public class ProviderDelayed extends AppCompatActivity {
                                 }
                             });
                     assert sp_provider != null;
-                    ProviderSpinnerAdapter spinnerAdapter = new ProviderSpinnerAdapter(ProviderDelayed.this, spinnerData);
+                    ProviderSpinnerAdapter spinnerAdapter = new ProviderSpinnerAdapter(ProviderDelayed2.this, spinnerData);
                     sp_provider.setAdapter(spinnerAdapter);
                 }
             }
@@ -189,7 +188,7 @@ public class ProviderDelayed extends AppCompatActivity {
                     }
 
                     //creating adapter object and setting it to recyclerview
-                    ProviderDelayedAdapter adapter = new ProviderDelayedAdapter(ProviderDelayed.this, requestList);
+                    ProviderDelayedAdapter adapter = new ProviderDelayedAdapter(ProviderDelayed2.this, requestList);
                     requestRecyclerView.setAdapter(adapter);
                     if(requestList == null || requestList.isEmpty()){
                         tv_details.setText("No  delayed requests for " + sProvider + " to manage");

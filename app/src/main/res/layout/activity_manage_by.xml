@@ -6,11 +6,25 @@
     android:layout_height="match_parent"
     tools:context="com.example.s215087038.wefixx.student.Student"
     android:orientation="vertical"
-    android:weightSum="2"
-    android:gravity="center_vertical"
-    android:paddingRight="20dp"
-    android:paddingLeft="20dp" >
+  >
     <!--android:weightSum="4">-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="Manage Requests"
+        android:textColor="#ffffff"
+        android:id="@+id/tv_header"
+        android:textSize="25dp"
+        android:gravity="center"></TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        android:weightSum="2"
+        android:gravity="center_vertical">
 
     <TextView
         android:layout_width="wrap_content"
@@ -38,7 +52,7 @@
                 android:id="@+id/btn_by_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/new_req"
+                app:srcCompat="@drawable/status"
                 android:layout_gravity="center"
                 android:clickable="true"
                 android:background="@null"
@@ -69,7 +83,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@null"
-                app:srcCompat="@drawable/history" />
+                app:srcCompat="@drawable/category" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -110,7 +124,7 @@
                 android:id="@+id/btn_by_priority"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/new_req"
+                app:srcCompat="@drawable/priority"
                 android:layout_gravity="center"
                 android:clickable="true"
                 android:background="@null"
@@ -141,7 +155,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@null"
-                app:srcCompat="@drawable/history" />
+                app:srcCompat="@drawable/provider" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -153,6 +167,7 @@
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large.Inverse" />
 
         </LinearLayout>
+    </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>

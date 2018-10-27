@@ -199,24 +199,6 @@
                     </TableRow>
 
                     <TableRow>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Maintenance Provider"
-                            />
-                        <TextView
-                            android:id="@+id/tv_provider"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="provider"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="20dp"/>
-
-
-                    </TableRow>
-
-                    <TableRow>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -230,20 +212,20 @@
                             android:textStyle="bold"
                             android:layout_marginLeft="20dp"/>
                     </TableRow>
-                    <TableRow>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Report" />
+                    <!--<TableRow>-->
+                        <!--<TextView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:text="Report" />-->
 
-                        <TextView
-                            android:id="@+id/tv_report"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="report"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="20dp"/>
-                    </TableRow>
+                        <!--<TextView-->
+                            <!--android:id="@+id/tv_report"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:text="report"-->
+                            <!--android:textStyle="bold"-->
+                            <!--android:layout_marginLeft="20dp"/>-->
+                    <!--</TableRow>-->
                     <TableRow>
 
                         <TextView

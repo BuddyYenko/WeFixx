@@ -1,10 +1,14 @@
 package com.example.s215087038.wefixx;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -13,6 +17,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.s215087038.wefixx.adapter.FaqAdapter;
 import com.example.s215087038.wefixx.adapter.HistoryAdapter;
+import com.example.s215087038.wefixx.manager.Manager;
 import com.example.s215087038.wefixx.model.FaqDataObject;
 import com.example.s215087038.wefixx.model.Request;
 
@@ -28,7 +33,22 @@ public class FAQ extends AppCompatActivity {
     private RecyclerView recyclerView;
     private FaqAdapter mAdapter;
     String url = "http://sict-iis.nmmu.ac.za/wefixx/faq.php";
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.logout, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_logout) {
+            Intent logout = new Intent(FAQ.this, LoginActivity.class);
+            startActivity(logout);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

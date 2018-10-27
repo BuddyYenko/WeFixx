@@ -6,12 +6,20 @@
     android:layout_height="match_parent"
     tools:context="com.example.s215087038.wefixx.manager.RegisterActivity"
     android:orientation="vertical">
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="Add RSA"
+        android:textColor="#ffffff"
+        android:id="@+id/tv_header"
+        android:textSize="25dp"
+        android:gravity="center"></TextView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:orientation="vertical">
 
 

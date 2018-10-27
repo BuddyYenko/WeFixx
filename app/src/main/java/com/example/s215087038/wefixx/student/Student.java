@@ -8,12 +8,16 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.s215087038.wefixx.FAQ;
 import com.example.s215087038.wefixx.History;
+import com.example.s215087038.wefixx.LoginActivity;
 import com.example.s215087038.wefixx.R;
 import com.example.s215087038.wefixx.NewRequest;
 import com.example.s215087038.wefixx.rsa.RSA;
@@ -21,7 +25,22 @@ import com.example.s215087038.wefixx.rsa.RSA;
 public class Student extends AppCompatActivity {
     ImageButton new_request, help, notifications, request_history;
     private static final int STORAGE_PERMISSION_CODE = 123;
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.logout, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_logout) {
+            Intent logout = new Intent(Student.this, LoginActivity.class);
+            startActivity(logout);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

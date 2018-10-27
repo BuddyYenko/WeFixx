@@ -23,7 +23,9 @@
         </activity>
         <activity android:name=".manager.ProviderHistory" />
         <activity android:name=".student.Student" />
-        <activity android:name=".rsa.Manage" />
+        <activity android:name=".rsa.Manage"
+            android:label="@string/title_activity_by_status"
+            />
         <activity android:name=".manager.Reports" />
         <activity android:name=".rsa.ManageBy" />
         <activity android:name=".History" />
@@ -32,15 +34,18 @@
         <activity android:name=".FAQ" />
         <activity android:name=".NewRequest" />
         <activity android:name=".manager.Delayed" />
-        <activity android:name=".rsa.ManageByPriority" />
+        <activity android:name=".rsa.ManageByPriority"
+            android:label="@string/title_activity_by_priority"
+            >
+        </activity>
         <activity android:name=".rsa.ManageByProvider" />
-        <activity android:name=".rsa.ManageByCategory" />
+        <activity android:name=".rsa.ManageByCategory"
+            android:label="@string/title_activity_by_category"
+            />
         <activity android:name=".manager.RegisterActivity" />
         <activity android:name=".manager.Manager" />
         <activity
-            android:name=".manager.ProviderDelayed"
-            android:label="@string/title_activity_provider_delayed"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:name=".manager.ProviderDelayed"></activity>
     </application>
 
 </manifest>

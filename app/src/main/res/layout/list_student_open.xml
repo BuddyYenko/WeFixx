@@ -71,7 +71,6 @@
                     android:background="@color/colorAccent"
                     android:padding="5dp"
                     android:text="desc"
-                    android:visibility="gone"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small.Inverse" />
             </LinearLayout>
 

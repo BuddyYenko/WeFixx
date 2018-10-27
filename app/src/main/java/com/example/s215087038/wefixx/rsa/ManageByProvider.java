@@ -22,6 +22,9 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
@@ -94,7 +97,22 @@ public class ManageByProvider extends AppCompatActivity implements ByProviderAda
 
     public static void startDoc(Intent intent) {
     }
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.logout, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_logout) {
+            Intent logout = new Intent(ManageByProvider.this, LoginActivity.class);
+            startActivity(logout);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,7 +132,7 @@ public class ManageByProvider extends AppCompatActivity implements ByProviderAda
         requestRecyclerView.addItemDecoration(new MyDividerItemDecoration(ManageByProvider.this, LinearLayoutManager.VERTICAL, 16));
         requestRecyclerView.setAdapter(aAdapter);
         requestJsonObject();
-        prepareRequestData("1");
+       // prepareRequestData("1");
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter("custom-message"));

@@ -185,6 +185,9 @@
                         </Spinner>
 
                     </TableRow>
+                    <TableRow>
+
+                    </TableRow>
 
                     <TableRow>
 
@@ -198,6 +201,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"></Spinner>
+                        <ImageButton
+                            android:id="@+id/tip"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_marginTop="-5dp"
+                            android:layout_weight="0.01"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/tooltip" />
                     </TableRow>
 
 

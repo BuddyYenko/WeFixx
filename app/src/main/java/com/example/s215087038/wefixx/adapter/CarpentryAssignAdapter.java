@@ -4,9 +4,11 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -35,6 +38,7 @@ import com.example.s215087038.wefixx.rsa.CarpentryAssignFragment;
 import com.example.s215087038.wefixx.rsa.Manage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.tooltip.Tooltip;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -74,13 +78,14 @@ public class CarpentryAssignAdapter extends RecyclerView.Adapter<CarpentryAssign
         public TextView no_photo, request_date, request_type, room, description, textView, date_label, desc_label, status, tv_fault_id, tv_fault_type_id;
         public TextView expected_close, days_overdue, tv_provider, tv_priority;
         public ImageView imageView;
+        public ImageButton tip;
         public LinearLayout linearLayout;
         public Spinner sp_priority, sp_provider;
         public Button bn_assign, view_photo;
 
         public MyViewHolder(View view) {
             super(view);
-
+            tip = view.findViewById(R.id.tip);
             sp_priority = (Spinner) view.findViewById(R.id.sp_priority);
             sp_provider = (Spinner) view.findViewById(R.id.sp_provider);
             bn_assign = (Button) view.findViewById(R.id.btn_submit);
@@ -111,6 +116,16 @@ public class CarpentryAssignAdapter extends RecyclerView.Adapter<CarpentryAssign
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final Request request = requestList.get(position);
+        holder.tip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch(v.getId()){
+                    case R.id.tip:
+                        priorityTooltip(v, Gravity.BOTTOM);
+                        break;
+                }
+            }
+        });
         holder.request_date.setText(request.getRequestDate());
         holder.request_type.setText(request.getRequestType());
         holder.description.setText(request.getDescription());
@@ -314,7 +329,28 @@ public class CarpentryAssignAdapter extends RecyclerView.Adapter<CarpentryAssign
                 }
             });
     }
-
+    private void priorityTooltip(View v, int gravity) {
+        ImageView imgV =(ImageView) v;
+        Tooltip tooltip = new Tooltip.Builder(imgV)
+                .setText("Specifies the request turnaround time.\nLow: 3-7 days\nModerate: 2-3 days\nCritical: 1-2 days")
+                .setTextColor(Color.BLACK)
+                .setGravity(gravity)
+                .setCornerRadius(8f)
+                .setBackgroundColor(Color.LTGRAY)
+                .setDismissOnClick(true)
+                .show();
+    }
+    private void providerTooltip(View v, int gravity) {
+        ImageView imgV =(ImageView) v;
+        Tooltip tooltip = new Tooltip.Builder(imgV)
+                .setText("Company you would like to assigned to fix the defect")
+                .setTextColor(Color.BLACK)
+                .setGravity(gravity)
+                .setCornerRadius(8f)
+                .setBackgroundColor(Color.LTGRAY)
+                .setDismissOnClick(true)
+                .show();
+    }
     @Override
     public int getItemCount() {
         return requestList.size();

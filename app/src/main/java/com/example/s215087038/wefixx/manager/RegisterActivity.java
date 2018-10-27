@@ -7,6 +7,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +25,7 @@ import com.example.s215087038.wefixx.GMailSender;
 import com.example.s215087038.wefixx.LoginActivity;
 import com.example.s215087038.wefixx.R;
 import com.example.s215087038.wefixx.model.MySingleton;
+import com.example.s215087038.wefixx.rsa.RSA;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +43,22 @@ public class RegisterActivity extends AppCompatActivity {
     String url = "http://sict-iis.nmmu.ac.za/wefixx/manager/register.php";
     public static final String DATA = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     public static Random RANDOM = new Random();
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.logout, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_logout) {
+            Intent logout = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(logout);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

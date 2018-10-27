@@ -2,18 +2,24 @@ package com.example.s215087038.wefixx.manager;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.example.s215087038.wefixx.LoginActivity;
 import com.example.s215087038.wefixx.model.Request;
 
 import com.android.volley.AuthFailureError;
@@ -27,6 +33,7 @@ import com.example.s215087038.wefixx.R;
 import com.example.s215087038.wefixx.adapter.ProviderHistoryAdapter;
 import com.example.s215087038.wefixx.adapter.ProviderSpinnerAdapter;
 import com.example.s215087038.wefixx.model.ProviderDataObject;
+import com.example.s215087038.wefixx.rsa.RSA;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.json.JSONArray;
@@ -61,7 +68,22 @@ public class ProviderHistory extends AppCompatActivity {
     int mYear, mMonth, mDay;
     String to, from, date_to, date_from, from_formatted, to_formatted;
     TextView tvFrom, tvTo;
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.logout, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_logout) {
+            Intent logout = new Intent(ProviderHistory.this, LoginActivity.class);
+            startActivity(logout);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -297,9 +319,12 @@ public class ProviderHistory extends AppCompatActivity {
                     if(requestList == null || requestList.isEmpty()){
                         tv_details.setText("No requests between " + date_from + " and " + date_to);
                         tv_details.setVisibility(View.VISIBLE);
+                        requestRecyclerView.setVisibility(View.INVISIBLE);
                     }
                     else{
                         tv_details.setVisibility(View.INVISIBLE);
+                        requestRecyclerView.setVisibility(View.VISIBLE);
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
