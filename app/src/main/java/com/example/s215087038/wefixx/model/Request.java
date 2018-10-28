@@ -5,6 +5,7 @@ public class Request {
     private String expected_close, days_overdue, request_status;
     private float rating ;
     private int user_id;
+    private String report;
 
     public Request() {
     }
@@ -68,7 +69,7 @@ public class Request {
         this.rating = rating;
     }
     //history
-    public Request( String request_date, String date_assigned, String date_closed, String request_type, String description, String room, String comment, float rating , String provider, String priority, String requester, String image_url) {
+    public Request( String request_date, String date_assigned, String date_closed, String request_type, String description, String room, String comment, float rating , String provider, String priority, String requester, String image_url, String report) {
         this.request_date = request_date;
         this.date_assigned = date_assigned;
         this.date_closed = date_closed;
@@ -81,6 +82,7 @@ public class Request {
         this.comment = comment;
         this.requester = requester;
         this.image_url = image_url;
+        this.report = report;
 
     }
     //delayed
@@ -100,8 +102,6 @@ public class Request {
         this.image_url = image_url;
         this.expected_close = expected_close;
         this.days_overdue = String.valueOf(days_overdue);
-
-
     }
     //manage by priority
     public Request(String fault_id, String request_date, String date_assigned, String expected_close, String days_overdue, String room, String request_type, String description, String provider, String status, String image_url) {
@@ -282,6 +282,9 @@ public class Request {
     }
     public String getRequestStatus() {
         return request_status;
+    }
+    public String getReport() {
+        return report;
     }
 
 }

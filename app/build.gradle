@@ -45,4 +45,6 @@ dependencies {
     implementation files('sampledata/activation.jar')
     implementation files('sampledata/additionnal.jar')
     implementation files('sampledata/mail.jar')
+    implementation 'com.commit451:PhotoView:1.2.4'
+
 }

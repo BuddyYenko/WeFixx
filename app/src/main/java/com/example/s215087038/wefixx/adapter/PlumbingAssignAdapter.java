@@ -1,5 +1,6 @@
 package com.example.s215087038.wefixx.adapter;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -56,6 +58,7 @@ public class PlumbingAssignAdapter extends RecyclerView.Adapter<PlumbingAssignAd
     String priorityUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/priority.php";
     String assignUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/update_request.php";
     AlertDialog.Builder builder;
+    ProgressDialog progressDialog;
 
     protected List<ProviderDataObject> providerData;
     protected List<PriorityDataObject> priorityData;
@@ -266,6 +269,7 @@ public class PlumbingAssignAdapter extends RecyclerView.Adapter<PlumbingAssignAd
             holder.bn_assign.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    showProgressDialog();
                     StringRequest stringRequest = new StringRequest(com.android.volley.Request.Method.POST, assignUrl,
                             new Response.Listener<String>() {
                                 @Override
@@ -275,6 +279,7 @@ public class PlumbingAssignAdapter extends RecyclerView.Adapter<PlumbingAssignAd
                                         JSONObject jsonObject = jsonArray.getJSONObject(0);
                                         String code = jsonObject.getString("code");
                                         String message = jsonObject.getString("message");
+                                        dismissProgressBar();
 
                                         final AlertDialog.Builder builder = new AlertDialog.Builder(mCtx);
                                         builder.setTitle("WeFixx Response");
@@ -282,6 +287,7 @@ public class PlumbingAssignAdapter extends RecyclerView.Adapter<PlumbingAssignAd
                                         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
+                                                currentPosition = -1;
                                                 fragment.prepareRequestData();
                                                 notifyDataSetChanged();
                                             }
@@ -309,6 +315,7 @@ public class PlumbingAssignAdapter extends RecyclerView.Adapter<PlumbingAssignAd
                             return params;
                         }
                     };
+                    stringRequest.setRetryPolicy(new DefaultRetryPolicy( 30000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                     MySingleton.getInstance(mCtx).addToRequestque(stringRequest);
 
                 }
@@ -341,5 +348,17 @@ public class PlumbingAssignAdapter extends RecyclerView.Adapter<PlumbingAssignAd
     @Override
     public int getItemCount() {
         return requestList.size();
+    }
+    private void showProgressDialog() {
+        progressDialog = new ProgressDialog(mCtx);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle("Please Wait..");
+        progressDialog.setMessage("Assigning Request ...");
+        progressDialog.show();
+    }
+    private void  dismissProgressBar() {
+        // To Dismiss progress dialog
+        progressDialog.dismiss();
     }
 }

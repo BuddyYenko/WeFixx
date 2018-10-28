@@ -64,24 +64,24 @@ public class Delayed extends AppCompatActivity {
                         JSONObject request = array.getJSONObject(i);
 
                         //adding the request to request list_open
-                        requestList.add(new Request(
-                                request.getString("request_date"),
-                                request.getString("date_assigned"),
-                                request.getString("expected_close"),
-                                request.getInt("days_overdue"),
-                                request.getString("request_type"),
-                                request.getString("description"),
-                                request.getString("room"),
-                                request.getString("requester"),
-                                request.getString("priority"),
-                                request.getString("turnaround"),
-                                request.getString("provider"),
-                                request.getString("contact_number"),
-                                request.getString("email"),
-                                request.getString("provider_status"),
-                                request.getString("photo")
-
-                        ));
+//                        requestList.add(new Request(
+//                                request.getString("request_date"),
+//                                request.getString("date_assigned"),
+//                                request.getString("expected_close"),
+//                                request.getInt("days_overdue"),
+//                                request.getString("request_type"),
+//                                request.getString("description"),
+//                                request.getString("room"),
+//                                request.getString("requester"),
+//                                request.getString("priority"),
+//                                request.getString("turnaround"),
+//                                request.getString("provider"),
+//                                request.getString("contact_number"),
+//                                request.getString("email"),
+//                                request.getString("provider_status"),
+//                                request.getString("photo")
+//
+//                        ));
                     }
                     //creating adapter object and setting it to recyclerview
                     DelayedAdapter adapter = new DelayedAdapter(Delayed.this, requestList);

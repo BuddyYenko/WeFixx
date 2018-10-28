@@ -1,5 +1,6 @@
 package com.example.s215087038.wefixx;
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -88,6 +89,7 @@ public class NewRequest extends AppCompatActivity {
     private RequestQueue queue;
     String user_id, name, fault, room, student_no;
     private ProgressBar progressBar;
+    ProgressDialog progressDialog;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -150,7 +152,8 @@ public class NewRequest extends AppCompatActivity {
         btn_request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
+                //progressBar.setVisibility(View.VISIBLE);
+                showProgressDialog();
                 description = Description.getText().toString();
                 room = RoomNo.getText().toString();
                 if (description.equals("")) {
@@ -171,7 +174,8 @@ public class NewRequest extends AppCompatActivity {
                                         builder.setTitle("WeFixx Response");
                                         builder.setMessage(message);
                                         displayAlert(code);
-                                        progressBar.setVisibility(View.INVISIBLE);
+                                        dismissProgressBar();
+                                        //progressBar.setVisibility(View.INVISIBLE);
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -181,7 +185,8 @@ public class NewRequest extends AppCompatActivity {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
                                     Toast.makeText(getApplicationContext(), error.getMessage() +"error " , Toast.LENGTH_LONG).show();
-                                    progressBar.setVisibility(View.INVISIBLE);
+                                   // progressBar.setVisibility(View.INVISIBLE);
+                                    dismissProgressBar();
                                 }
                             }) {
 
@@ -213,6 +218,7 @@ public class NewRequest extends AppCompatActivity {
                         }
                     };
                     volleyMultipartRequest.setRetryPolicy(new DefaultRetryPolicy(0,0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
                     //adding the request to volley
                     Volley.newRequestQueue(NewRequest.this).add(volleyMultipartRequest);
                 }
@@ -239,7 +245,6 @@ public class NewRequest extends AppCompatActivity {
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
             }
-
         });
     }
     private void requestJsonObject() {
@@ -453,6 +458,18 @@ public class NewRequest extends AppCompatActivity {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
         return byteArrayOutputStream.toByteArray();
+    }
+    private void showProgressDialog() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle("Please Wait..");
+        progressDialog.setMessage("Processing Assigning Request ...");
+        progressDialog.show();
+    }
+    private void  dismissProgressBar() {
+        // To Dismiss progress dialog
+        progressDialog.dismiss();
     }
 
 }

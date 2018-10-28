@@ -23,29 +23,33 @@
         </activity>
         <activity android:name=".manager.ProviderHistory" />
         <activity android:name=".student.Student" />
-        <activity android:name=".rsa.Manage"
-            android:label="@string/title_activity_by_status"
-            />
+        <activity
+            android:name=".rsa.Manage"
+            android:label="@string/title_activity_by_status" />
         <activity android:name=".manager.Reports" />
         <activity android:name=".rsa.ManageBy" />
         <activity android:name=".History" />
         <activity android:name=".rsa.RSA" />
-        <activity android:name=".student.StudentHistory" />
+        <activity
+            android:name=".student.StudentHistory"
+            android:label="@string/title_activity_my_history" />
         <activity android:name=".FAQ" />
         <activity android:name=".NewRequest" />
         <activity android:name=".manager.Delayed" />
-        <activity android:name=".rsa.ManageByPriority"
-            android:label="@string/title_activity_by_priority"
-            >
-        </activity>
-        <activity android:name=".rsa.ManageByProvider" />
-        <activity android:name=".rsa.ManageByCategory"
-            android:label="@string/title_activity_by_category"
-            />
-        <activity android:name=".manager.RegisterActivity" />
-        <activity android:name=".manager.Manager" />
         <activity
-            android:name=".manager.ProviderDelayed"></activity>
+            android:name=".rsa.ManageByPriority"
+            android:label="@string/title_activity_by_priority" />
+        <activity android:name=".rsa.ManageByProvider" />
+        <activity
+            android:name=".rsa.ManageByCategory"
+            android:label="@string/title_activity_by_category" />
+        <activity
+            android:name=".manager.RegisterActivity"
+            android:noHistory="true" />
+        <activity android:name=".manager.Manager" />
+        <activity android:name=".manager.ProviderDelayed" />
+        <activity android:name=".PDFActivity" />
+        <activity android:name=".manager.Notify"></activity>
     </application>
 
 </manifest>

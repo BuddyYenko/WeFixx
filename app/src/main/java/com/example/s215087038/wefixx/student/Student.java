@@ -26,6 +26,10 @@ public class Student extends AppCompatActivity {
     ImageButton new_request, help, notifications, request_history;
     private static final int STORAGE_PERMISSION_CODE = 123;
     @Override
+    public void onBackPressed() {
+        finish();
+    }
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.logout, menu);

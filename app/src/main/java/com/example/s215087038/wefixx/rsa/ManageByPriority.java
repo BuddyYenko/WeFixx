@@ -53,9 +53,9 @@ public class ManageByPriority extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new CriticalFragment(), "CRITICAL");
-        adapter.addFragment(new ModerateFragment(), "MODERATE");
         adapter.addFragment(new LowFragment()   , "LOW");
+        adapter.addFragment(new ModerateFragment(), "MODERATE");
+        adapter.addFragment(new CriticalFragment(), "CRITICAL");
         viewPager.setAdapter(adapter);
     }
 

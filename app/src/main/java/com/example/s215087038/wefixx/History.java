@@ -73,8 +73,10 @@ public class History extends AppCompatActivity {
                                 request.getString("provider"),
                                 request.getString("priority"),
                                 request.getString("requester"),
-                                request.getString("photo")
-                                ));
+                                request.getString("photo"),
+                                request.getString("report")
+
+                        ));
 
                 }
 

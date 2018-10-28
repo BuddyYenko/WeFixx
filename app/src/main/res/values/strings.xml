@@ -7,6 +7,9 @@
     <string name="title_activity_by_category">Manage By Category</string>
     <string name="title_activity_by_status">Manage By Status</string>
     <string name="title_activity_by_priority">Manage By Priority</string>
+    <string name="title_activity_my_history">My History</string>
+    <string name="title_report">Request Report</string>
+    <string name="title_activity_notify">Notify</string>
 
 
 </resources>

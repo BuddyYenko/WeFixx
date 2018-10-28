@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -41,8 +44,11 @@ public class RegisterActivity extends AppCompatActivity {
     String username, email, firstname, lastname, password;
     AlertDialog.Builder builder;
     String url = "http://sict-iis.nmmu.ac.za/wefixx/manager/register.php";
-    public static final String DATA = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    public static final String DATA = "0123456789abCdeFghJkmNpqrStuvWxyZ";
     public static Random RANDOM = new Random();
+    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    boolean valid_email = false;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -71,22 +77,48 @@ public class RegisterActivity extends AppCompatActivity {
         et_email = (EditText) findViewById(R.id.et_email);
 
         builder = new AlertDialog.Builder(RegisterActivity.this);
+
+        username = et_username.getText().toString();
+        email = et_email.getText().toString();
+        firstname = et_firstname.getText().toString();
+        lastname = et_lastname.getText().toString();
+        username = et_username.getText().toString();
+        password = generatePassword();
+
+        et_email.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                email = et_email.getText().toString();
+
+                if (email.matches(emailPattern) && s.length() > 0)
+                {
+                   valid_email = true;
+                }
+                else
+                {valid_email = false;
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // other stuffs
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // other stuffs
+            }
+        });
         register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                username = et_username.getText().toString();
-                email = et_email.getText().toString();
-                firstname = et_firstname.getText().toString();
-                lastname = et_lastname.getText().toString();
-                username = et_username.getText().toString();
-                password = generatePassword();
 
-                if (username.equals("") || email.equals("") || firstname.equals("") || lastname.equals("")) {
-                    builder.setTitle("Something Went Wrong...");
+
+                if ( username.equals("") || email.equals("") || firstname.equals("") || lastname.equals("")) {
+                    builder.setTitle("Empty Fields");
                     builder.setMessage("Please fill in all fields");
                     DisplayAlert("input_error");
-                } else {
+                }else if(!valid_email) {
+                    builder.setTitle("Invalid Fields");
+                    builder.setMessage("Please enter a valid email address");
+                    DisplayAlert("input_error");
+                }else {
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                             new Response.Listener<String>() {
                                 @Override
@@ -96,14 +128,16 @@ public class RegisterActivity extends AppCompatActivity {
                                         JSONObject jsonObject = jsonArray.getJSONObject(0);
                                         String code = jsonObject.getString("code");
                                         String message = jsonObject.getString("message");
-                                        if(code == "reg_success")
-                                        {
-                                            sendEmail();
+                                        if(code.equals("reg_failed")) {
+                                            builder.setTitle("WeFixx Response");
+                                        }
+                                        else if(code.equals("mail_error")) {
+                                            builder.setTitle("Mail Error");
                                         }
                                         else {
                                             builder.setTitle("WeFixx Response");
-                                            builder.setMessage(message);
                                         }
+                                        builder.setMessage(message);
                                         DisplayAlert(code);
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -128,6 +162,7 @@ public class RegisterActivity extends AppCompatActivity {
                             return params;
                         }
                     };
+                    stringRequest.setRetryPolicy(new DefaultRetryPolicy( 30000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                     MySingleton.getInstance(RegisterActivity.this).addToRequestque(stringRequest);
 
                 }
@@ -135,22 +170,6 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void sendEmail() {
-            Log.i("Send email", "");
-        try {
-            GMailSender sender = new GMailSender("weeluthuli@gmail.com", "password");
-            sender.sendMail("This is Subject",
-                    "This is Body",
-                    "user@gmail.com",
-                    email);
-            builder.setTitle("WeFixx Response");
-            builder.setMessage("Reg successful");
-            DisplayAlert("reg_success");
-        } catch (Exception e) {
-            Log.e("SendMail", e.getMessage(), e);
-        }
-
-    }
 
     public static String generatePassword() {
         StringBuilder sb = new StringBuilder(7);
@@ -172,7 +191,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Intent delayed = new Intent(RegisterActivity.this, Manager.class);
                     startActivity(delayed);
                 }
-                else if (code.equals("reg_failed")) {
+                else {
                 }
             }
         });

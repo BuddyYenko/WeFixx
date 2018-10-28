@@ -1,6 +1,7 @@
 package com.example.s215087038.wefixx.adapter;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,6 +24,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -59,6 +61,7 @@ public class CarpentryAssignAdapter extends RecyclerView.Adapter<CarpentryAssign
     String assignUrl = "http://sict-iis.nmmu.ac.za/wefixx/rsa/update_request.php";
     AlertDialog.Builder builder;
     CarpentryAssignFragment fragment;
+    ProgressDialog progressDialog;
 
     protected List<ProviderDataObject> providerData;
     protected List<PriorityDataObject> priorityData;
@@ -265,9 +268,12 @@ public class CarpentryAssignAdapter extends RecyclerView.Adapter<CarpentryAssign
                 notifyDataSetChanged();
             }
         });
-            holder.bn_assign.setOnClickListener(new View.OnClickListener() {
+      //  showProgressDialog();
+
+        holder.bn_assign.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    showProgressDialog();
                     StringRequest stringRequest = new StringRequest(com.android.volley.Request.Method.POST, assignUrl,
                             new Response.Listener<String>() {
                                 @Override
@@ -275,6 +281,7 @@ public class CarpentryAssignAdapter extends RecyclerView.Adapter<CarpentryAssign
                                     try {
                                         JSONArray jsonArray = new JSONArray(response);
                                         JSONObject jsonObject = jsonArray.getJSONObject(0);
+                                        dismissProgressBar();
                                         String code = jsonObject.getString("code");
                                         String message = jsonObject.getString("message");
 
@@ -284,6 +291,7 @@ public class CarpentryAssignAdapter extends RecyclerView.Adapter<CarpentryAssign
                                         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
+                                                currentPosition = -1;
                                                 fragment.prepareRequestData();
 
                                             }
@@ -307,10 +315,10 @@ public class CarpentryAssignAdapter extends RecyclerView.Adapter<CarpentryAssign
                             params.put("fault_id", holder.tv_fault_id.getText().toString());
                             params.put("priority", priority);
                             params.put("provider", provider);
-
                             return params;
                         }
                     };
+                    stringRequest.setRetryPolicy(new DefaultRetryPolicy( 30000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                     MySingleton.getInstance(mCtx).addToRequestque(stringRequest);
 
                 }
@@ -352,7 +360,20 @@ public class CarpentryAssignAdapter extends RecyclerView.Adapter<CarpentryAssign
                 .show();
     }
     @Override
+
     public int getItemCount() {
         return requestList.size();
+    }
+    private void showProgressDialog() {
+        progressDialog = new ProgressDialog(mCtx);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle("Please Wait..");
+        progressDialog.setMessage("Assigning Request ...");
+        progressDialog.show();
+    }
+    private void  dismissProgressBar() {
+        // To Dismiss progress dialog
+        progressDialog.dismiss();
     }
 }

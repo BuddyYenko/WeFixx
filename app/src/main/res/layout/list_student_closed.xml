@@ -227,10 +227,47 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="comment"
+                            android:visibility="visible"
                             android:textStyle="bold"
                             android:layout_marginLeft="20dp"/>
+                        <EditText
+                            android:id="@+id/et_comment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="type your comment"
+                            android:visibility="gone"
+                            android:layout_marginLeft="20dp"
+                            android:focusable="true"
+                            android:gravity="top|left"
+                            android:inputType="textMultiLine"
+                            android:overScrollMode="always"
+                            android:scrollbarStyle="insideInset"
+                            android:scrollbars="vertical"
+                            android:lines="5"
+                            android:background="@drawable/textarea"
+                            android:scrollHorizontally="false"/>
+                        <ImageButton
+                            android:id="@+id/ib_edit_comment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:background="@null"
+                            android:src="@drawable/pen" />
+                        <ImageButton
+                            android:id="@+id/ib_save"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:visibility="gone"
+                            android:background="@null"
+                            android:src="@drawable/save" />
                     </TableRow>
                 </TableLayout>
+                <TextView
+                    android:id="@+id/tv_fault_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
                 <Button
                     android:id="@+id/btn_view_photo"
                     android:layout_width="wrap_content"

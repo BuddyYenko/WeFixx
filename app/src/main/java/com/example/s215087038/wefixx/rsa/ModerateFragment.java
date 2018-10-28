@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +61,11 @@ public class ModerateFragment extends Fragment {
         Uri fileuri;
         byte[] result;
         AlertDialog.Builder builder;
-        public ModerateFragment() {
+
+    private static final String LOG_TAG = AssignedFragment.class.getSimpleName();
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+
+    public ModerateFragment() {
             // Required empty public constructor
         }
 
@@ -87,8 +94,69 @@ public class ModerateFragment extends Fragment {
             builder = new AlertDialog.Builder(getActivity());
 
             prepareRequestData();
+
+            mSwipeRefreshLayout = (SwipeRefreshLayout) myFragmentView.findViewById(R.id.swiperefresh);
+            mSwipeRefreshLayout.setColorScheme(
+                    R.color.swipe_color_1, R.color.swipe_color_2,
+                    R.color.swipe_color_3, R.color.swipe_color_4);
+
             return myFragmentView;
         }
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.i(LOG_TAG, "onRefresh called from SwipeRefreshLayout");
+
+                initiateRefresh();
+            }
+        });
+
+    }
+    private void initiateRefresh() {
+        Log.i(LOG_TAG, "initiateRefresh");
+
+        /**
+         * Execute the background task, which uses {@link android.os.AsyncTask} to load the data.
+         */
+        new ModerateFragment.DummyBackgroundTask().execute();
+    }
+    private void onRefreshComplete(List<String> result) {
+        Log.i(LOG_TAG, "onRefreshComplete");
+
+        // Remove all items from the ListAdapter, and then replace them with the new items
+        prepareRequestData();
+        // Stop the refreshing indicator
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+    private class DummyBackgroundTask extends AsyncTask<Void, Void, List<String>> {
+
+        static final int TASK_DURATION = 3 * 1000; // 3 seconds
+
+        @Override
+        protected List<String> doInBackground(Void... params) {
+            // Sleep for a small amount of time to simulate a background-task
+            try {
+                Thread.sleep(TASK_DURATION);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            // Return a new random list of cheeses
+            return null;//Cheeses.randomList(LIST_ITEM_COUNT);
+        }
+
+        @Override
+        protected void onPostExecute(List<String> result) {
+            super.onPostExecute(result);
+
+            // Tell the Fragment that the refresh has completed
+            onRefreshComplete(result);
+        }
+
+    }
 
         private void prepareRequestData() {
 
@@ -100,6 +168,7 @@ public class ModerateFragment extends Fragment {
                     try {
                         //converting the string to json array object
                         JSONArray array = new JSONArray(response);
+                        moderateList.clear();
 
                         //traversing through all the object
                         for (int i = 0; i < array.length(); i++) {
@@ -235,7 +304,7 @@ public class ModerateFragment extends Fragment {
                 prepareRequestData();
             }
         });
-
+        prepareRequestData();
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }

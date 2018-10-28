@@ -207,6 +207,7 @@ public class AssignedRequestAdapter extends  RecyclerView.Adapter<AssignedReques
         holder.bn_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                currentPosition = -1;
                 Intent intent = new Intent("custom-message");
                 intent.putExtra("id",holder.tv_fault_id.getText().toString());
                 LocalBroadcastManager.getInstance(mCtx).sendBroadcast(intent);

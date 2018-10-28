@@ -185,6 +185,7 @@ public class OtherCloseAdapter extends RecyclerView.Adapter<OtherCloseAdapter.My
                 bundle.putString("id", holder.tv_fault_id.getText().toString());
 
                 //PASS OVER THE BUNDLE TO OUR FRAGMENT
+                currentPosition = -1;
                 fragment.setArguments(bundle);
                 fragment.getFaultID();
             }

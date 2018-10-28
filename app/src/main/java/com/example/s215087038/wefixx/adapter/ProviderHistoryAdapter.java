@@ -1,6 +1,10 @@
 package com.example.s215087038.wefixx.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,15 +15,19 @@ import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.s215087038.wefixx.PDFActivity;
 import com.example.s215087038.wefixx.R;
 import com.example.s215087038.wefixx.model.Request;
 
 import java.util.List;
+
+import static com.example.s215087038.wefixx.PDFActivity.*;
 
 public class ProviderHistoryAdapter extends RecyclerView.Adapter<ProviderHistoryAdapter.MyViewHolder> {
 
@@ -30,6 +38,7 @@ public class ProviderHistoryAdapter extends RecyclerView.Adapter<ProviderHistory
     public ProviderHistoryAdapter(List<Request> requestList) {
         this.requestList = requestList;
     }
+    PDFActivity activity;
 
     public ProviderHistoryAdapter(Context mCtx, List<Request> requestList) {
         this.mCtx = mCtx;
@@ -37,22 +46,21 @@ public class ProviderHistoryAdapter extends RecyclerView.Adapter<ProviderHistory
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView no_photo, request_date, request_type, room, description, textView, date_label, priority, date_assigned, date_closed, comment, desc_label, tv_requester;
+        public TextView no_photo, request_date, request_type, room, description, textView, date_label, priority, date_assigned, date_closed, comment, desc_label, tv_requester, report_name;
         public ImageView imageView;
         public LinearLayout linearLayout, row;
         public Button view_photo;
-        public WebView webView;
+        ImageButton ib_view_report;
 
         public MyViewHolder(View view) {
             super(view);
 
-            webView = (WebView) view.findViewById(R.id.webview);
 
             request_date = (TextView) view.findViewById(R.id.tv_date);
             date_assigned = (TextView) view.findViewById(R.id.tv_date_assigned);
             date_closed = (TextView) view.findViewById(R.id.tv_date_closed);
             desc_label = (TextView) view.findViewById(R.id.desc_label);
-
+            ib_view_report = view.findViewById(R.id.ib_view_report);
             request_type = (TextView) view.findViewById(R.id.tv_type);
             description = (TextView) view.findViewById(R.id.tv_desc);
             room = (TextView) view.findViewById(R.id.tv_room);
@@ -65,13 +73,15 @@ public class ProviderHistoryAdapter extends RecyclerView.Adapter<ProviderHistory
             no_photo = (TextView) view.findViewById(R.id.tv_no_photo);
             view_photo = (Button) view.findViewById(R.id.btn_view_photo);
             tv_requester = (TextView) view.findViewById(R.id.tv_requester);
+            report_name =  view.findViewById(R.id.report_name);
+
         }
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_history, parent, false);
+                .inflate(R.layout.list_provider_history, parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -81,17 +91,12 @@ public class ProviderHistoryAdapter extends RecyclerView.Adapter<ProviderHistory
         final Request request = requestList.get(position);
 
 
-//        holder.webView.setWebViewClient(new WebViewClient());
-        //holder.webView.addView(holder.webView.getZoomControls());
-       // holder.webView.getSettings().setJavaScriptEnabled(true);
-      //  holder.webView.loadUrl("http://docs.google.com/gview?embedded=true&url=http://sict-iis.nmmu.ac.za/wefixx/files/request_reports/5bbfeb0d2f8ef9.47784997.pdf");
-
-
         holder.request_date.setText(request.getRequestDate());
         holder.date_assigned.setText(request.getDateAssigned());
         holder.date_closed.setText(request.getDateClosed());
         holder.desc_label.setText(request.getDescription());
         holder.tv_requester.setText(request.getRequester());
+        holder.report_name.setText(request.getReport());
 
         holder.request_type.setText(request.getRequestType());
         holder.description.setText(request.getDescription());
@@ -145,6 +150,22 @@ public class ProviderHistoryAdapter extends RecyclerView.Adapter<ProviderHistory
 
                 //reloading the list
                 notifyDataSetChanged();
+            }
+        });
+        holder.ib_view_report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //PASS OVER THE BUNDLE TO OUR ACTIVITY
+//                Intent intent = new Intent("custom-message");
+//                intent.putExtra("report",holder.report_name.getText().toString());
+//                LocalBroadcastManager.getInstance(mCtx).sendBroadcast(intent);
+
+                final Intent i = new Intent(mCtx, PDFActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("report", holder.report_name.getText().toString());
+                i.putExtras(bundle);
+                mCtx.startActivity(i);
             }
         });
     }

@@ -176,6 +176,9 @@ public class ManageByProvider extends AppCompatActivity implements ByProviderAda
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
             id = intent.getStringExtra("id" );
+
+
+
             String path = FilePath.getPath(ManageByProvider.this, fileuri);
 
             //Toast.makeText(ManageByProvider.this,id + " " + path ,Toast.LENGTH_SHORT).show();
@@ -263,7 +266,7 @@ public class ManageByProvider extends AppCompatActivity implements ByProviderAda
                 prepareRequestData(provider);
             }
         });
-
+        prepareRequestData(provider);
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }

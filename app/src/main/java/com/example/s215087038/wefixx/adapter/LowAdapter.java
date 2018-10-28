@@ -195,6 +195,7 @@ public class LowAdapter extends RecyclerView.Adapter<LowAdapter.MyViewHolder>{
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putString("id", holder.tv_fault_id.getText().toString());
+                currentPosition = -1;
 
                 //PASS OVER THE BUNDLE TO OUR FRAGMENT
                 fragment.setArguments(bundle);

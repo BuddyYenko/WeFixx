@@ -182,6 +182,7 @@ public class PlumbingCloseAdapter extends RecyclerView.Adapter<PlumbingCloseAdap
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putString("id", holder.tv_fault_id.getText().toString());
+                currentPosition = -1;
 
                 //PASS OVER THE BUNDLE TO OUR FRAGMENT
                 fragment.setArguments(bundle);

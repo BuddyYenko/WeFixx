@@ -16,6 +16,11 @@ import com.example.s215087038.wefixx.R;
 public class ManageBy extends AppCompatActivity {
     ImageButton by_provider, by_priority, by_status, by_category;
     @Override
+    public void onBackPressed() {
+        Intent a = new Intent(ManageBy.this, RSA.class);
+        startActivity(a);
+    }
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.logout, menu);

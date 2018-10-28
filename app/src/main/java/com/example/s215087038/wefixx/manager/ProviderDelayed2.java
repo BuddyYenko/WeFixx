@@ -164,23 +164,23 @@ public class ProviderDelayed2 extends AppCompatActivity {
                             JSONObject request = array.getJSONObject(i);
 
                             //adding the request to request list_open
-                            requestList.add(new Request(
-                                    request.getString("request_date"),
-                                    request.getString("date_assigned"),
-                                    request.getString("expected_close"),
-                                    request.getInt("days_overdue"),
-                                    request.getString("request_type"),
-                                    request.getString("description"),
-                                    request.getString("room"),
-                                    request.getString("requester"),
-                                    request.getString("priority"),
-                                    request.getString("turnaround"),
-                                    request.getString("provider"),
-                                    request.getString("contact_number"),
-                                    request.getString("email"),
-                                    request.getString("provider_status"),
-                                    request.getString("photo")
-                            ));
+//                            requestList.add(new Request(
+//                                    request.getString("request_date"),
+//                                    request.getString("date_assigned"),
+//                                    request.getString("expected_close"),
+//                                    request.getInt("days_overdue"),
+//                                    request.getString("request_type"),
+//                                    request.getString("description"),
+//                                    request.getString("room"),
+//                                    request.getString("requester"),
+//                                    request.getString("priority"),
+//                                    request.getString("turnaround"),
+//                                    request.getString("provider"),
+//                                    request.getString("contact_number"),
+//                                    request.getString("email"),
+//                                    request.getString("provider_status"),
+//                                    request.getString("photo")
+//                            ));
 
                             tv_count.setText("Amount: " + count);
                             tv_contact.setText("Contact: " + request.getString("contact_number"));

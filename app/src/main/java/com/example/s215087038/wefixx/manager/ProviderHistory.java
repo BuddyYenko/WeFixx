@@ -1,8 +1,12 @@
 package com.example.s215087038.wefixx.manager;
 
 import android.app.DatePickerDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +24,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.s215087038.wefixx.LoginActivity;
+import com.example.s215087038.wefixx.PDFActivity;
 import com.example.s215087038.wefixx.model.Request;
 
 import com.android.volley.AuthFailureError;
@@ -54,7 +59,7 @@ import java.util.UUID;
 public class ProviderHistory extends AppCompatActivity {
     public Spinner sp_provider;
     protected List<ProviderDataObject> spinnerData;
-    String provider, sProvider, provider_id;
+    String provider, sProvider;
     String url = "http://sict-iis.nmmu.ac.za/wefixx/rsa/providers.php";
     String provider_history = "http://sict-iis.nmmu.ac.za/wefixx/manager/provider_history.php";
     private List<Request> requestList;
@@ -127,6 +132,8 @@ public class ProviderHistory extends AppCompatActivity {
         to_formatted = dateFormatter2.format(now);
 
         //prepareRequestData("1");
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                new IntentFilter("custom-message"));
 
         btn_go.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -227,6 +234,19 @@ public class ProviderHistory extends AppCompatActivity {
             }
         });
     }
+    public BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            String report  = intent.getStringExtra("report");
+
+            final Intent i = new Intent(getApplicationContext(), PDFActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("report", report);
+            intent.putExtras(bundle);
+            startActivity(i);
+        }
+    };
 
     public void DisplayAlert(final String code) {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -306,7 +326,9 @@ public class ProviderHistory extends AppCompatActivity {
                                 request.getString("provider"),
                                 request.getString("priority"),
                                 request.getString("requester"),
-                                request.getString("photo")
+                                request.getString("photo"),
+                                request.getString("report")
+
                         ));
                         int count = request.getInt("count");
                         tv_count.setText("Amount: " + count);

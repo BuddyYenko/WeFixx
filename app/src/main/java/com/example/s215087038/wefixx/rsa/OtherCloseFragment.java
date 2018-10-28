@@ -8,16 +8,19 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +69,9 @@ public class OtherCloseFragment extends Fragment {
     Uri fileuri;
     byte[] result;
     private static final int STORAGE_PERMISSION_CODE = 123;
+
+    private static final String LOG_TAG = AssignedFragment.class.getSimpleName();
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     public OtherCloseFragment() {
         // Required empty public constructor
     }
@@ -94,7 +100,69 @@ public class OtherCloseFragment extends Fragment {
         recyclerView.setAdapter(aAdapter);
         prepareRequestData();
         builder = new AlertDialog.Builder(getActivity());
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) myFragmentView.findViewById(R.id.swiperefresh);
+        mSwipeRefreshLayout.setColorScheme(
+                R.color.swipe_color_1, R.color.swipe_color_2,
+                R.color.swipe_color_3, R.color.swipe_color_4);
+
         return myFragmentView;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.i(LOG_TAG, "onRefresh called from SwipeRefreshLayout");
+
+                initiateRefresh();
+            }
+        });
+
+    }
+    private void initiateRefresh() {
+        Log.i(LOG_TAG, "initiateRefresh");
+
+        /**
+         * Execute the background task, which uses {@link android.os.AsyncTask} to load the data.
+         */
+        new OtherCloseFragment.DummyBackgroundTask().execute();
+    }
+    private void onRefreshComplete(List<String> result) {
+        Log.i(LOG_TAG, "onRefreshComplete");
+
+        // Remove all items from the ListAdapter, and then replace them with the new items
+        prepareRequestData();
+        // Stop the refreshing indicator
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+    private class DummyBackgroundTask extends AsyncTask<Void, Void, List<String>> {
+
+        static final int TASK_DURATION = 3 * 1000; // 3 seconds
+
+        @Override
+        protected List<String> doInBackground(Void... params) {
+            // Sleep for a small amount of time to simulate a background-task
+            try {
+                Thread.sleep(TASK_DURATION);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            // Return a new random list of cheeses
+            return null;//Cheeses.randomList(LIST_ITEM_COUNT);
+        }
+
+        @Override
+        protected void onPostExecute(List<String> result) {
+            super.onPostExecute(result);
+
+            // Tell the Fragment that the refresh has completed
+            onRefreshComplete(result);
+        }
+
     }
     //Requesting permission
     private void requestStoragePermission() {
@@ -279,15 +347,7 @@ public class OtherCloseFragment extends Fragment {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(code == "update_success")
-                {
-                    prepareRequestData();
-                }
-                else if (code=="input_error")
-                {
-
-                }
-
+                prepareRequestData();
             }
         });
 

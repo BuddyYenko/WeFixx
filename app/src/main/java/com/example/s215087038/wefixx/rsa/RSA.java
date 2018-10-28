@@ -24,6 +24,11 @@ import com.example.s215087038.wefixx.manager.ProviderHistory;
 public class RSA extends AppCompatActivity {
     ImageButton manage_req, history;
     private static final int STORAGE_PERMISSION_CODE = 123;
+//    @Override
+//    public void onBackPressed() {
+//        Intent a = new Intent(RSA.this, LoginActivity.class);
+//        startActivity(a);
+//    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -89,10 +94,10 @@ public class RSA extends AppCompatActivity {
             //If permission is granted
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 //Displaying a toast
-                Toast.makeText(RSA.this, "Permission granted now you can read the storage", Toast.LENGTH_LONG).show();
             } else {
                 //Displaying another toast if permission is not granted
-                Toast.makeText(RSA.this, "Oops you just denied the permission", Toast.LENGTH_LONG).show();
+                Toast.makeText(RSA.this, "Oops you just denied the permission, certain activities will not run", Toast.LENGTH_LONG).show();
+                requestStoragePermission();
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.example.s215087038.wefixx.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
@@ -12,20 +13,34 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
+import com.example.s215087038.wefixx.LoginActivity;
 import com.example.s215087038.wefixx.R;
+import com.example.s215087038.wefixx.model.MySingleton;
 import com.example.s215087038.wefixx.model.PriorityDataObject;
 import com.example.s215087038.wefixx.model.ProviderDataObject;
 import com.example.s215087038.wefixx.model.Request;
+import com.example.s215087038.wefixx.student.StudentClosedFragment;
 import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class StudentClosedAdapter extends  RecyclerView.Adapter<StudentClosedAdapter.MyViewHolder> {
 
@@ -35,30 +50,38 @@ public class StudentClosedAdapter extends  RecyclerView.Adapter<StudentClosedAda
 
     private static int currentPosition = -1;
     AlertDialog.Builder builder;
+    String url = "http://sict-iis.nmmu.ac.za/wefixx/student/comment.php";
 
     protected List<ProviderDataObject> providerData;
     protected List<PriorityDataObject> priorityData;
     String fault_id, fault_type_id;
+    StudentClosedFragment fragment;
 
     public StudentClosedAdapter(List<Request> requestList) {
         this.requestList = requestList;
     }
 
-    public StudentClosedAdapter(Context mCtx, List<Request> requestList) {
+    public StudentClosedAdapter(Context mCtx, List<Request> requestList, StudentClosedFragment fragment) {
         this.mCtx = mCtx;
         this.requestList = requestList;
         this.context = mCtx;
+        this.fragment = fragment;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView no_photo, request_date, request_type, room, description,comment, textView, date_label, date_closed, date_assigned, provider, priority, category_label, desc_label;
+        public TextView fault_id,no_photo, request_date, request_type, room, description,comment, textView, date_label, date_closed, date_assigned, provider, priority, category_label, desc_label;
         public ImageView imageView;
         public LinearLayout linearLayout, row;
         public Button view_photo;
+        public EditText et_comment;
+        ImageButton ib_edit, ib_save;
 
 
         public MyViewHolder(View view) {
             super(view);
+            ib_save = view.findViewById(R.id.ib_save);
+            ib_edit = view.findViewById(R.id.ib_edit_comment);
+            et_comment =  view.findViewById(R.id.et_comment);
             request_date = (TextView) view.findViewById(R.id.tv_date_opened);
             request_type = (TextView) view.findViewById(R.id.tv_type);
             description = (TextView) view.findViewById(R.id.tv_desc);
@@ -77,6 +100,7 @@ public class StudentClosedAdapter extends  RecyclerView.Adapter<StudentClosedAda
             view_photo = (Button) view.findViewById(R.id.btn_view_photo);
             category_label = (TextView) view.findViewById(R.id.category_label);
             desc_label = (TextView) view.findViewById(R.id.desc_label);
+            fault_id = (TextView) view.findViewById(R.id.tv_fault_id);
 
 
         }
@@ -107,11 +131,13 @@ public class StudentClosedAdapter extends  RecyclerView.Adapter<StudentClosedAda
 
         fault_type_id = request.getFaultTypeID();
         fault_id = request.getFaultID();
+        holder.fault_id.setText(request.getFaultID());
         holder.date_assigned.setText(request.getDateAssigned());
         holder.provider.setText(request.getProvider());
         holder.priority.setText(request.getPriority());
         if(request.getComment() != "null"){
             holder.comment.setText(request.getComment());
+            holder.et_comment.setText(request.getComment());
         }else{
             holder.comment.setText("***No Comment***");
         }
@@ -120,6 +146,70 @@ public class StudentClosedAdapter extends  RecyclerView.Adapter<StudentClosedAda
             Glide.with(mCtx).load(request.getImageUrl()).into(holder.imageView);
 
         }
+        holder.ib_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.comment.setVisibility(View.GONE);
+                holder.ib_edit.setVisibility(View.GONE);
+                holder.ib_save.setVisibility(View.VISIBLE);
+                holder.et_comment.setVisibility(View.VISIBLE);
+
+            }
+        });
+        holder.ib_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                builder = new AlertDialog.Builder(mCtx);
+                StringRequest stringRequest = new StringRequest(com.android.volley.Request.Method.POST, url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONArray jsonArray = new JSONArray(response);
+                                    JSONObject jsonObject = jsonArray.getJSONObject(0);
+                                    String code = jsonObject.getString("code");
+                                    String message = jsonObject.getString("message");
+
+                                    builder.setTitle("WeFixx Response");
+                                    builder.setMessage(message);
+                                    holder.comment.setVisibility(View.VISIBLE);
+                                    holder.ib_edit.setVisibility(View.VISIBLE);
+                                    holder.ib_save.setVisibility(View.GONE);
+                                    holder.et_comment.setVisibility(View.GONE);
+
+                                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            fragment.prepareRequestData();
+                                            notifyDataSetChanged();
+                                        }
+                                    });
+                                    builder.show();
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<String, String>();
+
+                        params.put("comment", holder.et_comment.getText().toString() );
+                        params.put("fault_id", holder.fault_id.getText().toString());
+                        return params;
+                    }
+                };
+                MySingleton.getInstance(mCtx).addToRequestque(stringRequest);
+
+            }
+        });
         holder.linearLayout.setVisibility(View.GONE);
         holder.view_photo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,7 +220,6 @@ public class StudentClosedAdapter extends  RecyclerView.Adapter<StudentClosedAda
                 }
                 else{
                     holder.no_photo.setVisibility(View.VISIBLE);
-                    //holder.hide_photo.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -161,7 +250,6 @@ public class StudentClosedAdapter extends  RecyclerView.Adapter<StudentClosedAda
                 notifyDataSetChanged();
             }
         });
-      //  holder.choose_file.setOnClickListener(mCtx);
 
 
 

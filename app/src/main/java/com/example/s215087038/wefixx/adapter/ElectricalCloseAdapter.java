@@ -186,6 +186,7 @@ public class ElectricalCloseAdapter extends RecyclerView.Adapter<ElectricalClose
                 bundle.putString("idElec", holder.tv_fault_id.getText().toString());
 
                 //PASS OVER THE BUNDLE TO OUR FRAGMENT
+                currentPosition = -1;
                 fragment.setArguments(bundle);
                 fragment.getFaultID();
             }

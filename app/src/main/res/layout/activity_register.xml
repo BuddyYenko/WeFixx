@@ -74,6 +74,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/et_username"
             android:background="@drawable/textarea"
+            android:inputType="textEmailAddress"
             android:text="username"/>
         <Button
             android:id="@+id/btn_register"
@@ -83,6 +84,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="40dp"
+
             android:background="@drawable/rounded_button"
             android:text="submit"/>
     </LinearLayout>

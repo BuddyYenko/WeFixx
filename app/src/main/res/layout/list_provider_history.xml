@@ -231,15 +231,30 @@
                             android:textStyle="bold"
                             android:layout_marginLeft="20dp"/>
                     </TableRow>
-                    <TableRow>
-                        <WebView  xmlns:android="http://schemas.android.com/apk/res/android"
-                            android:id="@+id/webview"
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:visibility="visible"/>
-                    </TableRow>
+                    <RelativeLayout>
 
+                        <ImageButton
+                            android:id="@+id/ib_view_report"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:background="@null"
+                            android:src="@drawable/pdf_icon" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:gravity="bottom"
+                            android:layout_toRightOf="@+id/ib_view_report"
+                            android:text="View Report"/>
+
+                    </RelativeLayout>
                 </TableLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/report_name"
+                    android:visibility="invisible"
+                    />
                 <!--<LinearLayout-->
                     <!--android:layout_width="match_parent"-->
                     <!--android:layout_height="wrap_content"-->
