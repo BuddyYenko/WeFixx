@@ -108,7 +108,11 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
+                username = et_username.getText().toString();
+                email = et_email.getText().toString();
+                firstname = et_firstname.getText().toString();
+                lastname = et_lastname.getText().toString();
+                username = et_username.getText().toString();
 
                 if ( username.equals("") || email.equals("") || firstname.equals("") || lastname.equals("")) {
                     builder.setTitle("Empty Fields");
