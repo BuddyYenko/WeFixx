@@ -135,21 +135,6 @@
                             android:layout_marginLeft="20dp"/>
                     </TableRow>
 
-                    <TableRow>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Room No   " />
-
-                        <TextView
-                            android:id="@+id/tv_room"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="room"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="20dp"/>
-                    </TableRow>
 
                     <TableRow>
 
@@ -238,6 +223,7 @@
                             android:visibility="gone"
                             android:layout_marginLeft="20dp"
                             android:focusable="true"
+                            android:textSize="14sp"
                             android:gravity="top|left"
                             android:inputType="textMultiLine"
                             android:overScrollMode="always"

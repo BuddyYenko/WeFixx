@@ -156,8 +156,7 @@ public class AssignedFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            // Return a new random list of cheeses
-            return null;//Cheeses.randomList(LIST_ITEM_COUNT);
+            return null;
         }
 
         @Override
